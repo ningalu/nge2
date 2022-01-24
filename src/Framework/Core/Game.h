@@ -1,6 +1,8 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#include "Timer.h"
+
 namespace nge {
     class Game {
         public:
@@ -16,6 +18,8 @@ namespace nge {
 
         private:
             bool running_;
+
+            Timer timer_;
 
             void PreDrawUpdate();
             void Draw();
