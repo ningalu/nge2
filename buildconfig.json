@@ -1,0 +1,54 @@
+{
+    "platforms": [
+        {
+            "name": "win32",
+            "path_separator": "\\",
+            "commands": [
+                {
+                    "name": "config",
+                    "scripts": [
+                        "configure.bat"
+                    ],
+                    "description": "Configure the CMake project"
+                },
+                {
+                    "name": "clean",
+                    "scripts": [
+                        "clean.bat"
+                    ],
+                    "description": "Delete the current CMake configuration"
+                },
+                {
+                    "name": "reconfig",
+                    "scripts": [
+                        "clean.bat",
+                        "configure.bat"
+                    ],
+                    "description": "Delete the contents of the build folder and reconfigure the CMake project"
+                },
+                {
+                    "name": "build",
+                    "scripts": [
+                        "build.bat"
+                    ],
+                    "description": "Build the application with the current CMake configuration"
+                },
+                {
+                    "name": "run",
+                    "scripts": [
+                        "run.bat"
+                    ],
+                    "description": "Run the built application"
+                },
+                {
+                    "name": "rebuild",
+                    "scripts": [
+                        "build.bat",
+                        "run.bat"
+                    ],
+                    "description": "Rebuild and run the application with the current CMake configuration"
+                }
+            ]
+        }
+    ]
+}
