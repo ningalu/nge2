@@ -10,11 +10,25 @@ Game::Game() {
 
 void Game::Start() {
     running_ = true;
-    while(running_) {
-        //std::cout << timer_.GetDeltaTime() << std::endl;
-        PreDrawUpdate();
-        Draw();
-        PostDrawUpdate();
+
+    std::cout << "SDL Init from Game.cpp" << std::endl;
+    
+    SDL_Init(SDL_INIT_VIDEO);
+
+    SDL_Window *window = SDL_CreateWindow(
+        "SDL2Test",
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
+        640,
+        480,
+        0
+    );
+
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+    while (true) {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+        SDL_RenderClear(renderer);
+        SDL_RenderPresent(renderer);
     }
 }
 

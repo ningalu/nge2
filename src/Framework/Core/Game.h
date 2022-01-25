@@ -1,6 +1,8 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#include "SDL2/SDL.h"
+
 #include "Timer.h"
 
 namespace nge {
