@@ -1,4 +1,3 @@
-echo Cleaning
 cd build
 rmdir /S /Q CMakeFiles
 rmdir /S /Q src
