@@ -24,7 +24,7 @@
                         "clean.bat",
                         "configure.bat"
                     ],
-                    "description": "Delete the contents of the build folder and reconfigure the CMake project"
+                    "description": "Delete and reconfigure the CMake project"
                 },
                 {
                     "name": "build",
@@ -47,6 +47,16 @@
                         "run.bat"
                     ],
                     "description": "Rebuild and run the application with the current CMake configuration"
+                },
+                {
+                    "name": "all",
+                    "scripts": [
+                        "clean.bat",
+                        "configure.bat",
+                        "build.bat",
+                        "run.bat"
+                    ],
+                    "description": "Delete and reconfigure the CMake project, then build and run the application"
                 }
             ]
         }

@@ -5,3 +5,4 @@ rmdir /S /Q src
 del cmake_install.cmake
 del CMakeCache.txt
 del Makefile
+del *.exe

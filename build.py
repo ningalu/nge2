@@ -17,7 +17,6 @@ with open("buildconfig.json", "r") as settings_file:
             [config] = [c for c in platform["commands"] if c["name"] == sys.argv[1]]
             s = platform["path_separator"]
             for script in config["scripts"]:
-                print(f".{s}buildscripts{s}{script}")
                 Popen(f".{s}buildscripts{s}{script}").wait()
     else:
         print_help(platform)

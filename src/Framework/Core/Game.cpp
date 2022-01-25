@@ -11,7 +11,7 @@ Game::Game() {
 void Game::Start() {
     running_ = true;
     while(running_) {
-        std::cout << timer_.GetDeltaTime() << std::endl;
+        //std::cout << timer_.GetDeltaTime() << std::endl;
         PreDrawUpdate();
         Draw();
         PostDrawUpdate();
