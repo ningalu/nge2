@@ -3,6 +3,7 @@ add_library(
     ./Game.cpp
     ./Timer.cpp
     ./Graphics.cpp
+    ./Input.cpp
 )
 
 target_include_directories(

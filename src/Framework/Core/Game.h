@@ -10,6 +10,7 @@
 
 #include "Timer.h"
 #include "Graphics.h"
+#include "Input.h"
 
 namespace nge {
     class Game {
@@ -31,6 +32,9 @@ namespace nge {
             Timer tick_timer_;
 
             std::shared_ptr<Graphics> graphics_;
+            std::shared_ptr<Input> input_;
+
+            SDL_Event event_buffer_;
 
             void Tick();
             void Draw();
