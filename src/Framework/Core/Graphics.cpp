@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "SDL2/SDL.h"
+
 namespace nge {
     Graphics::Graphics() : 
         window_(nullptr, SDL_DestroyWindow),
@@ -70,11 +72,60 @@ namespace nge {
         SDL_RenderClear(renderer_.get());
     }
 
+    void Graphics::DrawTexture(SDL_Texture* const texture, const SDL_Rect* const src, const SDL_Rect* const dst) {
+        SDL_RenderCopy(renderer_.get(), texture, src, dst);
+    }
+
     void Graphics::Present() {
-        SDL_RenderCopy(renderer_.get(), LoadTexture("./resources/stewie.jpg").get(), NULL, NULL);
+        SDL_Rect a = {0, 0, 50, 50};
+        DrawTexture(LoadTexture("resources/stewie.jpg").get(), nullptr, &a);
         SDL_RenderPresent(renderer_.get());
     }
 
+    void Graphics::SetWindowSize(int w, int h){
+        SDL_SetWindowSize(window_.get(), w, h);
+    }
+
+    int Graphics::GetWindowWidth() const {
+        int w;
+        SDL_GetWindowSize(window_.get(), &w, nullptr);
+        return w;
+    }
+
+    int Graphics::GetWindowHeight() const {
+        int h;
+        SDL_GetWindowSize(window_.get(), nullptr, &h);
+        return h;
+    }
+    
+    void Graphics::SetWindowPosition(int x, int y) {
+        SDL_SetWindowPosition(window_.get(), x, y);
+    }
+
+    int Graphics::GetWindowX() const {
+        int x;
+        SDL_GetWindowPosition(window_.get(), &x, nullptr);
+        return x;
+    }
+
+    int Graphics::GetWindowY() const {
+        int y;
+        SDL_GetWindowPosition(window_.get(), nullptr, &y);
+        return y;
+    }
+    
+    void Graphics::SetWindowRect(SDL_Rect window) {
+        SetWindowPosition(window.x, window.y);
+        SetWindowSize(window.w, window.h);
+    }
+
+    SDL_Rect Graphics::GetWindowRect() const {
+        SDL_Rect window;
+        SDL_GetWindowPosition(window_.get(), &window.x, &window.y);
+        SDL_GetWindowSize(window_.get(), &window.w, &window.h);
+        return window;
+    }
+    
     Graphics::~Graphics() {
 
     }

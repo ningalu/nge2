@@ -14,9 +14,20 @@ namespace nge {
             Graphics();
 
             std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> LoadTexture(std::string path);
-
             void Clear();
+            void DrawTexture(SDL_Texture* const texture, const SDL_Rect* const src, const SDL_Rect* const dst);
             void Present();
+
+            void SetWindowSize(int w, int h);
+            int GetWindowWidth() const;
+            int GetWindowHeight() const;
+
+            void SetWindowPosition(int x, int y);
+            int GetWindowX() const;
+            int GetWindowY() const;
+
+            void SetWindowRect(SDL_Rect window);
+            SDL_Rect GetWindowRect() const;
 
             ~Graphics();
 

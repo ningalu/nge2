@@ -5,10 +5,13 @@ namespace nge {
     Game::Game() {
         running_ = false;
         graphics_ = std::make_shared<Graphics>();
+        std::cout << graphics_->GetWindowWidth() << std::endl;
     }
 
     void Game::Start() {
         running_ = true;
+
+        
         
         while (running_) {
             if (tick_timer_.GetElapsedTime() > (1.0 / 1000)) {
