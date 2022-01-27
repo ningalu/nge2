@@ -12,9 +12,11 @@ void Game::Start() {
     running_ = true;
 
     std::cout << "SDL Init from Game.cpp" << std::endl;
-    
-    SDL_Init(SDL_INIT_VIDEO);
 
+    SDL_Init(SDL_INIT_VIDEO);
+    IMG_Init(IMG_INIT_JPG);
+    Mix_Init(MIX_INIT_FLAC);
+    TTF_Init();
     SDL_Window *window = SDL_CreateWindow(
         "SDL2Test",
         SDL_WINDOWPOS_UNDEFINED,
