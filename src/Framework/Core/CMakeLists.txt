@@ -2,6 +2,7 @@ add_library(
     Core
     ./Game.cpp
     ./Timer.cpp
+    ./Graphics.cpp
 )
 
 target_include_directories(
