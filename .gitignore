@@ -6,4 +6,7 @@
 *.app
 .vscode
 CMakeCache.txt
-[Bb][Uu][Ii][Ll][Dd]
+build/CMakeFiles
+build/src
+build/cmake_install.cmake
+build/Makefile
