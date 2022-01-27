@@ -3,29 +3,19 @@
 using namespace nge;
 
 Timer::Timer() {
-    running_ = false;
+    start_time_ = std::chrono::steady_clock::now();
 }
 
 void Timer::Start() {
-    running_ = true;
+    start_time_ = std::chrono::steady_clock::now();
 }
 
-void Timer::Update() {
-    if (running_) {
-
-    }
-}
-
-double Timer::GetDeltaTime() {
-    return 1.0;
-}
-
-void Timer::Stop() {
-    running_ = false;
+double Timer::GetElapsedTime() {
+    return static_cast<std::chrono::duration<double>>(std::chrono::steady_clock::now() - start_time_).count();
 }
 
 void Timer::Reset() {
-
+    start_time_ = std::chrono::steady_clock::now();
 }
 
 Timer::~Timer() {

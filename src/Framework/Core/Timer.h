@@ -2,6 +2,7 @@
 #define _TIMER_H
 
 #include "stdint.h"
+#include <chrono>
 
 namespace nge {
     class Timer {
@@ -9,17 +10,12 @@ namespace nge {
             Timer();
 
             void Start();
-            void Update();
-            double GetDeltaTime();
-            void Stop();
+            double GetElapsedTime();
             void Reset();
 
             ~Timer();
         private:
-            bool running_;
-            uint32_t start_ticks_;
-            uint32_t elapsed_ticks_;
-            double delta_time_;
+            std::chrono::time_point<std::chrono::steady_clock> start_time_;
 
     };
 }

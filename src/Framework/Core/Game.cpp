@@ -5,13 +5,10 @@ using namespace nge;
 
 Game::Game() {
     running_ = false;
-    timer_.Start();
 }
 
 void Game::Start() {
     running_ = true;
-
-    std::cout << "SDL Init from Game.cpp" << std::endl;
 
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_JPG);
@@ -27,10 +24,18 @@ void Game::Start() {
     );
 
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
-    while (true) {
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-        SDL_RenderClear(renderer);
-        SDL_RenderPresent(renderer);
+    while (running_) {
+        if (tick_timer_.GetElapsedTime() > (1.0 / 1000)) {
+            Tick();
+            tick_timer_.Reset();
+        }
+        if (draw_timer_.GetElapsedTime() > (1.0f / 60)) {
+            SDL_RenderClear(renderer);
+            SDL_RenderPresent(renderer);
+            Draw();
+            draw_timer_.Reset();
+        }
+        
     }
 }
 
@@ -42,18 +47,14 @@ void Game::End() {
     running_ = false;
 }
 
-Game::~Game() {
-
-}
-
-void Game::PreDrawUpdate() {
+void Game::Tick() {
 
 }
 
 void Game::Draw() {
-
+    
 }
 
-void Game::PostDrawUpdate() {
+Game::~Game() {
 
 }

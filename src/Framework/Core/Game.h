@@ -24,11 +24,11 @@ namespace nge {
         private:
             bool running_;
 
-            Timer timer_;
+            Timer draw_timer_;
+            Timer tick_timer_;
 
-            void PreDrawUpdate();
+            void Tick();
             void Draw();
-            void PostDrawUpdate();
 
     };
 }
