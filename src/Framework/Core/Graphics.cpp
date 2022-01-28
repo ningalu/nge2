@@ -53,19 +53,22 @@ namespace nge {
         }
     }
 
-    std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> Graphics::LoadTexture(std::string path) {
+    Texture Graphics::LoadTexture(std::string path) {
         SDL_Surface *tempSurf = IMG_Load(path.c_str());
         if (tempSurf == nullptr) {
             std::cout << "LoadTexture: Surface could not be created from: " << path << std::endl;
-            return std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>(nullptr, SDL_DestroyTexture);
+            return Texture{nullptr};
         }
         SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer_.get(), tempSurf);
         if (texture == nullptr) {
             std::cout << "LoadTexture: Texture could not be created from SDL_Renderer* " << renderer_.get() << " and SDL_Surface* " << tempSurf << std::endl;
-            return std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>(nullptr, SDL_DestroyTexture);
+            return Texture{nullptr};
         }
         SDL_FreeSurface(tempSurf);
-        return std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)>(texture, SDL_DestroyTexture);
+        
+        // Apparently this works because of copy elision
+        // This value is automatically moved
+        return Texture{texture};
     }
 
     void Graphics::Clear() {

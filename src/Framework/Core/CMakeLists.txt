@@ -4,6 +4,7 @@ add_library(
     ./Timer.cpp
     ./Graphics.cpp
     ./Input.cpp
+    ./Texture.cpp
 )
 
 target_include_directories(

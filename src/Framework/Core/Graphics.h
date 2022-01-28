@@ -8,12 +8,15 @@
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
 
+#include "Texture.h"
+
 namespace nge {
+
     class Graphics {
         public:
             Graphics();
 
-            std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> LoadTexture(std::string path);
+            Texture LoadTexture(std::string path);
             void Clear();
             void DrawTexture(SDL_Texture* const texture, const SDL_Rect* const src, const SDL_Rect* const dst);
             void Present();
