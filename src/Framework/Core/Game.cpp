@@ -2,11 +2,16 @@
 #include <iostream>
 
 namespace nge {
-    Game::Game() {
+    Game::Game(State* initialState) {
         running_ = false;
         graphics_ = std::make_shared<Graphics>();
+        std::cout << "Game: " << graphics_.get() << std::endl;
+        initial_state_ = std::make_unique<State>(graphics_);
         input_ = std::make_shared<Input>();
         std::cout << graphics_->GetWindowWidth() << std::endl;
+        std::cout << "Creating Game.test" << std::endl;
+        test = graphics_->LoadTexture("resources/stewie.jpg");
+        std::cout << "Created Game.test" << std::endl;
     }
 
     void Game::Start() {
@@ -30,7 +35,7 @@ namespace nge {
                 Tick();
                 tick_timer_.Reset();
             }
-            if (draw_timer_.GetElapsedTime() > (1.0f / 60)) {
+            if (draw_timer_.GetElapsedTime() > (1.0f / 1)) {
                 Draw();
                 draw_timer_.Reset();
             }
@@ -51,6 +56,7 @@ namespace nge {
 
     void Game::Draw() {
         graphics_->Clear();
+        graphics_->DrawTexture(test.get(), nullptr, nullptr);
         graphics_->Present();
     }
 

@@ -5,6 +5,11 @@
 #include "SDL2/SDL.h"
 
 namespace nge {
+
+    void TextureDeleter::operator()(SDL_Texture* texture) {
+        SDL_DestroyTexture(texture);
+    }
+
     Graphics::Graphics() : 
         window_(nullptr, SDL_DestroyWindow),
         renderer_(nullptr, SDL_DestroyRenderer)
@@ -53,35 +58,51 @@ namespace nge {
         }
     }
 
-    Texture Graphics::LoadTexture(std::string path) {
+    void Graphics::TextureDeleter(SDL_Texture* texture) {
+        SDL_DestroyTexture(texture);
+    }
+
+    // Texture&& Graphics::LoadTexture(std::string path) {
+    //     SDL_Surface *tempSurf = IMG_Load(path.c_str());
+    //     if (tempSurf == nullptr) {
+    //         std::cout << "LoadTexture: Surface could not be created from: " << path << std::endl;
+    //         return Texture{nullptr};
+    //     }
+    //     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer_.get(), tempSurf);
+    //     if (texture == nullptr) {
+    //         std::cout << "LoadTexture: Texture could not be created from SDL_Renderer* " << renderer_.get() << " and SDL_Surface* " << tempSurf << std::endl;
+    //         return Texture{nullptr};
+    //     }
+    //     SDL_FreeSurface(tempSurf);
+    //     return std::move(Texture{texture});
+    // }
+    TexturePtr Graphics::LoadTexture(std::string path) {
+        TexturePtr t;
         SDL_Surface *tempSurf = IMG_Load(path.c_str());
         if (tempSurf == nullptr) {
             std::cout << "LoadTexture: Surface could not be created from: " << path << std::endl;
-            return Texture{nullptr};
+            return t;
         }
         SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer_.get(), tempSurf);
         if (texture == nullptr) {
             std::cout << "LoadTexture: Texture could not be created from SDL_Renderer* " << renderer_.get() << " and SDL_Surface* " << tempSurf << std::endl;
-            return Texture{nullptr};
+            return t;
         }
         SDL_FreeSurface(tempSurf);
-        
-        // Apparently this works because of copy elision
-        // This value is automatically moved
-        return Texture{texture};
+        return TexturePtr(texture);
     }
 
     void Graphics::Clear() {
-        SDL_RenderClear(renderer_.get());
+        //SDL_RenderClear(renderer_.get());
     }
 
     void Graphics::DrawTexture(SDL_Texture* const texture, const SDL_Rect* const src, const SDL_Rect* const dst) {
+        std::cout << "Draw: " << texture << std::endl;
+        // std::cout << "Graphics: " << this << std::endl;
         SDL_RenderCopy(renderer_.get(), texture, src, dst);
     }
 
     void Graphics::Present() {
-        SDL_Rect a = {0, 0, 50, 50};
-        DrawTexture(LoadTexture("resources/stewie.jpg").get(), nullptr, &a);
         SDL_RenderPresent(renderer_.get());
     }
 
@@ -127,6 +148,10 @@ namespace nge {
         SDL_GetWindowPosition(window_.get(), &window.x, &window.y);
         SDL_GetWindowSize(window_.get(), &window.w, &window.h);
         return window;
+    }
+
+    SDL_Renderer* Graphics::GetRenderer() {
+        return renderer_.get();
     }
     
     Graphics::~Graphics() {

@@ -3,20 +3,25 @@
 
 #include <memory>
 #include <string>
+#include <functional>
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
 
-#include "Texture.h"
-
 namespace nge {
+
+    struct TextureDeleter {
+        void operator()(SDL_Texture* texture);
+    };
+    using TexturePtr = std::unique_ptr<SDL_Texture, TextureDeleter>;
 
     class Graphics {
         public:
             Graphics();
 
-            Texture LoadTexture(std::string path);
+            static void TextureDeleter(SDL_Texture* texture);
+            TexturePtr LoadTexture(std::string path);
             void Clear();
             void DrawTexture(SDL_Texture* const texture, const SDL_Rect* const src, const SDL_Rect* const dst);
             void Present();
@@ -31,6 +36,8 @@ namespace nge {
 
             void SetWindowRect(SDL_Rect window);
             SDL_Rect GetWindowRect() const;
+
+            SDL_Renderer* GetRenderer();
 
             ~Graphics();
 
