@@ -4,16 +4,16 @@
 #include <vector>
 #include <memory>
 
-#include "State.h"
-
 namespace nge {
+    class State;
     class StateManager {
         public:
             StateManager();
 
-            void Advance(State* state);
+            void Advance(std::shared_ptr<State> state);
             void Return();
             std::shared_ptr<State> GetCurrentState();
+            bool IsEmpty();
 
             ~StateManager();
         private:
