@@ -35,7 +35,7 @@ namespace nge {
                 Tick();
                 tick_timer_.Reset();
             }
-            if (draw_timer_.GetElapsedTime() > (1.0f / 1)) {
+            if (draw_timer_.GetElapsedTime() > (1.0f / 60)) {
                 Draw();
                 draw_timer_.Reset();
             }
@@ -56,7 +56,7 @@ namespace nge {
 
     void Game::Draw() {
         graphics_->Clear();
-        graphics_->DrawTexture(test.get(), nullptr, nullptr);
+        initial_state_->Draw();
         graphics_->Present();
     }
 

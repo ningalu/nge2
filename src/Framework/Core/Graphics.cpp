@@ -62,20 +62,6 @@ namespace nge {
         SDL_DestroyTexture(texture);
     }
 
-    // Texture&& Graphics::LoadTexture(std::string path) {
-    //     SDL_Surface *tempSurf = IMG_Load(path.c_str());
-    //     if (tempSurf == nullptr) {
-    //         std::cout << "LoadTexture: Surface could not be created from: " << path << std::endl;
-    //         return Texture{nullptr};
-    //     }
-    //     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer_.get(), tempSurf);
-    //     if (texture == nullptr) {
-    //         std::cout << "LoadTexture: Texture could not be created from SDL_Renderer* " << renderer_.get() << " and SDL_Surface* " << tempSurf << std::endl;
-    //         return Texture{nullptr};
-    //     }
-    //     SDL_FreeSurface(tempSurf);
-    //     return std::move(Texture{texture});
-    // }
     TexturePtr Graphics::LoadTexture(std::string path) {
         TexturePtr t;
         SDL_Surface *tempSurf = IMG_Load(path.c_str());
@@ -93,7 +79,7 @@ namespace nge {
     }
 
     void Graphics::Clear() {
-        //SDL_RenderClear(renderer_.get());
+        SDL_RenderClear(renderer_.get());
     }
 
     void Graphics::DrawTexture(SDL_Texture* const texture, const SDL_Rect* const src, const SDL_Rect* const dst) {
