@@ -12,9 +12,11 @@ namespace nge {
             void Start();
             double GetElapsedTime();
             void Reset();
+            void Stop();
 
             ~Timer();
         private:
+            bool active_;
             std::chrono::time_point<std::chrono::steady_clock> start_time_;
 
     };

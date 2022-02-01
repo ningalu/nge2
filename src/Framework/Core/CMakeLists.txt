@@ -5,6 +5,7 @@ add_library(
     ./Graphics.cpp
     ./Input.cpp
     ./State.cpp
+    ./StateManager.cpp
 )
 
 target_include_directories(

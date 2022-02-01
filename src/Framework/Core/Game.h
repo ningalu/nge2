@@ -12,11 +12,12 @@
 #include "Graphics.h"
 #include "Input.h"
 #include "State.h"
+#include "StateManager.h"
 
 namespace nge {
     class Game {
         public:
-            Game(State* initialState);
+            Game();
 
             void Start();
 
@@ -31,12 +32,14 @@ namespace nge {
 
             Timer draw_timer_;
             Timer tick_timer_;
+            Timer state_timer_;
 
             std::shared_ptr<Graphics> graphics_;
             std::shared_ptr<Input> input_;
 
             SDL_Event event_buffer_;
 
+            std::shared_ptr<StateManager> state_manager_;
             std::unique_ptr<State> initial_state_;
 
             TexturePtr test;

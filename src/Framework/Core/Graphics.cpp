@@ -83,8 +83,6 @@ namespace nge {
     }
 
     void Graphics::DrawTexture(SDL_Texture* const texture, const SDL_Rect* const src, const SDL_Rect* const dst) {
-        std::cout << "Draw: " << texture << std::endl;
-        // std::cout << "Graphics: " << this << std::endl;
         SDL_RenderCopy(renderer_.get(), texture, src, dst);
     }
 

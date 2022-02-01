@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
         printf("%d\n", argv[i]);
     }
 
-    nge::Game game{new nge::State()};
+    nge::Game game;
     game.Start();
 
     return 0;
