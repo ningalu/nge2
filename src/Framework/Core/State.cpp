@@ -26,7 +26,7 @@ namespace nge {
     }
 
     State::~State() {
-        
+        std::cout << "State " << this << " Destroyed" << std::endl;
     }
 
 }

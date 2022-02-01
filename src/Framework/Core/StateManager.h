@@ -13,11 +13,11 @@ namespace nge {
 
             void Advance(State* state);
             void Return();
-            State* GetCurrentState();
+            std::shared_ptr<State> GetCurrentState();
 
             ~StateManager();
         private:
-            std::vector<State*> states_;
+            std::vector<std::shared_ptr<State>> states_;
     };
 }
 
