@@ -2,25 +2,25 @@
 #include <iostream>
 
 Input::Input() {
-    mMouseState = 0;
-    mPrevMouseState = 0;
-    mKeyboardState = SDL_GetKeyboardState(&mKeyLength);
-    mPrevKeyboardState = new Uint8[mKeyLength];
+    current_mouse_state_ = 0;
+    previous_mouse_state_ = 0;
+    current_keyboard_state_ = SDL_GetKeyboardState(&keyboard_state_length_);
+    previous_keyboard_state_ = new Uint8[keyboard_state_length_];
 }
 
 // Check if some SDL Scancode was pressed between the previous and current check
 bool Input::KeyPressed(SDL_Scancode scancode) {
-    return ((!(mPrevKeyboardState[scancode])) && (mKeyboardState[scancode]));
+    return ((!(previous_keyboard_state_[scancode])) && (current_keyboard_state_[scancode]));
 }
 
 // Check if some SDL Scancode is currently pressed down
 bool Input::KeyDown(SDL_Scancode scancode) {
-    return mKeyboardState[scancode];
+    return current_keyboard_state_[scancode];
 }
 
 // Check if some SDL Scancode was released between the previous and current check
 bool Input::KeyReleased(SDL_Scancode scancode) {
-    return ((mPrevKeyboardState[scancode]) && (!(mKeyboardState[scancode])));    
+    return ((previous_keyboard_state_[scancode]) && (!(current_keyboard_state_[scancode])));    
 }
 
 bool Input::MouseClicked(MouseButton button) {
@@ -42,7 +42,7 @@ bool Input::MouseClicked(MouseButton button) {
             mask = SDL_BUTTON_X2MASK;
             break;
     }
-    return ((!(mPrevMouseState & mask)) && (mMouseState & mask));
+    return ((!(previous_mouse_state_ & mask)) && (current_mouse_state_ & mask));
 }
 
 bool Input::MouseHeld(MouseButton button) {
@@ -64,7 +64,7 @@ bool Input::MouseHeld(MouseButton button) {
             mask = SDL_BUTTON_X2MASK;
             break;
     }
-    return (mMouseState & mask) && (mPrevMouseState & mask);
+    return (current_mouse_state_ & mask) && (previous_mouse_state_ & mask);
 }
 
 bool Input::MouseReleased(MouseButton button) {
@@ -86,27 +86,27 @@ bool Input::MouseReleased(MouseButton button) {
             mask = SDL_BUTTON_X2MASK;
             break;
     }
-    return ((mPrevMouseState & mask) && (!(mMouseState & mask)));    
+    return ((previous_mouse_state_ & mask) && (!(current_mouse_state_ & mask)));    
 }
 
 int Input::GetMouseX() {
-    return mMouseX;
+    return mouse_x_;
 }
 
 int Input::GetMouseY() {
-    return mMouseY;
+    return mouse_y_;
 }
 
 void Input::Update() {
-    mMouseState = SDL_GetMouseState(&mMouseX, &mMouseY);
+    current_mouse_state_ = SDL_GetMouseState(&mouse_x_, &mouse_y_);
 }
 
 void Input::UpdatePrevInput() {
-    memcpy(mPrevKeyboardState, mKeyboardState, mKeyLength);
-    this->mPrevMouseState = mMouseState;
+    memcpy(previous_keyboard_state_, current_keyboard_state_, keyboard_state_length_);
+    this->previous_mouse_state_ = current_mouse_state_;
 }
 
 Input::~Input() {
-    delete[] mPrevKeyboardState;
-    mPrevKeyboardState = nullptr;
+    delete[] previous_keyboard_state_;
+    previous_keyboard_state_ = nullptr;
 }

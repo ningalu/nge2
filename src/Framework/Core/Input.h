@@ -32,13 +32,13 @@ public:
 
 private:
 
-    const Uint8* mKeyboardState;
-    Uint8* mPrevKeyboardState;
-    int mKeyLength;
-    Uint32 mPrevMouseState;
-    Uint32 mMouseState;
-    int mMouseX;
-    int mMouseY;
+    const Uint8* current_keyboard_state_;
+    Uint8* previous_keyboard_state_;
+    int keyboard_state_length_;
+    Uint32 current_mouse_state_;
+    Uint32 previous_mouse_state_;
+    int mouse_x_;
+    int mouse_y_;
 };
 
 #endif
