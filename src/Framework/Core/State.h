@@ -29,6 +29,7 @@ namespace nge {
             TexturePtr test;
 
             void UpdateInput();
+            void Quit();
     };
 }
 

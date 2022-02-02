@@ -15,9 +15,7 @@ namespace nge {
 
     void State::Tick() {
         if (input_->KeyPressed(SDL_SCANCODE_ESCAPE)) {
-            SDL_Event quit;
-            quit.type = SDL_QUIT;
-            SDL_PushEvent(&quit);
+            Quit();
         }
     }
 
@@ -35,6 +33,12 @@ namespace nge {
     
     void State::UpdateInput() {
 
+    }
+
+    void State::Quit() {
+        SDL_Event quit;
+        quit.type = SDL_QUIT;
+        SDL_PushEvent(&quit);
     }
 
     State::~State() {
