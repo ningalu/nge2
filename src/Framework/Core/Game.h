@@ -19,10 +19,12 @@ namespace nge {
         public:
             Game();
 
-            void Start();
+            std::shared_ptr<StateManager> GetStateManager();
+            std::shared_ptr<Graphics> GetGraphics();
 
+            void Start(State* initialState);
+            void Start(std::shared_ptr<State> initialState);
             bool IsRunning();
-
             void End();
 
             ~Game();
@@ -32,7 +34,6 @@ namespace nge {
 
             Timer draw_timer_;
             Timer tick_timer_;
-            Timer state_timer_;
 
             std::shared_ptr<Graphics> graphics_;
             std::shared_ptr<Input> input_;

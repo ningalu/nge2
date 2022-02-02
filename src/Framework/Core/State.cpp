@@ -10,38 +10,21 @@ namespace nge {
         states_ = states;
         graphics_ = graphics;
         input_ = std::make_unique<Input>();
-        test = graphics_->LoadTexture("resources/stewie.jpg");
-        std::cout << "State: " << this << std::endl;
+        test = graphics_->LoadTexture("resources/override_error.png");
     }
 
     void State::Tick() {
-        if (input_->KeyDown(SDL_SCANCODE_A)) {
-            std::cout << "A Down" << std::endl;
+        if (input_->KeyPressed(SDL_SCANCODE_ESCAPE)) {
+            SDL_Event quit;
+            quit.type = SDL_QUIT;
+            SDL_PushEvent(&quit);
         }
-        if (input_->KeyPressed(SDL_SCANCODE_A)) {
-            std::cout << "A Pressed" << std::endl;
-        }
-        if (input_->KeyReleased(SDL_SCANCODE_A)) {
-            std::cout << "A Released" << std::endl;
-        }
-        if (input_->MouseClicked(Input::kLeft)) {
-            std::cout << "Left Mouse Clicked" << std::endl;
-        }
-        if (input_->MouseHeld(Input::kLeft)) {
-            std::cout << "Left Mouse Held" << std::endl;
-        }
-        if (input_->MouseReleased(Input::kLeft)) {
-            std::cout << "Left Mouse Released" << std::endl;
-        }
-        
     }
 
     void State::Draw() {
-        std::cout << "Drawing State " << this << std::endl;
         graphics_->DrawTexture(test.get(), nullptr, nullptr);
     }
 
-    
     void State::UpdatePreviousInput(){
         input_->UpdatePrevInput();
     }
@@ -55,7 +38,6 @@ namespace nge {
     }
 
     State::~State() {
-        std::cout << "State " << this << " Destroyed" << std::endl;
     }
 
 }

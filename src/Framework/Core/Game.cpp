@@ -5,17 +5,25 @@ namespace nge {
     Game::Game() {
         running_ = false;
         graphics_ = std::make_shared<Graphics>();
-        
         state_manager_ = std::make_shared<StateManager>();
-        state_manager_->Advance(std::shared_ptr<State>(new State(state_manager_, graphics_)));
-        std::cout << "Initial State: " << state_manager_->GetCurrentState() << std::endl;
-        state_manager_->Advance(std::shared_ptr<State>(new State(state_manager_, graphics_)));
-        std::cout << "Initial State: " << state_manager_->GetCurrentState() << std::endl;
         input_ = std::make_shared<Input>();
         test = graphics_->LoadTexture("resources/stewie.jpg");
     }
 
-    void Game::Start() {
+    std::shared_ptr<StateManager> Game::GetStateManager() {
+        return state_manager_;
+    }
+
+    std::shared_ptr<Graphics> Game::GetGraphics() {
+        return graphics_;
+    }
+
+    void Game::Start(State* initialState) {
+        Start(std::shared_ptr<State>(initialState));
+    }
+
+    void Game::Start(std::shared_ptr<State> initialState) {
+        state_manager_->Advance(initialState);
         running_ = true;
 
         while (running_ && !state_manager_->IsEmpty()) {
@@ -27,10 +35,6 @@ namespace nge {
             if (draw_timer_.GetElapsedTime() > (1.0f / 60)) {
                 Draw();
                 draw_timer_.Reset();
-            }
-            if (state_timer_.GetElapsedTime() > 2) {
-                state_manager_->Return();
-                state_timer_.Reset();
             }
         }
     }

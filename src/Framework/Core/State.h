@@ -15,20 +15,18 @@ namespace nge {
             State();
             State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics);
 
-            void Tick();
-            void Draw();
+            virtual void Tick();
+            virtual void Draw();
             void UpdatePreviousInput();
             void UpdateCurrentInput();
 
             ~State();
-        private:
+        protected:
             std::shared_ptr<StateManager> states_;
             std::shared_ptr<Graphics> graphics_;
             std::unique_ptr<Input> input_;
-
-            TexturePtr test;
-
             SDL_Event event_buffer_;
+            TexturePtr test;
 
             void UpdateInput();
     };

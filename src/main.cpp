@@ -1,8 +1,10 @@
 #include "stdio.h"
 #include <iostream>
 
-#include "Game.h"
-#include "Timer.h"
+#include "Core/Game.h"
+#include "Core/Timer.h"
+
+#include "InitialState.h"
 
 int main(int argc, char **argv) {
     
@@ -11,7 +13,7 @@ int main(int argc, char **argv) {
     }
 
     nge::Game game;
-    game.Start();
+    game.Start(new InitialState(game.GetStateManager(), game.GetGraphics()));
 
     return 0;
 }
