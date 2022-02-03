@@ -10,17 +10,20 @@ namespace nge {
         states_ = states;
         graphics_ = graphics;
         input_ = std::make_unique<Input>();
-        test = graphics_->LoadTexture("resources/override_error.png");
+        default_sound_ = Audio::LoadSound("resources/default_sound.wav");
     }
 
     void State::Tick() {
         if (input_->KeyPressed(SDL_SCANCODE_ESCAPE)) {
             Quit();
         }
+        if (input_->MouseClicked(Input::kLeft)) {
+            Audio::PlaySound(default_sound_.get());
+        }
     }
 
     void State::Draw() {
-        graphics_->DrawTexture(test.get(), nullptr, nullptr);
+        graphics_->DrawTexture(graphics_->LoadTexture("resources/default_texture.png").get(), nullptr, nullptr);
     }
 
     void State::UpdatePreviousInput(){

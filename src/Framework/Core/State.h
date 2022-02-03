@@ -8,6 +8,7 @@
 #include "Graphics.h"
 #include "Input.h"
 #include "StateManager.h"
+#include "Audio.h"
 
 namespace nge {
     class State {
@@ -26,7 +27,8 @@ namespace nge {
             std::shared_ptr<Graphics> graphics_;
             std::unique_ptr<Input> input_;
             SDL_Event event_buffer_;
-            TexturePtr test;
+
+            SoundPtr default_sound_;
 
             void UpdateInput();
             void Quit();

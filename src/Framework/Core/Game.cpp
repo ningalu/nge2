@@ -1,6 +1,8 @@
 #include "Game.h"
 #include <iostream>
 
+#include "Audio.h"
+
 namespace nge {
     Game::Game() {
         running_ = false;
@@ -8,6 +10,7 @@ namespace nge {
         state_manager_ = std::make_shared<StateManager>();
         input_ = std::make_shared<Input>();
         test = graphics_->LoadTexture("resources/stewie.jpg");
+        Audio::Init();
     }
 
     std::shared_ptr<StateManager> Game::GetStateManager() {

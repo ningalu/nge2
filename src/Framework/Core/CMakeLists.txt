@@ -6,6 +6,7 @@ add_library(
     ./Input.cpp
     ./State.cpp
     ./StateManager.cpp
+    ./Audio.cpp
 )
 
 target_include_directories(
