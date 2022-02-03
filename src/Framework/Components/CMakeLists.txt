@@ -1,12 +1,11 @@
 add_library(
-    Game
-    ./InitialState.cpp
+    Components
+    ./Sprite.cpp
 )
 
 target_include_directories(
-    Game
-    PUBLIC ${CMAKE_SOURCE_DIR}/src/Framework
-    PUBLIC ${CMAKE_SOURCE_DIR}/src/Components
+    Components
+    PUBLIC ${CMAKE_SOURCE_DIR}/src/Framework/Core
     PUBLIC ${SDL_INCLUDE_DIR}
     PUBLIC ${SDL_INCLUDE_DIR_SDL2}
     PUBLIC ${SDL_IMAGE_INCLUDE_DIR}
@@ -15,7 +14,7 @@ target_include_directories(
 )
 
 target_link_directories(
-    Game
+    Components
     PRIVATE ${SDL_LIBRARY_DIR}
     PRIVATE ${SDL_IMAGE_LIBRARY_DIR}
     PRIVATE ${SDL_MIXER_LIBRARY_DIR}
@@ -23,7 +22,7 @@ target_link_directories(
 )
 
 target_link_libraries(
-    Game
+    Components
     -lmingw32
     -lSDL2main
     -lSDL2
@@ -31,5 +30,4 @@ target_link_libraries(
     -lSDL2_mixer
     -lSDL2_ttf
     Core
-    Components
 )

@@ -14,6 +14,7 @@ set(NGE_FRAMEWORK_DIR ${CMAKE_SOURCE_DIR}/src/Framework)
 set(NGE_GAME_DIR ${CMAKE_SOURCE_DIR}/src/Game)
 
 add_subdirectory(./src/Framework/Core)
+add_subdirectory(./src/Framework/Components)
 add_subdirectory(./src/Game)
 
 target_include_directories(

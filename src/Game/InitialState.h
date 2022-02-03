@@ -6,6 +6,7 @@
 #include "Core/State.h"
 #include "Core/Graphics.h"
 #include "Core/StateManager.h"
+#include "Components/Sprite.h"
 
 class InitialState : public nge::State {
     public:
@@ -17,7 +18,7 @@ class InitialState : public nge::State {
         ~InitialState();
 
     private:
-        nge::TexturePtr tex;
+        nge::SpritePtr sprite_;
 };
 
 #endif
