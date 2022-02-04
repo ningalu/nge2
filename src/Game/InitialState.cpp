@@ -3,7 +3,7 @@
 #include <iostream>
 
 InitialState::InitialState(std::shared_ptr<nge::StateManager> states, std::shared_ptr<nge::Graphics> graphics) : State(states, graphics) {
-    sprite_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/stewie.jpg", {0, 0, 100, 100}, {100, 100, 100, 100}));
+    sprite_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/stewie.jpg", nge::Sprite::FULL_TEXTURE, {100, 100, 100, 100}));
 }
 
 void InitialState::Tick() {

@@ -10,7 +10,7 @@
 #include "Graphics.h"
 
 namespace nge {
-    
+
     class Sprite : public Drawable {
         public:
             Sprite(
@@ -20,7 +20,12 @@ namespace nge {
                 SDL_Rect dst
             );
 
+            static SDL_Rect FULL_TEXTURE;
+
+            // Drawable Interface
             void Draw() override;
+            int GetX() override;
+            int GetY() override;
 
             ~Sprite();
 

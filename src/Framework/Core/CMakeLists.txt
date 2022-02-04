@@ -7,6 +7,7 @@ add_library(
     ./State.cpp
     ./StateManager.cpp
     ./Audio.cpp
+    ./Utility/SDL_RectExtensions.cpp
 )
 
 target_include_directories(
