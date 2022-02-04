@@ -1,5 +1,5 @@
-#ifndef _INITIALSTATE_H
-#define _INITIALSTATE_H
+#ifndef _SAMPLESTATE_H
+#define _SAMPLESTATE_H
 
 #include <memory>
 
@@ -8,14 +8,14 @@
 #include "Core/StateManager.h"
 #include "Components/Sprite.h"
 
-class InitialState : public nge::State {
+class SampleState : public nge::State {
     public:
-        InitialState(std::shared_ptr<nge::StateManager> states, std::shared_ptr<nge::Graphics> graphics);
+        SampleState(std::shared_ptr<nge::StateManager> states, std::shared_ptr<nge::Graphics> graphics);
         
         void Tick() override;
         void Draw() override;
 
-        ~InitialState();
+        ~SampleState();
 
     private:
         nge::SpritePtr sprite_;
