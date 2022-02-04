@@ -2,6 +2,7 @@
 #define _SPRITE_H
 
 #include "GraphicsInterfaces/Drawable.h"
+#include "GraphicsInterfaces/Translatable.h"
 
 #include <string>
 
@@ -11,7 +12,7 @@
 
 namespace nge {
 
-    class Sprite : public Drawable {
+    class Sprite : public Drawable, public Translatable {
         public:
             Sprite(
                 std::shared_ptr<Graphics> graphics, 
@@ -26,6 +27,12 @@ namespace nge {
             void Draw() override;
             int GetX() override;
             int GetY() override;
+
+            //Translatable Interface
+            void SetX(int x);
+            void SetY(int y);
+            void MoveX(int x);
+            void MoveY(int y);
 
             ~Sprite();
 

@@ -28,7 +28,23 @@ namespace nge {
     int Sprite::GetY() {
         return dst_.y;
     }
-    
+
+    void Sprite::SetX(int x) {
+        dst_.x = x;
+    }
+
+    void Sprite::SetY(int y) {
+        dst_.y = y;
+    }
+
+    void Sprite::MoveX(int x) {
+        dst_.x += x;
+    }
+
+    void Sprite::MoveY(int y) {
+        dst_.y += y;
+    }
+
     Sprite::~Sprite() {
 
     }
