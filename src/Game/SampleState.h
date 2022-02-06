@@ -18,7 +18,8 @@ class SampleState : public nge::State {
         ~SampleState();
 
     private:
-        nge::SpritePtr sprite_;
+        nge::SpritePtr sprite1_;
+        nge::SpritePtr sprite2_;
 };
 
 #endif
