@@ -9,6 +9,7 @@ add_library(
     ./Audio.cpp
     ./Utility/SDL_RectExtensions.cpp
     ./Utility/SDL_PointExtensions.cpp
+    ./Utility/SDL_EventExtensions.cpp
 )
 
 target_include_directories(

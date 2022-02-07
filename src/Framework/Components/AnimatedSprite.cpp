@@ -26,7 +26,7 @@ namespace nge {
     current_frame_(0),
     current_repeat_(0) {
         full_texture_ = src_;
-        src_ = {};
+        src_ = {0, 0, 0, 0};
         src_.w = full_texture_.w / frameCount;
         src_.h = full_texture_.h;
     }

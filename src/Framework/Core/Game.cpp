@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "Audio.h"
+#include "Utility/SDL_EventExtensions.h"
 
 namespace nge {
     Game::Game() {
