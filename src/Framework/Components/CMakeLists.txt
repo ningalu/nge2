@@ -1,6 +1,7 @@
 add_library(
     Components
     ./Sprite.cpp
+    ./AnimatedSprite.cpp
 )
 
 target_include_directories(

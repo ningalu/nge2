@@ -5,6 +5,7 @@
 SampleState::SampleState(std::shared_ptr<nge::StateManager> states, std::shared_ptr<nge::Graphics> graphics) : State(states, graphics) {
     sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/stewie.jpg", nge::Sprite::FULL_TEXTURE, {100, 100, 100, 100}));
     sprite2_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/ibuki.png", nge::Sprite::FULL_TEXTURE, {300, 400, 160, 206}));
+    anim1_ = nge::AnimPtr(new nge::AnimatedSprite(graphics_, "resources/blaziken_anim_test.png", nge::Sprite::FULL_TEXTURE, {50, 50, 100, 100}, 17));
     draw_timer_.Start();
 }
 
@@ -20,7 +21,6 @@ void SampleState::Tick() {
 }
 
 void SampleState::Draw() {
-    std::cout << draw_timer_.GetElapsedTime() << std::endl;
     double dt = draw_timer_.GetElapsedTime();
     sprite1_->SetX(input_->GetMouseX() - 50);
     sprite1_->SetY(input_->GetMouseY() - 50);
@@ -44,6 +44,7 @@ void SampleState::Draw() {
     }
     sprite1_->Draw();
     sprite2_->Draw();
+    anim1_->Draw();
     draw_timer_.Reset();
 
 }
