@@ -20,6 +20,7 @@ namespace nge {
             );
 
             void Draw() override;
+            void Reset();
 
             ~AnimatedSprite();
 
@@ -28,6 +29,10 @@ namespace nge {
             int repeats_;
             double frame_duration_;
             SDL_Rect full_texture_;
+
+            int current_duration_;
+            int current_frame_;
+            int current_repeat_;
 
             void UpdateFrame();
     };

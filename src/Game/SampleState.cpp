@@ -5,7 +5,7 @@
 SampleState::SampleState(std::shared_ptr<nge::StateManager> states, std::shared_ptr<nge::Graphics> graphics) : State(states, graphics) {
     sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/stewie.jpg", nge::Sprite::FULL_TEXTURE, {100, 100, 100, 100}));
     sprite2_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/ibuki.png", nge::Sprite::FULL_TEXTURE, {300, 400, 160, 206}));
-    anim1_ = nge::AnimPtr(new nge::AnimatedSprite(graphics_, "resources/blaziken_anim_test.png", nge::Sprite::FULL_TEXTURE, {50, 50, 100, 100}, 17));
+    anim1_ = nge::AnimPtr(new nge::AnimatedSprite(graphics_, "resources/blaziken_anim_test.png", nge::Sprite::FULL_TEXTURE, {50, 50, 100, 100}, 17, 2, 2));
     draw_timer_.Start();
 }
 
@@ -16,8 +16,9 @@ void SampleState::Tick() {
     if (input_->KeyPressed(SDL_SCANCODE_SPACE)) {
         states_->Advance(std::shared_ptr<State>(new nge::State(states_, graphics_)));
     }
-    
-    
+    if (input_->KeyPressed(SDL_SCANCODE_RETURN)) {
+        anim1_->Reset();
+    }
 }
 
 void SampleState::Draw() {
@@ -42,11 +43,11 @@ void SampleState::Draw() {
     if (input_->KeyDown(SDL_SCANCODE_E)) {
         sprite2_->Rotate(100.0 * dt);
     }
+    
     sprite1_->Draw();
     sprite2_->Draw();
     anim1_->Draw();
     draw_timer_.Reset();
-
 }
 
 SampleState::~SampleState() {
