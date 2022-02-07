@@ -82,8 +82,15 @@ namespace nge {
         SDL_RenderClear(renderer_.get());
     }
 
-    void Graphics::DrawTexture(SDL_Texture* const texture, const SDL_Rect* const src, const SDL_Rect* const dst) {
-        SDL_RenderCopy(renderer_.get(), texture, src, dst);
+    void Graphics::DrawTexture(
+        SDL_Texture* const texture, 
+        const SDL_Rect* const src, 
+        const SDL_Rect* const dst, 
+        double angle,
+        SDL_Point* rotationCentre,
+        SDL_RendererFlip flip
+    ) {
+        SDL_RenderCopyEx(renderer_.get(), texture, src, dst, angle, rotationCentre, flip);
     }
 
     void Graphics::Present() {

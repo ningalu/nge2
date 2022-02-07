@@ -23,7 +23,14 @@ namespace nge {
             static void TextureDeleter(SDL_Texture* texture);
             TexturePtr LoadTexture(std::string path);
             void Clear();
-            void DrawTexture(SDL_Texture* const texture, const SDL_Rect* const src, const SDL_Rect* const dst);
+            void DrawTexture(
+                SDL_Texture* const texture, 
+                const SDL_Rect* const src, 
+                const SDL_Rect* const dst, 
+                double angle = 0.0f,
+                SDL_Point* rotationCentre = nullptr,
+                SDL_RendererFlip flip = SDL_FLIP_NONE
+            );
             void Present();
 
             void SetWindowSize(int w, int h);
