@@ -28,6 +28,12 @@ void SampleState::Tick() {
     if (input_->KeyDown(SDL_SCANCODE_D)) {
         sprite2_->MoveX(1);
     }
+    if (input_->KeyDown(SDL_SCANCODE_Q)) {
+        sprite2_->Rotate(0.1);
+    }
+    if (input_->KeyDown(SDL_SCANCODE_E)) {
+        sprite2_->Rotate(-0.1);
+    }
     
 }
 
