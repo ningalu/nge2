@@ -7,6 +7,7 @@
 #include "Core/Graphics.h"
 #include "Core/StateManager.h"
 #include "Components/Sprite.h"
+#include "Timer.h"
 
 class SampleState : public nge::State {
     public:
@@ -18,6 +19,7 @@ class SampleState : public nge::State {
         ~SampleState();
 
     private:
+        nge::Timer draw_timer_;
         nge::SpritePtr sprite1_;
         nge::SpritePtr sprite2_;
 };
