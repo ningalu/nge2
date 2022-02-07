@@ -1,6 +1,7 @@
 #include "Sprite.h"
 
 #include <climits>
+#include <iostream>
 
 #include "Utility/SDL_RectExtensions.h"
 #include "Utility/SDL_PointExtensions.h"
@@ -18,17 +19,31 @@ namespace nge {
         double angle,
         SDL_Point rotationCentre,
         SDL_RendererFlip flip
-    ) : graphics_(graphics), src_(src), dst_(dst), angle_(angle), rotation_centre_(rotationCentre), flip_(flip) {
+    ) : graphics_(graphics), dst_(dst), angle_(angle), flip_(flip) {
         texture_ = graphics_->LoadTexture(texturePath);
+        if (src == FULL_TEXTURE) {
+            src_.x = 0;
+            src_.y = 0;
+            SDL_QueryTexture(texture_.get(), nullptr, nullptr, &src_.w, &src_.h);
+        } else {
+            src_ = src;
+        }
+        if (rotationCentre == ROTATION_CENTRE) {
+            rotation_centre_.x = dst_.w / 2;
+            rotation_centre_.y = dst_.h / 2;
+        } else {
+            rotation_centre_ = rotationCentre;
+        }
+        
     }
 
     void Sprite::Draw() {
         graphics_->DrawTexture(
             texture_.get(), 
-            src_ == FULL_TEXTURE ? nullptr : &src_, 
+            &src_, 
             &dst_, 
             angle_, 
-            rotation_centre_ == ROTATION_CENTRE ? nullptr : &rotation_centre_, 
+            &rotation_centre_,
             flip_
         );
     }
