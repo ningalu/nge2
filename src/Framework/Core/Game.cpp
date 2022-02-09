@@ -7,10 +7,9 @@
 namespace nge {
     Game::Game() {
         running_ = false;
-        graphics_ = std::make_shared<Graphics>();
+        graphics_ = std::make_shared<Graphics>("NGE2 Demo", SDL_Rect{SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 800});
         state_manager_ = std::make_shared<StateManager>();
         input_ = std::make_shared<Input>();
-        test = graphics_->LoadTexture("resources/stewie.jpg");
         Audio::Init();
     }
 
@@ -39,6 +38,9 @@ namespace nge {
             if (draw_timer_.GetElapsedTime() > (1.0f / 60)) {
                 Draw();
                 draw_timer_.Reset();
+            }
+            if (!state_manager_->GetCurrentState()->IsActive()) {
+                state_manager_->Return();
             }
         }
     }
@@ -75,6 +77,5 @@ namespace nge {
     }
 
     Game::~Game() {
-
     }
 }

@@ -43,8 +43,6 @@ namespace nge {
             std::shared_ptr<StateManager> state_manager_;
             std::unique_ptr<State> initial_state_;
 
-            TexturePtr test;
-
             void Tick();
             void Draw();
             void ProcessInput();

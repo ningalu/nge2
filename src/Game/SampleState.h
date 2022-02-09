@@ -21,9 +21,9 @@ class SampleState : public nge::State {
 
     private:
         nge::Timer draw_timer_;
-        nge::SpritePtr sprite1_;
-        nge::SpritePtr sprite2_;
-        nge::AnimPtr anim1_;
+        // nge::SpritePtr sprite1_;
+        // nge::SpritePtr sprite2_;
+        // nge::AnimPtr anim1_;
 };
 
 #endif

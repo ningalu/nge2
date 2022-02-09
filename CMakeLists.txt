@@ -13,6 +13,8 @@ set(SDL_TTF_INCLUDE_DIR "A:/SDK/sdl2_ttf/SDL2_ttf-devel-2.0.15-mingw/SDL2_ttf-2.
 set(NGE_FRAMEWORK_DIR ${CMAKE_SOURCE_DIR}/src/Framework)
 set(NGE_GAME_DIR ${CMAKE_SOURCE_DIR}/src/Game)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 add_subdirectory(./src/Framework/Core)
 add_subdirectory(./src/Framework/Components)
 add_subdirectory(./src/Game)

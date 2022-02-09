@@ -1,5 +1,7 @@
 #include "StateManager.h"
 
+#include <iostream>
+
 namespace nge {
     StateManager::StateManager() {
     }

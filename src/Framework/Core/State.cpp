@@ -4,13 +4,18 @@
 
 namespace nge {
     State::State() {
-
     }
+
     State::State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics) {
+        active_ = true;
         states_ = states;
         graphics_ = graphics;
-        input_ = std::make_unique<Input>();
+        input_ = std::make_shared<Input>();
         default_sound_ = Audio::LoadSound("resources/default_sound.wav");
+    }
+
+    bool State::IsActive() {
+        return active_;
     }
 
     void State::Tick() {

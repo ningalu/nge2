@@ -34,7 +34,6 @@ namespace nge {
         } else {
             rotation_centre_ = rotationCentre;
         }
-        
     }
 
     void Sprite::Draw() {
@@ -83,6 +82,5 @@ namespace nge {
     }
 
     Sprite::~Sprite() {
-
     }
 }
