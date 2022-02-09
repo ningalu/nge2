@@ -20,6 +20,7 @@ namespace nge {
             );
 
             void Draw() override;
+            void Advance();
             void Reset();
 
             ~AnimatedSprite();

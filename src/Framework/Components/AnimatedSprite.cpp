@@ -34,6 +34,10 @@ namespace nge {
     // Having animation updates use time deltas would probably cause weird stuttering so this version is frame dependent
     void AnimatedSprite::Draw() {
         Sprite::Draw();
+        Advance();
+    }
+
+    void AnimatedSprite::Advance() {
         current_duration_++;
         if (current_duration_ >= frame_duration_) {
             current_duration_ = 0;
@@ -47,7 +51,6 @@ namespace nge {
             src_.x = current_frame_ * src_.w;
             src_.x %= full_texture_.w;
         }
-        
     }
 
     void AnimatedSprite::Reset() {
