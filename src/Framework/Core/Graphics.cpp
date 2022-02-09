@@ -5,14 +5,10 @@
 #include "SDL2/SDL.h"
 
 namespace nge {
-
-    void TextureDeleter::operator()(SDL_Texture* texture) {
-        SDL_DestroyTexture(texture);
-    }
-
-    Graphics::Graphics() : 
+    Graphics::Graphics(std::string title, SDL_Rect windowRect) : 
         window_(nullptr, SDL_DestroyWindow),
-        renderer_(nullptr, SDL_DestroyRenderer)
+        renderer_(nullptr, SDL_DestroyRenderer),
+        title_(title)
     {
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
             std::cout << "Error initialising SDL2: " << SDL_GetError() << std::endl;
@@ -32,10 +28,10 @@ namespace nge {
 
         SDL_Window *window = SDL_CreateWindow(
             "NGE2 Demo",
-            SDL_WINDOWPOS_CENTERED,
-            SDL_WINDOWPOS_CENTERED,
-            800,
-            600,
+            windowRect.x,
+            windowRect.y,
+            windowRect.w,
+            windowRect.h,
             0
         );
         if (window == nullptr) {
@@ -58,10 +54,6 @@ namespace nge {
         }
     }
 
-    void Graphics::TextureDeleter(SDL_Texture* texture) {
-        SDL_DestroyTexture(texture);
-    }
-
     TexturePtr Graphics::LoadTexture(std::string path) {
         TexturePtr t;
         SDL_Surface *tempSurf = IMG_Load(path.c_str());
@@ -75,7 +67,11 @@ namespace nge {
             return t;
         }
         SDL_FreeSurface(tempSurf);
-        return TexturePtr(texture);
+        std::cout << "Texture Loaded: " << texture << std::endl;
+        return TexturePtr(texture, [](SDL_Texture* tex){
+            std::cout << "Texture Destroyed: " << tex << std::endl;
+            SDL_DestroyTexture(tex);
+        });
     }
 
     void Graphics::Clear() {
@@ -146,6 +142,6 @@ namespace nge {
     }
     
     Graphics::~Graphics() {
-
+        std::cout << "Destroying Graphics " << this << std::endl;
     }
 }

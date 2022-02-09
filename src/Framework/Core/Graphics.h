@@ -10,17 +10,12 @@
 #include "SDL2/SDL_ttf.h"
 
 namespace nge {
-
-    struct TextureDeleter {
-        void operator()(SDL_Texture* texture);
-    };
-    using TexturePtr = std::unique_ptr<SDL_Texture, TextureDeleter>;
+    using TexturePtr = std::shared_ptr<SDL_Texture>;
 
     class Graphics {
         public:
-            Graphics();
+            Graphics(std::string title, SDL_Rect windowRect);
 
-            static void TextureDeleter(SDL_Texture* texture);
             TexturePtr LoadTexture(std::string path);
             void Clear();
             void DrawTexture(
@@ -51,6 +46,7 @@ namespace nge {
         private:
             std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window_;
             std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> renderer_;
+            std::string title_;
     };
 }
 
