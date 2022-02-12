@@ -6,5 +6,6 @@
 
 bool operator==(SDL_Rect lhs, SDL_Rect rhs);
 std::ostream& operator<<(std::ostream& os, const SDL_Rect& rect);
+bool PointInRect(const SDL_Point& p, const SDL_Rect& r);
 
 #endif

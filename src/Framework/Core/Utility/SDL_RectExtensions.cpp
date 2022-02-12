@@ -18,3 +18,10 @@ std::ostream& operator<<(std::ostream& os, const SDL_Rect& rect) {
     << rect.h;
     return os;
 }
+
+bool PointInRect(const SDL_Point& p, const SDL_Rect& r) {
+    return (r.x <= p.x)
+    && ((r.x + r.w) >= p.x)
+    && (r.y <= p.y)
+    && ((r.y + r.h) >= p.y);
+}
