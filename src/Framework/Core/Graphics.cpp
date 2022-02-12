@@ -67,9 +67,7 @@ namespace nge {
             return t;
         }
         SDL_FreeSurface(tempSurf);
-        std::cout << "Texture Loaded: " << texture << std::endl;
         return TexturePtr(texture, [](SDL_Texture* tex){
-            std::cout << "Texture Destroyed: " << tex << std::endl;
             SDL_DestroyTexture(tex);
         });
     }
@@ -142,6 +140,5 @@ namespace nge {
     }
     
     Graphics::~Graphics() {
-        std::cout << "Destroying Graphics " << this << std::endl;
     }
 }

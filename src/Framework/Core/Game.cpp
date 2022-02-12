@@ -7,7 +7,7 @@
 namespace nge {
     Game::Game() {
         running_ = false;
-        graphics_ = std::make_shared<Graphics>("NGE2 Demo", SDL_Rect{SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 800});
+        graphics_ = std::make_shared<Graphics>("NGE2 Demo", SDL_Rect{SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1200, 900});
         state_manager_ = std::make_shared<StateManager>();
         input_ = std::make_shared<Input>();
         Audio::Init();

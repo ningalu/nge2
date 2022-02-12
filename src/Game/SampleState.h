@@ -9,6 +9,7 @@
 #include "Components/Sprite.h"
 #include "Components/AnimatedSprite.h"
 #include "Timer.h"
+#include "Components/Button.h"
 
 class SampleState : public nge::State {
     public:
@@ -21,9 +22,10 @@ class SampleState : public nge::State {
 
     private:
         nge::Timer draw_timer_;
-        // nge::SpritePtr sprite1_;
-        // nge::SpritePtr sprite2_;
-        // nge::AnimPtr anim1_;
+        nge::SpritePtr sprite1_;
+        nge::SpritePtr sprite2_;
+        nge::AnimPtr anim1_;
+        nge::ButtonPtr butt1_;
 };
 
 #endif

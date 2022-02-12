@@ -9,6 +9,7 @@
 #include "Input.h"
 #include "StateManager.h"
 #include "Audio.h"
+#include "InputInterfaces/Clickable.h"
 
 namespace nge {
     class State {
@@ -21,6 +22,7 @@ namespace nge {
             virtual void Draw();
             void UpdatePreviousInput();
             void UpdateCurrentInput();
+            
 
             virtual ~State();
         protected:
@@ -31,6 +33,8 @@ namespace nge {
             SDL_Event event_buffer_;
 
             SoundPtr default_sound_;
+
+            std::vector<std::shared_ptr<Clickable>> clickables_;
 
             void UpdateInput();
             void Quit();
