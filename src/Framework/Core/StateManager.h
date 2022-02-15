@@ -12,7 +12,7 @@ namespace nge {
 
             void Advance(std::shared_ptr<State> state);
             void Return();
-            std::shared_ptr<State> GetCurrentState();
+            std::shared_ptr<State>& GetCurrentState();
             bool IsEmpty();
 
             ~StateManager();

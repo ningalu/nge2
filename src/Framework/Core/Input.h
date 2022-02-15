@@ -24,8 +24,8 @@ public:
     bool MouseHeld(MouseButton button);
     bool MouseClicked(MouseButton button);
     bool MouseReleased(MouseButton button);
-    int GetMouseX();
-    int GetMouseY();
+    const int& GetMouseX();
+    const int& GetMouseY();
     void Update();
     void UpdatePrevInput();
     ~Input();

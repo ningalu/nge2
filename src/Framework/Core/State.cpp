@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+#include "Utility/SDL_RectExtensions.h"
+#include "InputInterfaces/Clickable.h"
+
 namespace nge {
     State::State() {
     }
@@ -38,9 +41,33 @@ namespace nge {
     void State::UpdateCurrentInput(){
         input_->Update();
     }
-    
-    void State::UpdateInput() {
 
+    void State::RegisterClickable(std::shared_ptr<Clickable> clickable) {
+        clickables_.push_back(clickable);
+    }
+
+    void State::ProcessClickables() {
+        if (input_->MouseClicked(Input::kLeft)) {
+            for (auto &c : clickables_) {
+                if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
+                    c->OnClick();
+                }
+            }
+        }
+        if (input_->MouseHeld(Input::kLeft)) {
+            for (auto c : clickables_) {
+                if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
+                    c->OnHold();
+                }
+            }
+        }
+        if (input_->MouseReleased(Input::kLeft)) {
+            for (auto c : clickables_) {
+                if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
+                    c->OnRelease();
+                }
+            }
+        }
     }
 
     void State::Quit() {

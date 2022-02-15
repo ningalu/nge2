@@ -22,7 +22,9 @@ namespace nge {
             virtual void Draw();
             void UpdatePreviousInput();
             void UpdateCurrentInput();
-            
+
+            void RegisterClickable(std::shared_ptr<Clickable> clickable);
+            void ProcessClickables();
 
             virtual ~State();
         protected:
@@ -34,9 +36,9 @@ namespace nge {
 
             SoundPtr default_sound_;
 
+            // Should this be shared? Or references?
             std::vector<std::shared_ptr<Clickable>> clickables_;
 
-            void UpdateInput();
             void Quit();
     };
 }

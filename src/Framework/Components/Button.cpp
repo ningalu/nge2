@@ -2,9 +2,20 @@
 
 #include <iostream>
 
+#include "Utility/SDL_RectExtensions.h"
+
 namespace nge {
-    Button::Button(std::shared_ptr<Input> input, std::unique_ptr<Drawable> defaultDraw, SDL_Rect clickableRegion) : default_draw_(std::move(defaultDraw)) {
+    Button::Button() {
+
+    }
+    Button::Button(
+    std::shared_ptr<Input> input, 
+    std::unique_ptr<Drawable> defaultDrawable, 
+    SDL_Rect clickableRegion
+    ) : default_drawable_(std::move(defaultDrawable)) {
         enabled_ = true;
+        held_ = false;
+        input_ = input;
         clickable_region_ = clickableRegion;
     }
 
@@ -14,6 +25,7 @@ namespace nge {
 
     void Button::OnClick() {
         if (enabled_) {
+            held_ = true;
             on_click_();
         }
     }
@@ -25,6 +37,7 @@ namespace nge {
     }
 
     void Button::OnRelease() {
+        held_ = false;
         if (enabled_) {
             on_release_();
         }
@@ -39,7 +52,8 @@ namespace nge {
     }
 
     void Button::Draw() {
-        default_draw_->Draw();
+        held_ = held_ && MouseOver(input_->GetMouseX(), input_->GetMouseY());
+        held_ ? held_drawable_->Draw() : default_drawable_->Draw();
     }
     
     int Button::GetX() {
@@ -60,6 +74,14 @@ namespace nge {
 
     void Button::SetOnRelease(std::function<void(void)> onRelease) {
         on_release_ = onRelease;
+    }
+
+    void Button::SetHeldDrawable(std::unique_ptr<Drawable> heldDrawable) {
+        held_drawable_ = std::move(heldDrawable);
+    }
+
+    bool Button::MouseOver(int mouseX, int mouseY) {
+        return PointInRect({mouseX, mouseY}, clickable_region_);
     }
 
     Button::~Button() {

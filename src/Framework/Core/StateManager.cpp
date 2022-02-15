@@ -15,7 +15,7 @@ namespace nge {
     }
 
     // This is probably pretty bad
-    std::shared_ptr<State> StateManager::GetCurrentState() {
+    std::shared_ptr<State>& StateManager::GetCurrentState() {
         return states_[states_.size() - 1];
     }
 

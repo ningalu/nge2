@@ -89,11 +89,11 @@ bool Input::MouseReleased(MouseButton button) {
     return ((previous_mouse_state_ & mask) && (!(current_mouse_state_ & mask)));    
 }
 
-int Input::GetMouseX() {
+const int& Input::GetMouseX() {
     return mouse_x_;
 }
 
-int Input::GetMouseY() {
+const int& Input::GetMouseY() {
     return mouse_y_;
 }
 
