@@ -26,7 +26,7 @@ namespace nge {
         if (input_->KeyPressed(SDL_SCANCODE_ESCAPE)) {
             Quit();
         }
-        if (input_->MouseClicked(Input::kLeft)) {
+        if (input_->MouseClicked(MouseButton::LEFT)) {
             Audio::PlaySound(default_sound_.get());
         }
     }
@@ -48,21 +48,21 @@ namespace nge {
     }
 
     void State::ProcessClickables() {
-        if (input_->MouseClicked(Input::kLeft)) {
+        if (input_->MouseClicked(MouseButton::LEFT)) {
             for (auto &c : clickables_) {
                 if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
                     c->OnClick();
                 }
             }
         }
-        if (input_->MouseHeld(Input::kLeft)) {
+        if (input_->MouseHeld(MouseButton::LEFT)) {
             for (auto c : clickables_) {
                 if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
                     c->OnHold();
                 }
             }
         }
-        if (input_->MouseReleased(Input::kLeft)) {
+        if (input_->MouseReleased(MouseButton::LEFT)) {
             for (auto c : clickables_) {
                 if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
                     c->OnRelease();

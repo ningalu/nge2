@@ -5,40 +5,50 @@
 #include <vector>
 
 #include "SDL2/SDL.h"
-
-class Input {
-public:
+namespace nge {
 
     enum MouseButton {
-        kLeft = 0,
-        kRight = 1,
-        kMiddle = 2,
-        kBack = 3,
-        kForward = 4
+        LEFT = 0,
+        RIGHT = 1,
+        MIDDLE = 2,
+        BACK = 3,
+        FORWARD = 4
     };
 
-    Input();
-    bool KeyPressed(SDL_Scancode scancode);
-    bool KeyDown(SDL_Scancode scancode);
-    bool KeyReleased(SDL_Scancode scancode);
-    bool MouseHeld(MouseButton button);
-    bool MouseClicked(MouseButton button);
-    bool MouseReleased(MouseButton button);
-    const int& GetMouseX();
-    const int& GetMouseY();
-    void Update();
-    void UpdatePrevInput();
-    ~Input();
+    enum InputState {
+        PRESSED = 0,
+        HELD = 1,
+        RELEASED = 2
+    };
+    
+    class Input {
+        public:
+            
 
-private:
+            Input();
+            bool KeyPressed(SDL_Scancode scancode);
+            bool KeyHeld(SDL_Scancode scancode);
+            bool KeyReleased(SDL_Scancode scancode);
+            bool MouseHeld(MouseButton button);
+            bool MouseClicked(MouseButton button);
+            bool MouseReleased(MouseButton button);
+            const int& GetMouseX();
+            const int& GetMouseY();
+            void Update();
+            void UpdatePrevInput();
+            ~Input();
 
-    const Uint8* current_keyboard_state_;
-    Uint8* previous_keyboard_state_;
-    int keyboard_state_length_;
-    Uint32 current_mouse_state_;
-    Uint32 previous_mouse_state_;
-    int mouse_x_;
-    int mouse_y_;
-};
+        private:
+
+            const Uint8* current_keyboard_state_;
+            Uint8* previous_keyboard_state_;
+            int keyboard_state_length_;
+            Uint32 current_mouse_state_;
+            Uint32 previous_mouse_state_;
+            int mouse_x_;
+            int mouse_y_;
+    };
+}
+
 
 #endif

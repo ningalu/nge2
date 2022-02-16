@@ -64,19 +64,19 @@ void SampleState::Draw() {
     double dt = draw_timer_.GetElapsedTime();
     sprite1_->SetX(input_->GetMouseX() - 50);
     sprite1_->SetY(input_->GetMouseY() - 50);
-    if (input_->KeyDown(SDL_SCANCODE_S)) {
+    if (input_->KeyHeld(SDL_SCANCODE_S)) {
         sprite2_->MoveY(120 * dt);
     }
-    if (input_->KeyDown(SDL_SCANCODE_A)) {
+    if (input_->KeyHeld(SDL_SCANCODE_A)) {
         sprite2_->MoveX(-120 * dt);
     }
-    if (input_->KeyDown(SDL_SCANCODE_D)) {
+    if (input_->KeyHeld(SDL_SCANCODE_D)) {
         sprite2_->MoveX(120 * dt);
     }
-    if (input_->KeyDown(SDL_SCANCODE_Q)) {
+    if (input_->KeyHeld(SDL_SCANCODE_Q)) {
         sprite2_->Rotate(-100.0 * dt);
     }
-    if (input_->KeyDown(SDL_SCANCODE_E)) {
+    if (input_->KeyHeld(SDL_SCANCODE_E)) {
         sprite2_->Rotate(100.0 * dt);
     }
     
