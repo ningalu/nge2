@@ -1,7 +1,7 @@
 #include "stdio.h"
 #include <iostream>
 
-#include "Core/Game.h"
+#include "Core/Game.hpp"
 #include "Core/Timer.h"
 
 #include "SampleState.h"
