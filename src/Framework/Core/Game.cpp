@@ -21,12 +21,7 @@ namespace nge {
         return graphics_;
     }
 
-    void Game::Start(State* initialState) {
-        Start(std::shared_ptr<State>(initialState));
-    }
-
-    void Game::Start(std::shared_ptr<State> initialState) {
-        state_manager_->Advance(initialState);
+    void Game::Start() {
         running_ = true;
 
         while (running_ && !state_manager_->IsEmpty()) {
@@ -43,6 +38,15 @@ namespace nge {
                 state_manager_->Return();
             }
         }
+    }
+
+    void Game::Start(State* initialState) {
+        Start(std::shared_ptr<State>(initialState));
+    }
+
+    void Game::Start(std::shared_ptr<State> initialState) {
+        state_manager_->Advance(initialState);
+        Start();
     }
 
     bool Game::IsRunning() {

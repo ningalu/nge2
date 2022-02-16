@@ -22,6 +22,12 @@ namespace nge {
             std::shared_ptr<StateManager> GetStateManager();
             std::shared_ptr<Graphics> GetGraphics();
 
+            template<typename state, typename... Args>
+            void SetInitialState(Args&&... args) {
+                state_manager_->Advance(std::make_shared<state>(std::forward<Args>(args)...));
+            }
+
+            void Start();
             void Start(State* initialState);
             void Start(std::shared_ptr<State> initialState);
             bool IsRunning();

@@ -16,7 +16,10 @@ int main(int argc, char **argv) {
     // auto s = std::make_shared<SampleState>(game.GetStateManager(), game.GetGraphics());
     // auto s = new SampleState(game.GetStateManager(), game.GetGraphics());
     // std::cout << "Initial State: " << s << std::endl;
-    game.Start(new SampleState(game.GetStateManager(), game.GetGraphics()));
+    // game.Start(new SampleState(game.GetStateManager(), game.GetGraphics()));
+
+    game.SetInitialState<SampleState>(game.GetStateManager(), game.GetGraphics());
+    game.Start();
     
 
     return 0;
