@@ -26,6 +26,12 @@ namespace nge {
             void RegisterClickable(std::shared_ptr<Clickable> clickable);
             void ProcessClickables();
 
+            void RegisterKeyPressedEvent(SDL_Scancode key, std::function<void(void)> event);
+            void RegisterKeyHeldEvent(SDL_Scancode key, std::function<void(void)> event);
+            void ProcessKeyboardEvents();
+
+            void ProcessInputs();
+
             virtual ~State();
         protected:
             bool active_;
@@ -38,6 +44,8 @@ namespace nge {
 
             // Should this be shared? Or references?
             std::vector<std::shared_ptr<Clickable>> clickables_;
+
+            std::vector<std::pair<SDL_Scancode, std::function<void(void)> > > keydown_events_;
 
             void Quit();
     };

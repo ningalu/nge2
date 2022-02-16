@@ -34,6 +34,10 @@ SampleState::SampleState(std::shared_ptr<nge::StateManager> states, std::shared_
 
     anim2_ = std::make_unique<nge::AnimatedSprite>(graphics_, "resources/kokichiwalk.png", nge::Sprite::FULL_TEXTURE, SDL_Rect{600, 600, 89, 90}, 2, -1, 15);
 
+    RegisterKeyPressedEvent(SDL_SCANCODE_W, [&](){
+        sprite2_->MoveY(-120 * draw_timer_.GetElapsedTime());
+    });
+
     draw_timer_.Start();
 }
 
@@ -60,9 +64,6 @@ void SampleState::Draw() {
     double dt = draw_timer_.GetElapsedTime();
     sprite1_->SetX(input_->GetMouseX() - 50);
     sprite1_->SetY(input_->GetMouseY() - 50);
-    if (input_->KeyDown(SDL_SCANCODE_W)) {
-        sprite2_->MoveY(-120 * dt);
-    }
     if (input_->KeyDown(SDL_SCANCODE_S)) {
         sprite2_->MoveY(120 * dt);
     }

@@ -59,7 +59,7 @@ namespace nge {
 
     void Game::Tick() {
         state_manager_->GetCurrentState()->Tick();
-        state_manager_->GetCurrentState()->ProcessClickables();
+        state_manager_->GetCurrentState()->ProcessInputs();
     }
 
     void Game::Draw() {
