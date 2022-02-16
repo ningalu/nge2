@@ -27,6 +27,7 @@ class SampleState : public nge::State {
         nge::AnimPtr anim1_;
         nge::ButtonPtr butt1_;
         nge::Button butt2_;
+        nge::AnimPtr anim2_;
 };
 
 #endif

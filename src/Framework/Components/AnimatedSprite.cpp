@@ -12,7 +12,7 @@ namespace nge {
         SDL_Rect dst,
         int frameCount,
         int repeats,
-        double frameDuration,
+        int frameDuration,
         double angle,
         SDL_Point rotationCentre,
         SDL_RendererFlip flip

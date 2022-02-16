@@ -30,8 +30,9 @@ SampleState::SampleState(std::shared_ptr<nge::StateManager> states, std::shared_
             sm->Advance(std::make_shared<State>(sm, graphics_));
         }
     });
-
     RegisterClickable(butt1_);
+
+    anim2_ = std::make_unique<nge::AnimatedSprite>(graphics_, "resources/kokichiwalk.png", nge::Sprite::FULL_TEXTURE, SDL_Rect{600, 600, 89, 90}, 2, -1, 15);
 
     draw_timer_.Start();
 }
@@ -82,6 +83,7 @@ void SampleState::Draw() {
     sprite2_->Draw();
     anim1_->Draw();
     butt1_->Draw();
+    anim2_->Draw();
     draw_timer_.Reset();
 }
 
