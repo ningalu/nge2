@@ -8,3 +8,6 @@ concept of automatic z levels for drawables instead of forced user defined draw 
 const correctness, pass by reference, inline where applicable
 fix namespacing and include guards
 button construction is convoluted
+improve templating of initial state creation
+move input processing into states?
+input handling needs a longer history of mouse and keyboard states to allow buffers of precision, like allowing a 5 frame buffer before an input is considered "held"

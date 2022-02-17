@@ -8,34 +8,39 @@
 namespace nge {
 
     enum MouseButton {
-        LEFT = 0,
-        RIGHT = 1,
-        MIDDLE = 2,
-        BACK = 3,
+        LEFT    = 0,
+        RIGHT   = 1,
+        MIDDLE  = 2,
+        BACK    = 3,
         FORWARD = 4
     };
 
-    enum InputState {
-        PRESSED = 0,
-        HELD = 1,
-        RELEASED = 2
+    enum class InputState {
+        PRESSED  = 1 << 0,
+        HELD     = 1 << 1,
+        RELEASED = 1 << 2
     };
-    
+    int operator&(const InputState& lhs, const InputState& rhs);
+    int operator|(const InputState& lhs, const InputState& rhs);
+
     class Input {
         public:
-            
-
             Input();
+
             bool KeyPressed(SDL_Scancode scancode);
             bool KeyHeld(SDL_Scancode scancode);
             bool KeyReleased(SDL_Scancode scancode);
+
             bool MouseHeld(MouseButton button);
             bool MouseClicked(MouseButton button);
             bool MouseReleased(MouseButton button);
-            const int& GetMouseX();
-            const int& GetMouseY();
+
+            int GetMouseX();
+            int GetMouseY();
+
             void Update();
             void UpdatePrevInput();
+
             ~Input();
 
         private:

@@ -26,8 +26,7 @@ namespace nge {
             void RegisterClickable(std::shared_ptr<Clickable> clickable);
             void ProcessClickables();
 
-            void RegisterKeyPressedEvent(SDL_Scancode key, std::function<void(void)> event);
-            void RegisterKeyHeldEvent(SDL_Scancode key, std::function<void(void)> event);
+            void RegisterKeyEvent(SDL_Scancode key, int flags, std::function<void(void)> event);
             void ProcessKeyboardEvents();
 
             void ProcessInputs();
@@ -35,6 +34,7 @@ namespace nge {
             virtual ~State();
         protected:
             bool active_;
+            std::string base_path_;
             std::weak_ptr<StateManager> states_;
             std::shared_ptr<Graphics> graphics_;
             std::shared_ptr<Input> input_;
@@ -45,8 +45,9 @@ namespace nge {
             // Should this be shared? Or references?
             std::vector<std::shared_ptr<Clickable>> clickables_;
 
-            std::vector<std::pair<SDL_Scancode, std::function<void(void)> > > keydown_events_;
+            std::vector<std::pair<SDL_Scancode, std::function<void(void)> > > keypressed_events_, keyheld_events_, keyreleased_events_;
 
+            void RegisterKeyEvent(SDL_Scancode key, std::function<void(void)> event, std::vector<std::pair<SDL_Scancode, std::function<void(void)> > >& eventList);
             void Quit();
     };
 }

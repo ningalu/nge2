@@ -10,19 +10,18 @@ SampleState::SampleState(std::shared_ptr<nge::StateManager> states, std::shared_
     // 1. sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/stewie.jpg", nge::Sprite::FULL_TEXTURE, {100, 100, 100, 100}));
     // 2. butt1_ = std::make_shared<nge::Button>(input_, std::move(temp), SDL_Rect{300, 50, 250, 250});
 
-    sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/stewie.jpg", nge::Sprite::FULL_TEXTURE, {100, 100, 100, 100}));
-    sprite2_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/ibuki.png", nge::Sprite::FULL_TEXTURE, {300, 400, 160, 206}));
-    anim1_ = nge::AnimPtr(new nge::AnimatedSprite(graphics_, "resources/blaziken_anim_test.png", nge::Sprite::FULL_TEXTURE, {50, 50, 100, 100}, 17, 2, 2));
-    nge::SpritePtr temp = std::make_unique<nge::Sprite>(graphics_, "resources/hachigatsu.jpg", nge::Sprite::FULL_TEXTURE, SDL_Rect{300, 50, 250, 250});
-    nge::SpritePtr tempHeld = std::make_unique<nge::Sprite>(graphics_, "resources/hachigatsu_held.jpg", nge::Sprite::FULL_TEXTURE, SDL_Rect{300, 50, 250, 250});
+    sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/stewie.jpg", nge::Sprite::FULL_TEXTURE, {100, 100, 100, 100}));
+
+    sprite2_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/ibuki.png", nge::Sprite::FULL_TEXTURE, {300, 400, 160, 206}));
+
+    anim1_ = nge::AnimPtr(new nge::AnimatedSprite(graphics_, "resources/SampleState/blaziken_anim_test.png", nge::Sprite::FULL_TEXTURE, {50, 50, 100, 100}, 17, 2, 2));
+
+    nge::SpritePtr temp = std::make_unique<nge::Sprite>(graphics_, "resources/SampleState/hachigatsu.jpg", nge::Sprite::FULL_TEXTURE, SDL_Rect{300, 50, 250, 250});
+
+    nge::SpritePtr tempHeld = std::make_unique<nge::Sprite>(graphics_, "resources/SampleState/hachigatsu_held.jpg", nge::Sprite::FULL_TEXTURE, SDL_Rect{300, 50, 250, 250});
+
     butt1_ = std::make_shared<nge::Button>(input_, std::move(temp), SDL_Rect{300, 50, 250, 250});
     butt1_->SetHeldDrawable(std::move(tempHeld));
-    butt1_->SetOnClick([](){
-        std::cout << "Clicked from lambda" << std::endl;
-    });
-    butt1_->SetOnHold([](){
-        //std::cout << "Held from lambda" << std::endl;
-    });
     butt1_->SetOnRelease([&](){
         std::cout << "Released from lambda" << std::endl;
         if (std::shared_ptr<nge::StateManager> sm = states_.lock()) {
@@ -30,12 +29,22 @@ SampleState::SampleState(std::shared_ptr<nge::StateManager> states, std::shared_
             sm->Advance(std::make_shared<State>(sm, graphics_));
         }
     });
+
     RegisterClickable(butt1_);
 
     anim2_ = std::make_unique<nge::AnimatedSprite>(graphics_, "resources/kokichiwalk.png", nge::Sprite::FULL_TEXTURE, SDL_Rect{600, 600, 89, 90}, 2, -1, 15);
 
-    RegisterKeyPressedEvent(SDL_SCANCODE_W, [&](){
-        sprite2_->MoveY(-120 * draw_timer_.GetElapsedTime());
+    RegisterKeyEvent(SDL_SCANCODE_W, nge::InputState::PRESSED | nge::InputState::HELD, [&](){
+        sprite2_->MoveY(-100 * draw_timer_.GetElapsedTime());
+    });
+    RegisterKeyEvent(SDL_SCANCODE_A, nge::InputState::PRESSED | nge::InputState::HELD, [&](){
+        sprite2_->MoveX(-100 * draw_timer_.GetElapsedTime());
+    });
+    RegisterKeyEvent(SDL_SCANCODE_S, nge::InputState::PRESSED | nge::InputState::HELD, [&](){
+        sprite2_->MoveY(100 * draw_timer_.GetElapsedTime());
+    });
+    RegisterKeyEvent(SDL_SCANCODE_D, nge::InputState::PRESSED | nge::InputState::HELD, [&](){
+        sprite2_->MoveX(100 * draw_timer_.GetElapsedTime());
     });
 
     draw_timer_.Start();
@@ -64,15 +73,6 @@ void SampleState::Draw() {
     double dt = draw_timer_.GetElapsedTime();
     sprite1_->SetX(input_->GetMouseX() - 50);
     sprite1_->SetY(input_->GetMouseY() - 50);
-    if (input_->KeyHeld(SDL_SCANCODE_S)) {
-        sprite2_->MoveY(120 * dt);
-    }
-    if (input_->KeyHeld(SDL_SCANCODE_A)) {
-        sprite2_->MoveX(-120 * dt);
-    }
-    if (input_->KeyHeld(SDL_SCANCODE_D)) {
-        sprite2_->MoveX(120 * dt);
-    }
     if (input_->KeyHeld(SDL_SCANCODE_Q)) {
         sprite2_->Rotate(-100.0 * dt);
     }

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <cmath>
 
 #include "Utility/SDL_RectExtensions.h"
 #include "InputInterfaces/Clickable.h"
@@ -11,11 +12,12 @@ namespace nge {
     }
 
     State::State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics) {
+        base_path_ = SDL_GetBasePath();
         active_ = true;
         states_ = states;
         graphics_ = graphics;
         input_ = std::make_shared<Input>();
-        default_sound_ = Audio::LoadSound("resources/default_sound.wav");
+        default_sound_ = Audio::LoadSound("resources/State/default_sound.wav");
     }
 
     bool State::IsActive() {
@@ -32,7 +34,7 @@ namespace nge {
     }
 
     void State::Draw() {
-        graphics_->DrawTexture(graphics_->LoadTexture("resources/default_texture.png").get(), nullptr, nullptr);
+        graphics_->DrawTexture(graphics_->LoadTexture("resources/State/default_texture.png").get(), nullptr, nullptr);
     }
 
     void State::UpdatePreviousInput(){
@@ -71,26 +73,52 @@ namespace nge {
         }
     }
 
-    void State::RegisterKeyPressedEvent(SDL_Scancode key, std::function<void(void)> event) {
+    void State::RegisterKeyEvent(SDL_Scancode key, int flags, std::function<void(void)> event) {
+        if (flags & (1 << 0)) {
+            std::cout << "Pressed" << std::endl;
+            RegisterKeyEvent(key, event, keypressed_events_);
+        }
+        
+        if (flags & (1 << 1)) {
+            std::cout << "Held" << std::endl;
+            RegisterKeyEvent(key, event, keyheld_events_);
+        }
+        
+        if (flags & (1 << 2)) {
+            std::cout << "Released" << std::endl;
+            RegisterKeyEvent(key, event, keyreleased_events_);
+        }
+
+    }
+
+    void State::RegisterKeyEvent(SDL_Scancode key, std::function<void(void)> event, std::vector<std::pair<SDL_Scancode, std::function<void(void)> > >& eventList) {
         auto it = std::find_if(
-            keydown_events_.begin(), 
-            keydown_events_.end(), 
+            eventList.begin(), 
+            eventList.end(), 
             [&](auto it){
                 return it.first == key;
             }
         );
-        if (it == keydown_events_.end()) {
-            std::cout << "not found" << std::endl;
-            keydown_events_.push_back({key, event});
+        if (it == eventList.end()) {
+            eventList.push_back({key, event});
         } else {
-            std::cout << "found, replaced" << std::endl;
             it->second = event;
         }
     }
 
     void State::ProcessKeyboardEvents() {
-        for (auto e : keydown_events_) {
+        for (auto e : keypressed_events_) {
             if (input_->KeyPressed(e.first)) {
+                e.second();
+            }
+        }
+        for (auto e : keyheld_events_) {
+            if (input_->KeyHeld(e.first)) {
+                e.second();
+            }
+        }
+        for (auto e : keyreleased_events_) {
+            if (input_->KeyReleased(e.first)) {
                 e.second();
             }
         }

@@ -3,6 +3,14 @@
 
 namespace nge {
 
+    int operator&(const InputState& lhs, const InputState& rhs) {
+        return static_cast<int>(lhs) | static_cast<int>(rhs);
+    }
+
+    int operator|(const InputState& lhs, const InputState& rhs) {
+        return static_cast<int>(lhs) | static_cast<int>(rhs);
+    }
+
     Input::Input() {
         current_mouse_state_ = 0;
         previous_mouse_state_ = 0;
@@ -91,11 +99,11 @@ namespace nge {
         return ((previous_mouse_state_ & mask) && (!(current_mouse_state_ & mask)));    
     }
 
-    const int& Input::GetMouseX() {
+    int Input::GetMouseX() {
         return mouse_x_;
     }
 
-    const int& Input::GetMouseY() {
+    int Input::GetMouseY() {
         return mouse_y_;
     }
 
