@@ -48,10 +48,11 @@ namespace nge {
 
             std::shared_ptr<StateManager> state_manager_;
             std::unique_ptr<State> initial_state_;
-
+            
+            void ProcessInput();
             void Tick();
             void Draw();
-            void ProcessInput();
+            
 
     };
 }

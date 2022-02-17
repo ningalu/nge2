@@ -32,7 +32,7 @@ SampleState::SampleState(std::shared_ptr<nge::StateManager> states, std::shared_
 
     RegisterClickable(butt1_);
 
-    anim2_ = std::make_unique<nge::AnimatedSprite>(graphics_, "resources/kokichiwalk.png", nge::Sprite::FULL_TEXTURE, SDL_Rect{600, 600, 89, 90}, 2, -1, 15);
+    anim2_ = std::make_unique<nge::AnimatedSprite>(graphics_, "resources/SampleState/kokichiwalk.png", nge::Sprite::FULL_TEXTURE, SDL_Rect{600, 600, 89, 90}, 2, -1, 15);
 
     RegisterKeyEvent(SDL_SCANCODE_W, nge::InputState::PRESSED | nge::InputState::HELD, [&](){
         sprite2_->MoveY(-100 * draw_timer_.GetElapsedTime());

@@ -17,19 +17,17 @@ namespace nge {
             State();
             State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics);
 
-            bool IsActive();
+            bool IsActive() const;
+
+            virtual void ProcessInput();
             virtual void Tick();
             virtual void Draw();
-            void UpdatePreviousInput();
-            void UpdateCurrentInput();
 
             void RegisterClickable(std::shared_ptr<Clickable> clickable);
-            void ProcessClickables();
 
             void RegisterKeyEvent(SDL_Scancode key, int flags, std::function<void(void)> event);
-            void ProcessKeyboardEvents();
 
-            void ProcessInputs();
+           
 
             virtual ~State();
         protected:
@@ -48,6 +46,8 @@ namespace nge {
             std::vector<std::pair<SDL_Scancode, std::function<void(void)> > > keypressed_events_, keyheld_events_, keyreleased_events_;
 
             void RegisterKeyEvent(SDL_Scancode key, std::function<void(void)> event, std::vector<std::pair<SDL_Scancode, std::function<void(void)> > >& eventList);
+            void ProcessClickables();
+            void ProcessKeyboardEvents();
             void Quit();
     };
 }

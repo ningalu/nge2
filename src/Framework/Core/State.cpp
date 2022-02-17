@@ -20,8 +20,24 @@ namespace nge {
         default_sound_ = Audio::LoadSound("resources/State/default_sound.wav");
     }
 
-    bool State::IsActive() {
+    bool State::IsActive() const {
         return active_;
+    }
+
+    void State::ProcessInput() {
+        input_->UpdatePrevInput();
+        while (SDL_PollEvent(&event_buffer_)) {
+            switch (event_buffer_.type) {
+                case SDL_QUIT:
+                    std::cout << "SDL_QUIT" << std::endl;
+                    active_ = false;
+                    break;
+            }  
+        }
+        input_->Update();
+        
+        ProcessClickables();
+        ProcessKeyboardEvents();
     }
 
     void State::Tick() {
@@ -35,14 +51,6 @@ namespace nge {
 
     void State::Draw() {
         graphics_->DrawTexture(graphics_->LoadTexture("resources/State/default_texture.png").get(), nullptr, nullptr);
-    }
-
-    void State::UpdatePreviousInput(){
-        input_->UpdatePrevInput();
-    }
-
-    void State::UpdateCurrentInput(){
-        input_->Update();
     }
 
     void State::RegisterClickable(std::shared_ptr<Clickable> clickable) {
@@ -122,11 +130,6 @@ namespace nge {
                 e.second();
             }
         }
-    }
-
-    void State::ProcessInputs() {
-        ProcessClickables();
-        ProcessKeyboardEvents();
     }
 
     void State::Quit() {

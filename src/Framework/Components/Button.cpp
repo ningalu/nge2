@@ -17,6 +17,9 @@ namespace nge {
         held_ = false;
         input_ = input;
         clickable_region_ = clickableRegion;
+        SetOnClick([](){return;});
+        SetOnHold([](){return;});
+        SetOnRelease([](){return;});
     }
 
     const SDL_Rect& Button::GetClickableRegion() const {

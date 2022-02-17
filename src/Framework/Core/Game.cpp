@@ -23,8 +23,14 @@ namespace nge {
 
     void Game::Start() {
         running_ = true;
-
+        
         while (running_ && !state_manager_->IsEmpty()) {
+            // Every 1/1000th of a second, update inputs and Tick the topmost State
+
+
+
+
+
             if (tick_timer_.GetElapsedTime() > (1.0 / 1000)) {
                 ProcessInput();
                 Tick();
@@ -57,28 +63,20 @@ namespace nge {
         running_ = false;
     }
 
+    void Game::ProcessInput() {
+        state_manager_->GetCurrentState()->ProcessInput();
+    }
+
     void Game::Tick() {
+        
         state_manager_->GetCurrentState()->Tick();
-        state_manager_->GetCurrentState()->ProcessInputs();
+        
     }
 
     void Game::Draw() {
         graphics_->Clear();
         state_manager_->GetCurrentState()->Draw();
         graphics_->Present();
-    }
-
-    void Game::ProcessInput() {
-        state_manager_->GetCurrentState()->UpdatePreviousInput();
-        while (SDL_PollEvent(&event_buffer_)) {
-            switch (event_buffer_.type) {
-                case SDL_QUIT:
-                    std::cout << "SDL_QUIT" << std::endl;
-                    running_ = false;
-                    break;
-            }  
-        }
-        state_manager_->GetCurrentState()->UpdateCurrentInput();
     }
 
     Game::~Game() {
