@@ -25,12 +25,6 @@ namespace nge {
         running_ = true;
         
         while (running_ && !state_manager_->IsEmpty()) {
-            // Every 1/1000th of a second, update inputs and Tick the topmost State
-
-
-
-
-
             if (tick_timer_.GetElapsedTime() > (1.0 / 1000)) {
                 ProcessInput();
                 Tick();
@@ -39,6 +33,9 @@ namespace nge {
             if (draw_timer_.GetElapsedTime() > (1.0f / 60)) {
                 Draw();
                 draw_timer_.Reset();
+            }
+            if (state_manager_->GetCurrentState()->GameEnded()) {
+                break;
             }
             if (!state_manager_->GetCurrentState()->IsActive()) {
                 state_manager_->Return();
