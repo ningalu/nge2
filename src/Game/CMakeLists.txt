@@ -1,6 +1,7 @@
 add_library(
     Game
     ./SampleState.cpp
+    ./InitialState/InitialState.cpp
 )
 
 target_include_directories(

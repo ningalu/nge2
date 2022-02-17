@@ -4,7 +4,7 @@
 #include "Core/Game.hpp"
 #include "Core/Timer.h"
 
-#include "SampleState.h"
+#include "InitialState/InitialState.h"
 
 int main(int argc, char **argv) {
     
@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     // std::cout << "Initial State: " << s << std::endl;
     // game.Start(new SampleState(game.GetStateManager(), game.GetGraphics()));
 
-    game.SetInitialState<SampleState>(game.GetStateManager(), game.GetGraphics());
+    game.SetInitialState<InitialState>(game.GetStateManager(), game.GetGraphics());
     game.Start();
     
 
