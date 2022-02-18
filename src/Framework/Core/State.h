@@ -26,6 +26,7 @@ namespace nge {
 
             void RegisterClickable(std::shared_ptr<Clickable> clickable);
             void RegisterKeyEvent(SDL_Scancode key, int flags, std::function<void(void)> event);
+            void RegisterKeyEvent(SDL_Scancode key, InputState flags, std::function<void(void)> event);
 
             virtual ~State();
 

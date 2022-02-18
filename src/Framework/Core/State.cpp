@@ -74,6 +74,10 @@ namespace nge {
         }
     }
 
+    void State::RegisterKeyEvent(SDL_Scancode key, InputState flag, std::function<void(void)> event) {
+        RegisterKeyEvent(key, static_cast<int>(flag), event);
+    }
+
     void State::RegisterKeyEvent(SDL_Scancode key, std::function<void(void)> event, std::vector<std::pair<SDL_Scancode, std::function<void(void)> > >& eventList) {
         auto it = std::find_if(
             eventList.begin(), 
