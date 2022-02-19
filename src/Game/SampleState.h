@@ -13,7 +13,7 @@
 
 class SampleState : public nge::State {
     public:
-        SampleState(std::shared_ptr<nge::StateManager> states, std::shared_ptr<nge::Graphics> graphics);
+        SampleState(nge::State init);
         
         void Tick() override;
         void Draw() override;

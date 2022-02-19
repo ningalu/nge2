@@ -13,7 +13,7 @@
 
 class InitialState : public nge::State {
     public:
-        InitialState(std::shared_ptr<nge::StateManager> states, std::shared_ptr<nge::Graphics> graphics);
+        InitialState(nge::State init);
         
         void Tick() override;
         void Draw() override;

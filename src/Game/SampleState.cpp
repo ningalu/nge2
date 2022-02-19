@@ -4,7 +4,7 @@
 
 #include "Utility/SDL_RectExtensions.h"
 
-SampleState::SampleState(std::shared_ptr<nge::StateManager> states, std::shared_ptr<nge::Graphics> graphics) : State(states, graphics) {
+SampleState::SampleState(nge::State init) : nge::State(init) {
 
     // 1 doesn't require the user knows the actual type of WhateverPtr, but you kinda want to be using make_shared when applicable
     // 1. sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/stewie.jpg", nge::Sprite::FULL_TEXTURE, {100, 100, 100, 100}));
@@ -56,12 +56,12 @@ void SampleState::Tick() {
     }
     if (input_->KeyPressed(SDL_SCANCODE_SPACE)) {
         if (std::shared_ptr<nge::StateManager> sm = states_.lock()) {
-            sm->Advance(std::make_shared<State>(sm, graphics_));
+            //sm->Advance(std::make_shared<State>(sm, graphics_));
         }
     }
     if (input_->KeyPressed(SDL_SCANCODE_U)) {
         if (std::shared_ptr<nge::StateManager> sm = states_.lock()) {
-            sm->Advance(std::make_shared<SampleState>(sm, graphics_));
+            //sm->Advance(std::make_shared<SampleState>(sm, graphics_));
         }
     }
     if (input_->KeyPressed(SDL_SCANCODE_RETURN)) {
