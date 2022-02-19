@@ -7,4 +7,5 @@ class Drawable {
         virtual int GetX() = 0;
         virtual int GetY() = 0;
 };
+
 #endif

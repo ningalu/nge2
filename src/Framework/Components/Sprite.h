@@ -1,9 +1,9 @@
 #ifndef _SPRITE_H
 #define _SPRITE_H
 
-#include "GraphicsInterfaces/Drawable.h"
-#include "GraphicsInterfaces/Translatable.h"
-#include "GraphicsInterfaces/Rotatable.h"
+#include "Interfaces/Drawable.h"
+#include "Interfaces/Translatable.h"
+#include "Interfaces/Rotatable.h"
 
 #include <string>
 

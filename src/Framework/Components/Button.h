@@ -7,8 +7,8 @@
 #include <functional>
 
 #include "Input.h"
-#include "InputInterfaces/Clickable.h"
-#include "GraphicsInterfaces/Drawable.h"
+#include "Interfaces/Clickable.h"
+#include "Interfaces/Drawable.h"
 
 namespace nge {
     class Button : public Clickable, public Drawable {

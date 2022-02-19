@@ -5,18 +5,16 @@
 #include <cmath>
 
 #include "Utility/SDL_RectExtensions.h"
-#include "InputInterfaces/Clickable.h"
+#include "Interfaces/Clickable.h"
 
 namespace nge {
     State::State() {
     }
 
-    State::State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics) {
+    State::State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics) : states_(states), graphics_(graphics) {
         base_path_ = SDL_GetBasePath();
         active_ = true;
         quit_ = false;
-        states_ = states;
-        graphics_ = graphics;
         input_ = std::make_shared<Input>();
         default_sound_ = Audio::LoadSound("resources/State/default_sound.wav");
     }

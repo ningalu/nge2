@@ -24,7 +24,10 @@ namespace nge {
 
             template<typename state, typename... Args>
             void SetInitialState(Args&&... args) {
-                state_manager_->Advance(std::make_shared<state>(std::forward<Args>(args)...));
+                std::shared_ptr<state> initialState = std::make_shared<state>(std::forward<Args>(args)...);
+                // initialState->SetStateManager(state_manager_);
+                // initialState->SetGraphicsManager(graphics_);
+                state_manager_->Advance(initialState);
             }
 
             void Start();

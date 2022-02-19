@@ -10,4 +10,5 @@ class Translatable {
         virtual void MoveX(int x) = 0;
         virtual void MoveY(int y) = 0;
 };
+
 #endif
