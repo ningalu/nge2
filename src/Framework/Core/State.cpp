@@ -16,7 +16,6 @@ namespace nge {
         active_ = true;
         quit_ = false;
         input_ = std::make_shared<Input>();
-        default_sound_ = Audio::LoadSound("resources/State/default_sound.wav");
     }
 
     bool State::IsActive() const {
@@ -48,7 +47,7 @@ namespace nge {
             Return();
         }
         if (input_->MouseClicked(MouseButton::LEFT)) {
-            Audio::PlaySound(default_sound_.get());
+            Audio::PlaySound(Audio::LoadSound("resources/State/default_sound.wav").get());
         }
     }
 

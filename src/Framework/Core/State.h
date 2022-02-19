@@ -45,7 +45,6 @@ namespace nge {
             std::string base_path_;
             std::shared_ptr<Input> input_;
             SDL_Event event_buffer_;
-            SoundPtr default_sound_;
             std::vector<std::shared_ptr<Clickable>> clickables_;
             std::vector<std::pair<SDL_Scancode, std::function<void(void)> > > keypressed_events_, keyheld_events_, keyreleased_events_;
 
