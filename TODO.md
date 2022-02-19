@@ -26,7 +26,7 @@ your state is default constructed, its dependencies are set externally by the ga
 \- the base State class will have to expose methods to set its dependencies after construction, either giving the user the ability to arbitrarily set (and therefore invalidate) any other State's dependencies they want, or requiring that the base State's setters for these dependencies are friends to the Game class  
 \- you still have to write a bit more boilerplate than is absolutely necessary with the empty default ctor  
 
-3: pass a fully constructed State object to the child state  
+3: pass a fully constructed State object to the child state \<-- this for now  
 you take a correctly constructed and initialised state created by the game class as an argument to your new state's ctor  
 \+ you only need to implement a ctor and not a separate Init method, reducing boilerplate and ambiguity between construction and initialisation  
 \+ i can add as many dependencies as i want for state, like a resource manager or if sound becomes non static, and you wont have to change the ctor of every single state to accept more arguments  
