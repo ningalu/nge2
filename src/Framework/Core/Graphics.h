@@ -11,15 +11,42 @@
 
 namespace nge {
     using TexturePtr = std::shared_ptr<SDL_Texture>;
+    using FontPtr = std::shared_ptr<TTF_Font>;
+
+    enum FontStyle {
+        SOLID,
+        SHADED,
+        BLENDED
+    };
 
     class Graphics {
         public:
+            const static SDL_Rect FULL_TEXTURE;
+            const static SDL_Point ROTATION_CENTRE;
+
             Graphics(std::string title, SDL_Rect windowRect);
 
-            TexturePtr LoadTexture(std::string path);
+            TexturePtr LoadTexture(const std::string& path);
+            FontPtr LoadFont(const std::string& path, int size);
+            TexturePtr LoadText(
+                const FontPtr& font, 
+                FontStyle style, 
+                const std::string& text, 
+                SDL_Color colour = {0, 0, 0, 0}, 
+                SDL_Color bg = {0, 0, 0, 255}
+            );
+
             void Clear();
             void DrawTexture(
                 SDL_Texture* const texture, 
+                const SDL_Rect* const src, 
+                const SDL_Rect* const dst, 
+                double angle = 0.0f,
+                SDL_Point* rotationCentre = nullptr,
+                SDL_RendererFlip flip = SDL_FLIP_NONE
+            );
+            void DrawTexture(
+                const TexturePtr& texture, 
                 const SDL_Rect* const src, 
                 const SDL_Rect* const dst, 
                 double angle = 0.0f,
@@ -39,7 +66,7 @@ namespace nge {
             void SetWindowRect(SDL_Rect window);
             SDL_Rect GetWindowRect() const;
 
-            SDL_Renderer* GetRenderer();
+            SDL_Renderer* const GetRenderer();
 
             ~Graphics();
 

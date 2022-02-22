@@ -26,6 +26,9 @@ class InitialState : public nge::State {
         nge::SpritePtr title_;
         nge::SpritePtr ibuki_;
         nge::SpritePtr kaito_;
+        nge::TexturePtr solid_tex_;
+        nge::TexturePtr shaded_tex_;
+        nge::TexturePtr blended_tex_;
 
         SDL_Texture *solid_, *shaded_, *blended_;
 };

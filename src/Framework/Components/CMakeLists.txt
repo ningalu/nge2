@@ -3,6 +3,7 @@ add_library(
     ./Sprite.cpp
     ./AnimatedSprite.cpp
     ./Button.cpp
+    ./Text.cpp
 )
 
 target_include_directories(

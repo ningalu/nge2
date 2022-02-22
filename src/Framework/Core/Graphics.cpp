@@ -5,6 +5,10 @@
 #include "SDL2/SDL.h"
 
 namespace nge {
+
+    const SDL_Rect Graphics::FULL_TEXTURE = {INT_MIN, INT_MIN, INT_MIN, INT_MIN};
+    const SDL_Point Graphics::ROTATION_CENTRE = {INT_MIN, INT_MIN};
+
     Graphics::Graphics(std::string title, SDL_Rect windowRect) : 
         window_(nullptr, SDL_DestroyWindow),
         renderer_(nullptr, SDL_DestroyRenderer),
@@ -54,7 +58,7 @@ namespace nge {
         }
     }
 
-    TexturePtr Graphics::LoadTexture(std::string path) {
+    TexturePtr Graphics::LoadTexture(const std::string& path) {
         TexturePtr t;
         SDL_Surface *tempSurf = IMG_Load(path.c_str());
         if (tempSurf == nullptr) {
@@ -64,6 +68,54 @@ namespace nge {
         SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer_.get(), tempSurf);
         if (texture == nullptr) {
             std::cout << "LoadTexture: Texture could not be created from SDL_Renderer* " << renderer_.get() << " and SDL_Surface* " << tempSurf << std::endl;
+            return t;
+        }
+        SDL_FreeSurface(tempSurf);
+        return TexturePtr(texture, [](SDL_Texture* tex){
+            SDL_DestroyTexture(tex);
+        });
+    }
+
+    FontPtr Graphics::LoadFont(const std::string& path, int size) {
+        FontPtr f;
+        TTF_Font *tempFont = TTF_OpenFont(path.c_str(), size);
+        if (tempFont == nullptr) {
+            std::cout << "LoadFont: Font could not be created from " << path << ": " << TTF_GetError() << std::endl;
+            return f;
+        }
+        return FontPtr(tempFont, [](TTF_Font* font) {
+            TTF_CloseFont(font);
+        });
+    }
+
+    TexturePtr Graphics::LoadText(
+        const FontPtr& font, 
+        FontStyle style, 
+        const std::string& text, 
+        SDL_Color colour, 
+        SDL_Color bg
+    ) {
+        std::cout << "LoadText" << std::endl;
+        TexturePtr t;
+        SDL_Surface *tempSurf;
+        switch(style) {
+            case SOLID:
+                tempSurf = TTF_RenderText_Solid(font.get(), text.c_str(), colour);
+                break;
+            case SHADED:
+                tempSurf = TTF_RenderText_Shaded(font.get(), text.c_str(), colour, bg);
+                break;
+            case BLENDED:
+                tempSurf = TTF_RenderText_Blended(font.get(), text.c_str(), colour);
+                break;
+        } 
+        if (tempSurf == nullptr) {
+            std::cout << "LoadTextSolid: Surface could not be created from TTF_Font* " << font.get() << ": " << TTF_GetError() << std::endl;
+            return t;
+        }
+        SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer_.get(), tempSurf);
+        if (texture == nullptr) {
+            std::cout << "LoadTextSolid: Texture could not be created from SDL_Renderer* " << renderer_.get() << " and SDL_Surface* " << ": " << TTF_GetError() << tempSurf << std::endl;
             return t;
         }
         SDL_FreeSurface(tempSurf);
@@ -85,6 +137,17 @@ namespace nge {
         SDL_RendererFlip flip
     ) {
         SDL_RenderCopyEx(renderer_.get(), texture, src, dst, angle, rotationCentre, flip);
+    }
+
+    void Graphics::DrawTexture(
+        const TexturePtr& texture, 
+        const SDL_Rect* const src, 
+        const SDL_Rect* const dst, 
+        double angle,
+        SDL_Point* rotationCentre,
+        SDL_RendererFlip flip
+    ) {
+        DrawTexture(texture.get(), src, dst, angle, rotationCentre, flip);
     }
 
     void Graphics::Present() {
@@ -135,7 +198,7 @@ namespace nge {
         return window;
     }
 
-    SDL_Renderer* Graphics::GetRenderer() {
+    SDL_Renderer* const Graphics::GetRenderer() {
         return renderer_.get();
     }
     

@@ -1,31 +1,29 @@
-#ifndef _SPRITE_H
-#define _SPRITE_H
+#ifndef _TEXT_H
+#define _TEXT_H
 
 #include "Interfaces/Drawable.h"
 #include "Interfaces/Translatable.h"
 #include "Interfaces/Rotatable.h"
-
-#include <string>
 
 #include "SDL2/SDL.h"
 
 #include "Graphics.h"
 
 namespace nge {
-
-    class Sprite : public Drawable, public Translatable, public Rotatable {
+    class Text : public Drawable, public Translatable, public Rotatable {
         public:
-            Sprite(
+            Text(
                 std::shared_ptr<Graphics> graphics, 
-                std::string texturePath, 
-                SDL_Rect src, 
-                SDL_Rect dst,
+                FontPtr font, 
+                FontStyle style,
+                const std::string& text, 
+                SDL_Point dst, 
+                SDL_Color colour = {0, 0, 0, 0},
+                SDL_Color bg = {0, 0, 0, 255},
                 double angle = 0.0f,
                 SDL_Point rotationCentre = Graphics::ROTATION_CENTRE,
                 SDL_RendererFlip flip = SDL_FLIP_NONE
             );
-            
-            
 
             // Drawable Interface
             void Draw();
@@ -43,19 +41,16 @@ namespace nge {
             void Rotate(double angle);
             void SetAngle(double angle);
 
-            ~Sprite();
+            ~Text();
 
         protected:
             std::shared_ptr<Graphics> graphics_;
+            SDL_Rect src_, dst_;
             TexturePtr texture_;
-            SDL_Rect src_;
-            SDL_Rect dst_;
             double angle_;
             SDL_Point rotation_centre_;
             SDL_RendererFlip flip_;
     };
-
-    using SpritePtr = std::unique_ptr<Sprite>;
 }
 
 #endif

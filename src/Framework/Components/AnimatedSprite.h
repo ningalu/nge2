@@ -15,7 +15,7 @@ namespace nge {
                 int repeats = -1,
                 int frameDuration = 1,
                 double angle = 0.0f,
-                SDL_Point rotationCentre = ROTATION_CENTRE,
+                SDL_Point rotationCentre = Graphics::ROTATION_CENTRE,
                 SDL_RendererFlip flip = SDL_FLIP_NONE
             );
 

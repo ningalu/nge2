@@ -10,15 +10,15 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
     // 1. sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/stewie.jpg", nge::Sprite::FULL_TEXTURE, {100, 100, 100, 100}));
     // 2. butt1_ = std::make_shared<nge::Button>(input_, std::move(temp), SDL_Rect{300, 50, 250, 250});
 
-    sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/stewie.jpg", nge::Sprite::FULL_TEXTURE, {100, 100, 100, 100}));
+    sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/stewie.jpg", nge::Graphics::FULL_TEXTURE, {100, 100, 100, 100}));
 
-    sprite2_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/ibuki.png", nge::Sprite::FULL_TEXTURE, {300, 400, 160, 206}));
+    sprite2_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/ibuki.png", nge::Graphics::FULL_TEXTURE, {300, 400, 160, 206}));
 
-    anim1_ = nge::AnimPtr(new nge::AnimatedSprite(graphics_, "resources/SampleState/blaziken_anim_test.png", nge::Sprite::FULL_TEXTURE, {50, 50, 100, 100}, 17, 2, 2));
+    anim1_ = nge::AnimPtr(new nge::AnimatedSprite(graphics_, "resources/SampleState/blaziken_anim_test.png", nge::Graphics::FULL_TEXTURE, {50, 50, 100, 100}, 17, 2, 2));
 
-    nge::SpritePtr temp = std::make_unique<nge::Sprite>(graphics_, "resources/SampleState/hachigatsu.jpg", nge::Sprite::FULL_TEXTURE, SDL_Rect{300, 50, 250, 250});
+    nge::SpritePtr temp = std::make_unique<nge::Sprite>(graphics_, "resources/SampleState/hachigatsu.jpg", nge::Graphics::FULL_TEXTURE, SDL_Rect{300, 50, 250, 250});
 
-    nge::SpritePtr tempHeld = std::make_unique<nge::Sprite>(graphics_, "resources/SampleState/hachigatsu_held.jpg", nge::Sprite::FULL_TEXTURE, SDL_Rect{300, 50, 250, 250});
+    nge::SpritePtr tempHeld = std::make_unique<nge::Sprite>(graphics_, "resources/SampleState/hachigatsu_held.jpg", nge::Graphics::FULL_TEXTURE, SDL_Rect{300, 50, 250, 250});
 
     butt1_ = std::make_shared<nge::Button>(input_, std::move(temp), SDL_Rect{300, 50, 250, 250});
     butt1_->SetHeldDrawable(std::move(tempHeld));
@@ -32,7 +32,7 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
 
     RegisterClickable(butt1_);
 
-    anim2_ = std::make_unique<nge::AnimatedSprite>(graphics_, "resources/SampleState/kokichiwalk.png", nge::Sprite::FULL_TEXTURE, SDL_Rect{600, 600, 89, 90}, 2, -1, 15);
+    anim2_ = std::make_unique<nge::AnimatedSprite>(graphics_, "resources/SampleState/kokichiwalk.png", nge::Graphics::FULL_TEXTURE, SDL_Rect{600, 600, 89, 90}, 2, -1, 15);
 
     RegisterKeyEvent(SDL_SCANCODE_W, nge::InputState::PRESSED | nge::InputState::HELD, [&](){
         sprite2_->MoveY(-100 * draw_timer_.GetElapsedTime());
