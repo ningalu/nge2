@@ -6,6 +6,7 @@ add_library(
 
 target_include_directories(
     Game
+    PUBLIC ${CMAKE_SOURCE_DIR}/src
     PUBLIC ${CMAKE_SOURCE_DIR}/src/Framework
     PUBLIC ${CMAKE_SOURCE_DIR}/src/Components
     PUBLIC ${SDL_INCLUDE_DIR}

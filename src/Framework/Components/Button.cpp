@@ -12,11 +12,14 @@ namespace nge {
     std::shared_ptr<Input> input, 
     std::unique_ptr<Drawable> defaultDrawable, 
     SDL_Rect clickableRegion
-    ) : default_drawable_(std::move(defaultDrawable)) {
+    ) : default_drawable_(std::move(defaultDrawable)), input_(input) {
+
         enabled_ = true;
+
         held_ = false;
-        input_ = input;
+
         clickable_region_ = clickableRegion;
+
         SetOnClick([](){return;});
         SetOnHold([](){return;});
         SetOnRelease([](){return;});
@@ -56,7 +59,7 @@ namespace nge {
 
     void Button::Draw() {
         held_ = held_ && MouseOver(input_->GetMouseX(), input_->GetMouseY());
-        held_ ? held_drawable_->Draw() : default_drawable_->Draw();
+        held_ && (held_drawable_.get() != nullptr) ? held_drawable_->Draw() : default_drawable_->Draw();
     }
     
     int Button::GetX() {

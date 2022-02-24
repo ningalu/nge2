@@ -40,11 +40,11 @@ namespace nge {
             ~Button();
 
         protected:
+            std::shared_ptr<Input> input_;
             bool enabled_;
             bool held_;
             SDL_Rect clickable_region_;
             std::unique_ptr<Drawable> default_drawable_, hover_drawable_, held_drawable_;
-            std::shared_ptr<Input> input_;
             std::function<void(void)> on_click_, on_hold_, on_release_;
     };
 
