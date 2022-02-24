@@ -11,7 +11,7 @@
 #include "Timer.h"
 #include "Graphics.h"
 #include "Input.h"
-#include "State.h"
+#include "State.hpp"
 #include "StateManager.h"
 
 namespace nge {

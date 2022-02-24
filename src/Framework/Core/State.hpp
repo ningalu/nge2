@@ -4,6 +4,7 @@
 #include <memory>
 #include <map>
 #include <string>
+#include <iostream>
 
 #include "Graphics.h"
 #include "Input.h"
@@ -51,6 +52,15 @@ namespace nge {
             void RegisterKeyEvent(SDL_Scancode key, std::function<void(void)> event, std::vector<std::pair<SDL_Scancode, std::function<void(void)> > >& eventList);
             void ProcessClickables();
             void ProcessKeyboardEvents();
+            template <typename TState, typename ...Args>
+            void Advance(Args... args) {
+                if (std::shared_ptr<StateManager> sm = states_.lock()) {
+                    State temp(sm, graphics_);
+                    sm->Advance(std::make_shared<TState>(temp, args...));
+                } else {
+                    std::cout << "Could not obtain lock on StateManager\n";
+                }
+            }
             void Return();
             void Quit();
     };

@@ -95,7 +95,6 @@ namespace nge {
         SDL_Color colour, 
         SDL_Color bg
     ) {
-        std::cout << "LoadText" << std::endl;
         TexturePtr t;
         SDL_Surface *tempSurf;
         switch(style) {

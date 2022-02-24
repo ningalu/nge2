@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "Core/State.h"
+#include "Core/State.hpp"
 #include "Core/Graphics.h"
 #include "Core/StateManager.h"
 #include "Components/Sprite.h"

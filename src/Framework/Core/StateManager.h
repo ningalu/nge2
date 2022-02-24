@@ -11,6 +11,7 @@ namespace nge {
             StateManager();
 
             void Advance(std::shared_ptr<State> state);
+
             void Return();
             std::shared_ptr<State>& GetCurrentState();
             bool IsEmpty();

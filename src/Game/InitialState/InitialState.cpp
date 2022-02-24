@@ -64,10 +64,12 @@ InitialState::InitialState(nge::State init) : State(init) {
     start_button_->SetHeldDrawable(std::move(startButtonHeldText));
 
     start_button_->SetOnRelease([&](){
-        if (std::shared_ptr<nge::StateManager> sm = states_.lock()) {
-            nge::State s(sm, graphics_);
-            sm->Advance(std::make_shared<SampleState>(s));
-        }
+        Advance<SampleState>();
+        // if (std::shared_ptr<nge::StateManager> sm = states_.lock()) {
+        //     nge::State s(sm, graphics_);
+        //     auto n = std::make_shared<SampleState>(s);
+        //     Advance(n);
+        // }
     });
 
     RegisterClickable(start_button_);
