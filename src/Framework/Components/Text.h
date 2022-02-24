@@ -45,12 +45,14 @@ namespace nge {
 
         protected:
             std::shared_ptr<Graphics> graphics_;
-            SDL_Rect src_, dst_;
             TexturePtr texture_;
+            SDL_Rect src_, dst_;
             double angle_;
             SDL_Point rotation_centre_;
             SDL_RendererFlip flip_;
     };
+    
+    using TextPtr = std::unique_ptr<Text>;
 }
 
 #endif

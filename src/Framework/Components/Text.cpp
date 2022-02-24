@@ -1,5 +1,7 @@
 #include "Text.h"
 
+#include "Utility/SDL_PointExtensions.h"
+
 namespace nge {
 
     Text::Text(
@@ -14,7 +16,25 @@ namespace nge {
         SDL_Point rotationCentre,
         SDL_RendererFlip flip
     ) : graphics_(graphics) {
+
         texture_ = graphics_->LoadText(font, style, text, colour, bg);
+
+        src_ = {0, 0, 0, 0};
+        SDL_QueryTexture(texture_.get(), nullptr, nullptr, &src_.w, &src_.h);
+
+        dst_ = {dst.x, dst.y, src_.w, src_.h};
+
+        angle_ = angle;
+
+        if (rotationCentre == Graphics::ROTATION_CENTRE) {
+            rotation_centre_.x = dst_.w / 2;
+            rotation_centre_.y = dst_.h / 2;
+        } else {
+            rotation_centre_ = rotationCentre;
+        }
+
+        flip_ = flip;
+    
     }
 
     void Text::Draw() {
@@ -53,5 +73,8 @@ namespace nge {
     }
     void Text::SetAngle(double angle) {
         angle_ = angle;
+    }
+    Text::~Text() {
+        
     }
 }

@@ -8,6 +8,7 @@
 #include "Core/StateManager.h"
 #include "Components/Sprite.h"
 #include "Components/AnimatedSprite.h"
+#include "Components/Text.h"
 #include "Timer.h"
 #include "Components/Button.h"
 
@@ -29,6 +30,9 @@ class InitialState : public nge::State {
         nge::TexturePtr solid_tex_;
         nge::TexturePtr shaded_tex_;
         nge::TexturePtr blended_tex_;
+        nge::TextPtr solid_text_;
+        nge::TextPtr shaded_text_;
+        nge::TextPtr blended_text_;
 
         SDL_Texture *solid_, *shaded_, *blended_;
 };

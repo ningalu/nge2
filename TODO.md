@@ -10,7 +10,7 @@
 - dedicated resource loader? ~would be another annoying dependency to pass in~ not that annoying anymore
 - this kinda needs a more robust event listener system. could write my own
 - input class was literally just ripped from old project and i want to overhaul it since it feels really clumsy to use. maybe shift sdl event processing to inputs and register to inputs as well? essentially make the input class responsible for acting on user input in addition to just observing it as it does now
-- how should text be handled?
+- how should text be handled? feels like it shouldnt warrant its own class since plain text is functionally just a sprite
 
 ## game states
 you should be able to inherit from state, write a constructor with only objects you actually want to pass in, write your draw and tick methods, and not have to worry about passing in game level dependencies like graphics or the state manager. solutions are a bit annoying.
