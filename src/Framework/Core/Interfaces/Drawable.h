@@ -8,7 +8,16 @@ class Drawable {
         virtual int GetY() = 0;
         virtual int GetW() = 0;
         virtual int GetH() = 0;
-
 };
+
+template <typename T>
+int GetCentreX(T& drawable) {
+    return (drawable.GetX() + (drawable.GetW() / 2));
+}
+
+template <typename T>
+int GetCentreY(T& drawable) {
+    return (drawable.GetY() + (drawable.GetH() / 2));
+}
 
 #endif

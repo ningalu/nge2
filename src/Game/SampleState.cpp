@@ -15,8 +15,9 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
     sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/stewie.jpg", nge::Graphics::FULL_TEXTURE, {input_->GetMouseX(), input_->GetMouseY(), 100, 100}));
     sprite1_text_ = nge::Text{graphics_, f, nge::FontStyle::SOLID, "Mouse Movement", SDL_Point{input_->GetMouseX(), input_->GetMouseY()}};
 
-    sprite2_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/ibuki.png", nge::Graphics::FULL_TEXTURE, {50, 80, 160, 206}));
     sprite2_text_ = nge::Text{graphics_, f, nge::FontStyle::SOLID, "Sprite Test", SDL_Point{50, 50}};
+    sprite2_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/ibuki.png", nge::Graphics::FULL_TEXTURE, {0, sprite2_text_.GetY() + 30, 160, 206}));
+    AlignHorizontal(sprite2_text_, *sprite2_);
 
     anim1_ = nge::AnimPtr(new nge::AnimatedSprite(graphics_, "resources/SampleState/blaziken_anim_test.png", nge::Graphics::FULL_TEXTURE, {330, 90, 100, 100}, 17, 2, 2));
     anim1_text_ = nge::Text{graphics_, f, nge::FontStyle::SOLID, "Animation Test 1", SDL_Point{300, 50}};

@@ -12,6 +12,7 @@
 - input class was literally just ripped from old project and i want to overhaul it since it feels really clumsy to use. maybe shift sdl event processing to inputs and register to inputs as well? essentially make the input class responsible for acting on user input in addition to just observing it as it does now
 - how should text be handled? feels like it shouldnt warrant its own class since plain text is functionally just a sprite
 - fix cmake so it doesnt depend on my file system
+- the entire drawing system is super clumsy; it should be easier to position objects relative to one another and defining destination rect size is a pain, maybe binding objects relative positions. might need CSTs or at least some linear algebra
 
 ## game states
 you should be able to inherit from state, write a constructor with only objects you actually want to pass in, write your draw and tick methods, and not have to worry about passing in game level dependencies like graphics or the state manager. solutions are a bit annoying.
