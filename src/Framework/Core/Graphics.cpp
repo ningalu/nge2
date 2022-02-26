@@ -54,6 +54,7 @@ namespace nge {
             std::cout << "Error creating renderer: " << SDL_GetError() << std::endl;
             return;
         } else {
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
             renderer_.reset(renderer);
         }
     }

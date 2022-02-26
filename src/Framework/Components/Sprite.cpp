@@ -7,9 +7,6 @@
 #include "Utility/SDL_PointExtensions.h"
 
 namespace nge {
-
-    
-
     Sprite::Sprite(
         std::shared_ptr<Graphics> graphics, 
         std::string texturePath, 
@@ -54,6 +51,14 @@ namespace nge {
         return dst_.y;
     }
 
+    int Sprite::GetW(){
+        return dst_.w;
+    }
+
+    int Sprite::GetH(){
+        return dst_.h;
+    }
+    
     void Sprite::SetX(int x) {
         dst_.x = x;
     }

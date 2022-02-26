@@ -12,6 +12,7 @@
 namespace nge {
     class Text : public Drawable, public Translatable, public Rotatable {
         public:
+            Text() = default;
             Text(
                 std::shared_ptr<Graphics> graphics, 
                 FontPtr font, 
@@ -29,6 +30,8 @@ namespace nge {
             void Draw();
             int GetX();
             int GetY();
+            int GetW();
+            int GetH();
 
             // Translatable Interface
             void SetX(int x);

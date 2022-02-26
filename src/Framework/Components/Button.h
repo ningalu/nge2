@@ -28,6 +28,8 @@ namespace nge {
             void Draw();
             int GetX();
             int GetY();
+            int GetW();
+            int GetH();
 
             void SetOnClick(std::function<void(void)> onClick);
             void SetOnHold(std::function<void(void)> onHold);

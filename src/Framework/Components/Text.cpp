@@ -3,7 +3,6 @@
 #include "Utility/SDL_PointExtensions.h"
 
 namespace nge {
-
     Text::Text(
         std::shared_ptr<Graphics> graphics, 
         FontPtr font, 
@@ -51,6 +50,14 @@ namespace nge {
 
     void Text::SetX(int x) {
         dst_.x = x;
+    }
+
+    int Text::GetW(){
+        return dst_.w;
+    }
+
+    int Text::GetH(){
+        return dst_.h;
     }
 
     void Text::SetY(int y) {

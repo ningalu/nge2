@@ -31,6 +31,8 @@ namespace nge {
             void Draw();
             int GetX();
             int GetY();
+            int GetW();
+            int GetH();
 
             // Translatable Interface
             void SetX(int x);

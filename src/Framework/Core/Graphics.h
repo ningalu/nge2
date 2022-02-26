@@ -32,8 +32,8 @@ namespace nge {
                 const FontPtr& font, 
                 FontStyle style, 
                 const std::string& text, 
-                SDL_Color colour = {0, 0, 0, 0}, 
-                SDL_Color bg = {0, 0, 0, 255}
+                SDL_Color colour = {0, 0, 0, SDL_ALPHA_OPAQUE}, 
+                SDL_Color bg = {0, 0, 0, SDL_ALPHA_TRANSPARENT} // doesnt really work?
             );
 
             void Clear();

@@ -70,6 +70,14 @@ namespace nge {
         return clickable_region_.y;
     }
     
+    int Button::GetW(){
+        return clickable_region_.w;
+    }
+
+    int Button::GetH(){
+        return clickable_region_.h;
+    }
+    
     void Button::SetOnClick(std::function<void(void)> onClick) {
         on_click_ = onClick;
     }
