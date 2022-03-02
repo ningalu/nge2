@@ -48,16 +48,20 @@ namespace nge {
         return dst_.y;
     }
 
-    void Text::SetX(int x) {
-        dst_.x = x;
-    }
-
-    int Text::GetW(){
+    int Text::GetW() {
         return dst_.w;
     }
 
-    int Text::GetH(){
+    int Text::GetH() {
         return dst_.h;
+    }
+
+    SDL_Rect Text::GetDestRect() {
+        return dst_;
+    }
+    
+    void Text::SetX(int x) {
+        dst_.x = x;
     }
 
     void Text::SetY(int y) {

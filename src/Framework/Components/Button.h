@@ -30,6 +30,7 @@ namespace nge {
             int GetY();
             int GetW();
             int GetH();
+            SDL_Rect GetDestRect();
 
             void SetOnClick(std::function<void(void)> onClick);
             void SetOnHold(std::function<void(void)> onHold);

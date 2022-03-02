@@ -4,6 +4,7 @@ add_library(
     ./InitialState/InitialState.cpp
     ./OverworldState/Tileset.cpp
     ./OverworldState/Tilemap.cpp
+    ./OverworldState/OverworldState.cpp
 )
 
 target_include_directories(

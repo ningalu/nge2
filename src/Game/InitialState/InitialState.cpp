@@ -5,6 +5,7 @@
 
 #include "Utility/SDL_RectExtensions.h"
 #include "Game/SampleState.h"
+#include "Game/OverworldState/OverworldState.h"
 
 InitialState::InitialState(nge::State init) : State(init) {
     title_ = std::make_unique<nge::Sprite>(graphics_, "resources/InitialState/title.png", nge::Graphics::FULL_TEXTURE, SDL_Rect{0, 0, 1200, 900});
@@ -55,24 +56,47 @@ InitialState::InitialState(nge::State init) : State(init) {
         SDL_Point{150, 500},
         SDL_Color{0, 0, 0, 128}
     );
-
+    SDL_Rect startButtonTextDst = startButtonText->GetDestRect();
     start_button_ = std::make_shared<nge::Button>(
         input_, 
         std::move(startButtonText), 
-        SDL_Rect{150, 500, 200, 100}
+        startButtonTextDst
     );
     start_button_->SetHeldDrawable(std::move(startButtonHeldText));
 
     start_button_->SetOnRelease([&](){
         Advance<SampleState>();
-        // if (std::shared_ptr<nge::StateManager> sm = states_.lock()) {
-        //     nge::State s(sm, graphics_);
-        //     auto n = std::make_shared<SampleState>(s);
-        //     Advance(n);
-        // }
+    });
+
+    nge::TextPtr rpgText = std::make_unique<nge::Text>(
+        graphics_,  
+        f,
+        nge::FontStyle::SOLID,
+        "RPG",
+        SDL_Point{450, 500}
+    );
+    nge::TextPtr rpgTextHeld = std::make_unique<nge::Text>(
+        graphics_,  
+        f,
+        nge::FontStyle::SOLID,
+        "RPG",
+        SDL_Point{rpgText->GetX()+5, rpgText->GetY()+5},
+        SDL_Color{0, 0, 0, 120}
+    );
+    SDL_Rect rpgTextSrc = rpgText->GetDestRect();
+    rpg_button_ = std::make_shared<nge::Button>(
+        input_,
+        std::move(rpgText),
+        rpgTextSrc
+    );
+    rpg_button_->SetHeldDrawable(std::move(rpgTextHeld));
+
+    rpg_button_->SetOnRelease([&](){
+        Advance<rpg::OverworldState>();
     });
 
     RegisterClickable(start_button_);
+    RegisterClickable(rpg_button_);
 
     RegisterKeyEvent(
         SDL_SCANCODE_ESCAPE, 
@@ -98,6 +122,7 @@ void InitialState::Draw() {
     blended_text_->Draw();
 
     start_button_->Draw();
+    rpg_button_->Draw();
 
 }
 

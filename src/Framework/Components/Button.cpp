@@ -77,6 +77,10 @@ namespace nge {
     int Button::GetH(){
         return clickable_region_.h;
     }
+
+    SDL_Rect Button::GetDestRect() {
+        return clickable_region_;
+    }
     
     void Button::SetOnClick(std::function<void(void)> onClick) {
         on_click_ = onClick;

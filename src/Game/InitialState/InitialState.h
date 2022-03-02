@@ -34,6 +34,7 @@ class InitialState : public nge::State {
         nge::TextPtr blended_text_;
 
         nge::ButtonPtr start_button_;
+        nge::ButtonPtr rpg_button_;
         nge::ButtonPtr info_button_;
         nge::ButtonPtr quit_button_;
 

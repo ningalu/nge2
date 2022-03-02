@@ -33,6 +33,7 @@ namespace nge {
             int GetY();
             int GetW();
             int GetH();
+            SDL_Rect GetDestRect();
 
             // Translatable Interface
             void SetX(int x);

@@ -51,12 +51,16 @@ namespace nge {
         return dst_.y;
     }
 
-    int Sprite::GetW(){
+    int Sprite::GetW() {
         return dst_.w;
     }
 
-    int Sprite::GetH(){
+    int Sprite::GetH() {
         return dst_.h;
+    }
+
+    SDL_Rect Sprite::GetDestRect() {
+        return dst_;
     }
     
     void Sprite::SetX(int x) {
