@@ -10,13 +10,53 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
     // 1. sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/stewie.jpg", nge::Sprite::FULL_TEXTURE, {100, 100, 100, 100}));
     // 2. butt1_ = std::make_shared<nge::Button>(input_, std::move(temp), SDL_Rect{300, 50, 250, 250});
 
-    nge::FontPtr f = graphics_->LoadFont("resources/pokemon_pixel_font.ttf", 48);
+    nge::Timer ctorTimer;
 
+    ctorTimer.Start();
+    tileset1_ = std::make_shared<rpg::Tileset>(graphics_, "resources/OverworldState/tileset.png", 32, 32);
+    std::cout << "tileset time: " << ctorTimer << std::endl;
+    
+    std::vector<std::vector<int>> tileIds1;
+    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
+    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
+    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
+    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
+    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
+    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
+    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
+    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
+
+    ctorTimer.Reset();
+    tilemap1_ = rpg::Tilemap{graphics_, tileset1_, tileIds1};
+    std::cout << "map 1 time: " << ctorTimer << std::endl;
+
+    std::vector<std::vector<int>> tileIds2;
+    tileIds2.push_back({0, 0, 30, 31, 0, 0, 0});
+    tileIds2.push_back({0, 0, 38, 39, 0, 0, 0});
+    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
+    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
+    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
+    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
+    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
+    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
+
+    ctorTimer.Reset();
+    tilemap2_ = rpg::Tilemap{graphics_, tileset1_, tileIds2};
+    std::cout << "map 2 time: " << ctorTimer << std::endl;
+
+    ctorTimer.Reset();
+    nge::FontPtr f = graphics_->LoadFont("resources/pokemon_pixel_font.ttf", 48);
+    std::cout << "font time: " << ctorTimer << std::endl;
+
+    ctorTimer.Reset();
     sprite1_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/stewie.jpg", nge::Graphics::FULL_TEXTURE, {input_->GetMouseX(), input_->GetMouseY(), 100, 100}));
+    std::cout << "sprite1_ time: " << ctorTimer << std::endl;
     sprite1_text_ = nge::Text{graphics_, f, nge::FontStyle::SOLID, "Mouse Movement", SDL_Point{input_->GetMouseX(), input_->GetMouseY()}};
 
     sprite2_text_ = nge::Text{graphics_, f, nge::FontStyle::SOLID, "Sprite Test", SDL_Point{50, 50}};
+    ctorTimer.Reset();
     sprite2_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/ibuki.png", nge::Graphics::FULL_TEXTURE, {0, sprite2_text_.GetY() + 30, 160, 206}));
+    std::cout << "sprite2_ time: " << ctorTimer << std::endl;
     AlignHorizontal(sprite2_text_, *sprite2_);
 
     anim1_text_ = nge::Text{graphics_, f, nge::FontStyle::SOLID, "Animation Test 1", SDL_Point{300, 50}};
@@ -114,6 +154,24 @@ void SampleState::Draw() {
     butt1_text_.Draw();
 
     draw_timer_.Reset();
+
+    
+    SDL_Rect tempdst = {500, 500, 400, 400};
+    SDL_QueryTexture(tilemap1_.GetMapTexture(), nullptr, nullptr, &tempdst.w, &tempdst.h);
+    //SDL_RenderCopy(graphics_->GetRenderer(), target, nullptr, &tempdst);
+    SDL_RenderCopy(graphics_->GetRenderer(), tilemap1_.GetMapTexture(), nullptr, &tempdst);
+    SDL_RenderCopy(graphics_->GetRenderer(), tilemap2_.GetMapTexture(), nullptr, &tempdst);
+
+    // tempdst = {100, 700, 32, 32};
+    // SDL_RenderCopy(graphics_->GetRenderer(), tileset1_.GetT)
+
+    // auto t2 = graphics_->LoadTexture("resources/SampleState/ibuki.png");
+    
+    // tilemap1_.Draw();
+    // auto temp = tilemap1_.GetMapTexture();
+    // SDL_SetRenderTarget(graphics_->GetRenderer(), temp);
+
+    // graphics_->DrawTexture(tilemap1_.GetMapTexture(), nullptr, &tempdst);
 }
 
 SampleState::~SampleState() {

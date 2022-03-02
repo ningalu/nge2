@@ -1,29 +1,36 @@
 #include "Timer.h"
 
-using namespace nge;
+namespace nge {
+    Timer::Timer() {
+        active_ = true;
+        start_time_ = std::chrono::steady_clock::now();
+    }
 
-Timer::Timer() {
-    active_ = true;
-    start_time_ = std::chrono::steady_clock::now();
+    void Timer::Start() {
+        active_ = true;
+        start_time_ = std::chrono::steady_clock::now();
+    }
+
+    double Timer::GetElapsedTime() const {
+        return active_ ? static_cast<std::chrono::duration<double>>(std::chrono::steady_clock::now() - start_time_).count() : 0;
+    }
+
+    void Timer::Reset() {
+        start_time_ = std::chrono::steady_clock::now();
+    }
+
+    void Timer::Stop() {
+        active_ = false;
+    }
+
+    Timer::~Timer() {
+
+    }
 }
 
-void Timer::Start() {
-    active_ = true;
-    start_time_ = std::chrono::steady_clock::now();
-}
 
-double Timer::GetElapsedTime() {
-    return active_ ? static_cast<std::chrono::duration<double>>(std::chrono::steady_clock::now() - start_time_).count() : 0;
-}
 
-void Timer::Reset() {
-    start_time_ = std::chrono::steady_clock::now();
-}
-
-void Timer::Stop() {
-    active_ = false;
-}
-
-Timer::~Timer() {
-
+std::ostream& operator<<(std::ostream& os, const nge::Timer& timer) {
+    os << timer.GetElapsedTime();
+    return os;
 }

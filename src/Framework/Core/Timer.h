@@ -3,6 +3,7 @@
 
 #include "stdint.h"
 #include <chrono>
+#include <ostream>
 
 namespace nge {
     class Timer {
@@ -10,7 +11,7 @@ namespace nge {
             Timer();
 
             void Start();
-            double GetElapsedTime();
+            double GetElapsedTime() const;
             void Reset();
             void Stop();
 
@@ -21,5 +22,7 @@ namespace nge {
 
     };
 }
+
+std::ostream& operator<<(std::ostream& os, const nge::Timer& timer);
 
 #endif

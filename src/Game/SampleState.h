@@ -11,6 +11,8 @@
 #include "Timer.h"
 #include "Components/Button.h"
 #include "Components/Text.h"
+#include "OverworldState/Tileset.h"
+#include "OverworldState/Tilemap.h"
 
 class SampleState : public nge::State {
     public:
@@ -40,6 +42,9 @@ class SampleState : public nge::State {
         nge::Text butt1_text_;
 
         nge::Button butt2_;
+
+        std::shared_ptr<rpg::Tileset> tileset1_;
+        rpg::Tilemap tilemap1_, tilemap2_;
 };
 
 #endif

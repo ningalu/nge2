@@ -48,7 +48,7 @@ namespace nge {
         SDL_Renderer *renderer = SDL_CreateRenderer(
             window_.get(),
             -1,
-            0
+            SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE
         );
         if (renderer == nullptr) {
             std::cout << "Error creating renderer: " << SDL_GetError() << std::endl;

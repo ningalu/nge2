@@ -2,6 +2,8 @@ add_library(
     Game
     ./SampleState.cpp
     ./InitialState/InitialState.cpp
+    ./OverworldState/Tileset.cpp
+    ./OverworldState/Tilemap.cpp
 )
 
 target_include_directories(
