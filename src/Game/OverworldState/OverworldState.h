@@ -17,6 +17,7 @@ namespace rpg {
         protected:
             std::shared_ptr<Tileset> tileset1_;
             Tilemap tilemap1_;
+            Tilemap tilemap2_;
 
     };
 }
