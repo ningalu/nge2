@@ -1,7 +1,7 @@
 #ifndef _SPRITE_H
 #define _SPRITE_H
 
-#include "SimpleDrawableBase.h"
+#include "Utility/SimpleDrawableBase.h"
 
 #include <string>
 

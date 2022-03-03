@@ -1,7 +1,7 @@
 #ifndef _TEXT_H
 #define _TEXT_H
 
-#include "SimpleDrawableBase.h"
+#include "Utility/SimpleDrawableBase.h"
 
 #include "SDL2/SDL.h"
 
