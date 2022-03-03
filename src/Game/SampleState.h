@@ -45,6 +45,7 @@ class SampleState : public nge::State {
 
         std::shared_ptr<rpg::Tileset> tileset1_;
         rpg::Tilemap tilemap1_, tilemap2_;
+        SDL_Rect cam_src_, cam_dst_;
 };
 
 #endif

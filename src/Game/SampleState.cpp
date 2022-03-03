@@ -15,34 +15,51 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
     ctorTimer.Start();
     tileset1_ = std::make_shared<rpg::Tileset>(graphics_, "resources/OverworldState/tileset.png", 32, 32);
     std::cout << "tileset time: " << ctorTimer << std::endl;
-    
-    std::vector<std::vector<int>> tileIds1;
-    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
-    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
-    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
-    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
-    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
-    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
-    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
-    tileIds1.push_back({1, 1, 1, 1, 1, 1, 1});
 
+    //std::vector<std::vector<int>> tilemap1Ids{
+    //    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    //    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    //    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    //    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    //    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    //    {1, 1, 36, 36, 1, 1, 1, 1, 1, 1},
+    //    {1, 1, 36, 1, 1, 1, 1, 1, 1, 1},
+    //    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    //    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    //    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+    //};
+    std::vector<std::vector<int>> tilemap1Ids;
+    for (int i = 0; i < 100; i++) {
+        std::vector<int> temp;
+        for (int j = 0; j < 100; j++) {
+            temp.push_back((j % 2) ? 1 : 28);
+        }
+        tilemap1Ids.push_back(temp);
+    }
     ctorTimer.Reset();
-    tilemap1_ = rpg::Tilemap{graphics_, tileset1_, tileIds1};
-    std::cout << "map 1 time: " << ctorTimer << std::endl;
+    tilemap1_ = rpg::Tilemap{graphics_, tileset1_, tilemap1Ids};
+    std::cout << "tilemap 1 time: " << ctorTimer << std::endl;
 
-    std::vector<std::vector<int>> tileIds2;
-    tileIds2.push_back({0, 0, 30, 31, 0, 0, 0});
-    tileIds2.push_back({0, 0, 38, 39, 0, 0, 0});
-    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
-    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
-    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
-    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
-    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
-    tileIds2.push_back({0, 0, 0, 0, 0, 0, 0});
+    // std::vector<std::vector<int>> tilemap2Ids{
+    //     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    //     {0, 72, 73, 74, 75, 0, 0, 0, 0, 0},
+    //     {0, 80, 81, 82, 83, 0, 0, 14, 14, 0},
+    //     {0, 88, 89, 90, 91, 0, 14, 22, 22, 0},
+    //     {0, 96, 97, 98, 99, 0, 22, 0, 0, 0},
+    //     {0, 0, 0, 0, 4, 0, 0, 0, 0, 0},
+    //     {0, 0, 0, 0, 0, 0, 4, 128, 129, 129},
+    //     {0, 0, 0, 0, 0, 0, 0, 136, 223, 223},
+    //     {0, 0, 0, 4, 0, 0, 0, 136, 223, 223},
+    //     {0, 0, 0, 0, 128, 129, 129, 190, 223, 223}
+    // };
+    // ctorTimer.Reset();
+    // tilemap2_ = rpg::Tilemap{graphics_, tileset1_, tilemap2Ids};
+    // std::cout << "tilemap 2 time: " << ctorTimer << std::endl;
 
-    ctorTimer.Reset();
-    tilemap2_ = rpg::Tilemap{graphics_, tileset1_, tileIds2};
-    std::cout << "map 2 time: " << ctorTimer << std::endl;
+    cam_src_ = {0, 0, tileset1_->GetTileDimRect().w * 10, tileset1_->GetTileDimRect().h * 10};
+
+    cam_dst_ = {50, 500, tileset1_->GetTileDimRect().w * 10, tileset1_->GetTileDimRect().h * 10};
+    //SDL_QueryTexture(tilemap1_.GetMapTexture(), nullptr, nullptr, &cam_dst_.w, &cam_dst_.h);
 
     ctorTimer.Reset();
     nge::FontPtr f = graphics_->LoadFont("resources/pokemon_pixel_font.ttf", 48);
@@ -92,15 +109,32 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
 
     RegisterKeyEvent(SDL_SCANCODE_W, nge::InputState::PRESSED | nge::InputState::HELD, [&](){
         sprite2_->MoveY(-100 * draw_timer_.GetElapsedTime());
+        cam_src_.y -= 1;
+        if (cam_src_.y < 0) {
+            cam_src_.y = 0;
+        }
     });
     RegisterKeyEvent(SDL_SCANCODE_A, nge::InputState::PRESSED | nge::InputState::HELD, [&](){
         sprite2_->MoveX(-100 * draw_timer_.GetElapsedTime());
+        cam_src_.x -= 1;
+        if (cam_src_.x < 0) {
+            cam_src_.x = 0;
+        }
     });
     RegisterKeyEvent(SDL_SCANCODE_S, nge::InputState::PRESSED | nge::InputState::HELD, [&](){
         sprite2_->MoveY(100 * draw_timer_.GetElapsedTime());
+        cam_src_.y += 1;
+        if ((cam_src_.y + cam_src_.h) > tilemap1_.GetH()) {
+            cam_src_.y = tilemap1_.GetH() - cam_src_.h;
+        }
     });
     RegisterKeyEvent(SDL_SCANCODE_D, nge::InputState::PRESSED | nge::InputState::HELD, [&](){
         sprite2_->MoveX(100 * draw_timer_.GetElapsedTime());
+        cam_src_.x += 1;
+        if ((cam_src_.x + cam_src_.w) > tilemap1_.GetW()) {
+            cam_src_.x = tilemap1_.GetW() - cam_src_.w;
+        }
+
     });
 
     draw_timer_.Start();
@@ -155,12 +189,9 @@ void SampleState::Draw() {
 
     draw_timer_.Reset();
 
-    
-    SDL_Rect tempdst = {500, 500, 400, 400};
-    SDL_QueryTexture(tilemap1_.GetMapTexture(), nullptr, nullptr, &tempdst.w, &tempdst.h);
     //SDL_RenderCopy(graphics_->GetRenderer(), target, nullptr, &tempdst);
-    SDL_RenderCopy(graphics_->GetRenderer(), tilemap1_.GetMapTexture(), nullptr, &tempdst);
-    SDL_RenderCopy(graphics_->GetRenderer(), tilemap2_.GetMapTexture(), nullptr, &tempdst);
+    SDL_RenderCopy(graphics_->GetRenderer(), tilemap1_.GetMapTexture(), &cam_src_, &cam_dst_);
+    // SDL_RenderCopy(graphics_->GetRenderer(), tilemap2_.GetMapTexture(), &cam_src_, &cam_dst_);
 
     // tempdst = {100, 700, 32, 32};
     // SDL_RenderCopy(graphics_->GetRenderer(), tileset1_.GetT)

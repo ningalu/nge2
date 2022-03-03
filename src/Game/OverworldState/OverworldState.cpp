@@ -2,6 +2,8 @@
 
 #include <vector>
 
+#include "Timer.h"
+// benchmarking state
 namespace rpg {
     OverworldState::OverworldState(nge::State state) : nge::State(state) {
         tileset1_ = std::make_shared<Tileset>(graphics_, "resources/OverworldState/tileset.png", 32, 32);
@@ -34,10 +36,18 @@ namespace rpg {
     }
 
     void OverworldState::Draw() {
+        nge::Timer t;
         
         SDL_Rect tempdst = {100, 100, 0, 0};
         SDL_QueryTexture(tilemap1_.GetMapTexture(), nullptr, nullptr, &tempdst.w, &tempdst.h);
-        SDL_RenderCopy(graphics_->GetRenderer(), tilemap1_.GetMapTexture(), nullptr, &tempdst);
+
+        t.Reset();
+        for (int i = 0; i < 35000; i++) {
+            SDL_RenderCopy(graphics_->GetRenderer(), tilemap1_.GetMapTexture(), nullptr, &tempdst);
+        }
+        std::cout << t << std::endl;
+
+        SDL_QueryTexture(tilemap2_.GetMapTexture(), nullptr, nullptr, &tempdst.w, &tempdst.h);
         SDL_RenderCopy(graphics_->GetRenderer(), tilemap2_.GetMapTexture(), nullptr, &tempdst);
 
     }

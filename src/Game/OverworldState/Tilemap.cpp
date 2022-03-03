@@ -10,19 +10,27 @@ namespace rpg {
         std::shared_ptr<Tileset> tileset, 
         std::vector<std::vector<int>> mapTileIds
     ) : graphics_(graphics), tileset_(tileset), map_tile_ids_(mapTileIds) {
+        w_ = mapTileIds[0].size() * tileset_->GetTileDimRect().w;
+        h_ = mapTileIds.size() * tileset_->GetTileDimRect().h;
         map_texture_ = SDL_CreateTexture(
             graphics->GetRenderer(), 
             SDL_PIXELFORMAT_RGBA8888, 
             SDL_TEXTUREACCESS_TARGET, 
-            mapTileIds[0].size() * tileset_->GetTileDimRect().w, 
-            mapTileIds.size() * tileset_->GetTileDimRect().h
+            w_, 
+            h_
         );
         Draw();
-
     }
 
     SDL_Texture* const Tilemap::GetMapTexture() const {
         return map_texture_;
+    }
+
+    int Tilemap::GetW() const {
+        return w_;
+    }
+    int Tilemap::GetH() const {
+        return h_;
     }
 
     void Tilemap::Draw() {
