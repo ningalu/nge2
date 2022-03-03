@@ -1,9 +1,7 @@
 #ifndef _SPRITE_H
 #define _SPRITE_H
 
-#include "Interfaces/Drawable.h"
-#include "Interfaces/Translatable.h"
-#include "Interfaces/Rotatable.h"
+#include "SimpleDrawableBase.h"
 
 #include <string>
 
@@ -13,7 +11,7 @@
 
 namespace nge {
 
-    class Sprite : public Drawable, public Translatable, public Rotatable {
+    class Sprite : public SimpleDrawableBase {
         public:
             Sprite(
                 std::shared_ptr<Graphics> graphics, 
@@ -24,37 +22,14 @@ namespace nge {
                 SDL_Point rotationCentre = Graphics::ROTATION_CENTRE,
                 SDL_RendererFlip flip = SDL_FLIP_NONE
             );
-            
-            
 
-            // Drawable Interface
             void Draw();
-            int GetX();
-            int GetY();
-            int GetW();
-            int GetH();
-            SDL_Rect GetDestRect();
-
-            // Translatable Interface
-            void SetX(int x);
-            void SetY(int y);
-            void MoveX(int x);
-            void MoveY(int y);
-
-            // Rotatable Interface
-            double GetAngle();
-            void Rotate(double angle);
-            void SetAngle(double angle);
 
             ~Sprite();
 
         protected:
             std::shared_ptr<Graphics> graphics_;
             TexturePtr texture_;
-            SDL_Rect src_;
-            SDL_Rect dst_;
-            double angle_;
-            SDL_Point rotation_centre_;
             SDL_RendererFlip flip_;
     };
 

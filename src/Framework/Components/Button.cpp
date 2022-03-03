@@ -29,6 +29,18 @@ namespace nge {
         return clickable_region_;
     }
 
+    bool Button::Overlaps(SDL_Rect area) {
+        return true;
+    }
+
+    void Button::AlignHorizontal(int x) {
+
+    }
+
+    void Button::AlignVertical(int y) {
+
+    }
+
     void Button::OnClick() {
         if (enabled_) {
             held_ = true;

@@ -32,6 +32,10 @@ namespace nge {
             int GetH();
             SDL_Rect GetDestRect();
 
+            bool Overlaps(SDL_Rect area);
+            void AlignHorizontal(int x);
+            void AlignVertical(int y);
+
             void SetOnClick(std::function<void(void)> onClick);
             void SetOnHold(std::function<void(void)> onHold);
             void SetOnRelease(std::function<void(void)> onRelease);

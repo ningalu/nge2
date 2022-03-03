@@ -4,6 +4,7 @@ add_library(
     ./AnimatedSprite.cpp
     ./Button.cpp
     ./Text.cpp
+    ./SimpleDrawableBase.cpp
 )
 
 target_include_directories(

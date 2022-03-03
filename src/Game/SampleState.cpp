@@ -74,7 +74,7 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
     ctorTimer.Reset();
     sprite2_ = nge::SpritePtr(new nge::Sprite(graphics_, "resources/SampleState/ibuki.png", nge::Graphics::FULL_TEXTURE, {0, sprite2_text_.GetY() + 30, 160, 206}));
     std::cout << "sprite2_ time: " << ctorTimer << std::endl;
-    AlignHorizontal(sprite2_text_, *sprite2_);
+    sprite2_->AlignHorizontal(sprite2_text_.GetCentreX());
 
     anim1_text_ = nge::Text{graphics_, f, nge::FontStyle::SOLID, "Animation Test 1", SDL_Point{300, 50}};
     anim1_ = std::make_unique<nge::AnimatedSprite>(
@@ -86,17 +86,17 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
         2, 
         2
     );
-    AlignHorizontal(anim1_text_, *anim1_);
+    anim1_->AlignHorizontal(anim1_text_.GetCentreX());
 
     anim2_text_ = nge::Text{graphics_, f, nge::FontStyle::SOLID, "Animation Test 2", SDL_Point{900, 50}};
     anim2_ = std::make_unique<nge::AnimatedSprite>(graphics_, "resources/SampleState/kokichiwalk.png", nge::Graphics::FULL_TEXTURE, SDL_Rect{900, 80, 89, 90}, 2, -1, 15);
-    AlignHorizontal(anim2_text_, *anim2_);
+    anim2_->AlignHorizontal(anim2_text_.GetCentreX());
 
     butt1_text_ = nge::Text{graphics_, f, nge::FontStyle::SOLID, "Button Test", SDL_Point{600, 50}};
     nge::SpritePtr temp = std::make_unique<nge::Sprite>(graphics_, "resources/SampleState/hachigatsu.jpg", nge::Graphics::FULL_TEXTURE, SDL_Rect{600, 90, 250, 250});
-    AlignHorizontal(butt1_text_, *temp);
+    temp->AlignHorizontal(butt1_text_.GetCentreX());
     nge::SpritePtr tempHeld = std::make_unique<nge::Sprite>(graphics_, "resources/SampleState/hachigatsu_held.jpg", nge::Graphics::FULL_TEXTURE, SDL_Rect{600, 90, 250, 250});
-    AlignHorizontal(butt1_text_, *tempHeld);
+    tempHeld->AlignHorizontal(butt1_text_.GetCentreX());
     butt1_ = std::make_shared<nge::Button>(input_, std::move(temp), SDL_Rect{600, 90, 250, 250});
     butt1_->SetHeldDrawable(std::move(tempHeld));
     butt1_->SetOnRelease([&](){

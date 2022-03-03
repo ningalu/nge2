@@ -15,7 +15,9 @@ namespace nge {
         double angle,
         SDL_Point rotationCentre,
         SDL_RendererFlip flip
-    ) : graphics_(graphics), dst_(dst), angle_(angle), flip_(flip) {
+    ) : graphics_(graphics), flip_(flip) {
+        dst_ = dst;
+        angle_ = angle;
         texture_ = graphics_->LoadTexture(texturePath);
         if (src == Graphics::FULL_TEXTURE) {
             src_.x = 0;
@@ -41,52 +43,6 @@ namespace nge {
             &rotation_centre_,
             flip_
         );
-    }
-
-    int Sprite::GetX() {
-        return dst_.x;
-    }
-
-    int Sprite::GetY() {
-        return dst_.y;
-    }
-
-    int Sprite::GetW() {
-        return dst_.w;
-    }
-
-    int Sprite::GetH() {
-        return dst_.h;
-    }
-
-    SDL_Rect Sprite::GetDestRect() {
-        return dst_;
-    }
-    
-    void Sprite::SetX(int x) {
-        dst_.x = x;
-    }
-
-    void Sprite::SetY(int y) {
-        dst_.y = y;
-    }
-
-    void Sprite::MoveX(int x) {
-        dst_.x += x;
-    }
-
-    void Sprite::MoveY(int y) {
-        dst_.y += y;
-    }
-
-    double Sprite::GetAngle() {
-        return angle_;
-    }
-    void Sprite::Rotate(double angle) {
-        angle_ += angle;
-    }
-    void Sprite::SetAngle(double angle) {
-        angle_ = angle;
     }
 
     Sprite::~Sprite() {

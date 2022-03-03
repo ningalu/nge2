@@ -39,52 +39,7 @@ namespace nge {
     void Text::Draw() {
         graphics_->DrawTexture(texture_, &src_, &dst_, angle_, &rotation_centre_, flip_);
     }
-
-    int Text::GetX() {
-        return dst_.x;
-    }
-
-    int Text::GetY() {
-        return dst_.y;
-    }
-
-    int Text::GetW() {
-        return dst_.w;
-    }
-
-    int Text::GetH() {
-        return dst_.h;
-    }
-
-    SDL_Rect Text::GetDestRect() {
-        return dst_;
-    }
     
-    void Text::SetX(int x) {
-        dst_.x = x;
-    }
-
-    void Text::SetY(int y) {
-        dst_.y = y;
-    }
-
-    void Text::MoveX(int x) {
-        dst_.x += x;
-    }
-
-    void Text::MoveY(int y) {
-        dst_.y += y;
-    }
-
-    double Text::GetAngle() {
-        return angle_;
-    }
-    void Text::Rotate(double angle) {
-        angle_ += angle;
-    }
-    void Text::SetAngle(double angle) {
-        angle_ = angle;
-    }
     Text::~Text() {
         
     }

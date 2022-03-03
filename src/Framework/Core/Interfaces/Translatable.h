@@ -13,14 +13,4 @@ class Translatable {
         virtual void AlignVertical(int y) = 0;
 };
 
-template <typename T1, typename T2>
-void AlignHorizontal(T1& origin, T2& toMove) {
-    toMove.SetX(GetCentreX(origin) - (toMove.GetW() / 2));
-}
-
-template <typename T1, typename T2>
-void AlignVertical(T1& origin, T2& toMove) {
-    toMove.SetY(GetCentreY(origin) - (toMove.GetH() / 2));
-}
-
 #endif

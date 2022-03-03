@@ -22,6 +22,9 @@ InitialState::InitialState(nge::State init) : State(init) {
         SDL_Point{100, 800}, 
         SDL_Color{0, 0, 0, 0}
     );
+    solid_text_->SetX(150);
+    solid_text_->SetAngle(30.0);
+
     shaded_text_ = std::make_unique<nge::Text>(
         graphics_, 
         f, 
