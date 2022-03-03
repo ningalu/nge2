@@ -5,6 +5,7 @@ add_library(
     ./Button.cpp
     ./Text.cpp
     ./Utility/SimpleDrawableBase.cpp
+    ./Utility/AnimationState.cpp
 )
 
 target_include_directories(
