@@ -6,12 +6,16 @@ namespace nge {
         AnimationState(
             int frameCount, 
             int repeats = -1, 
-            int frameDuration = 1, 
+            int subframes = 1, 
             int startingSubframe = 0, 
             int startingFrame = 0, 
             int startingRepeat = 0
         );
-        const int FrameCount, Repeats, FrameDuration;
+
+        void Advance();
+        void Reset();
+
+        const int FrameCount, Repeats, Subframes;
         int CurrentSubframe, CurrentFrame, CurrentRepeat;
     };
 }

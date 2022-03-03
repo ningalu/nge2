@@ -2,6 +2,7 @@
 #define _ANIMATEDSPRITE_H
 
 #include "Sprite.h"
+#include "Utility/AnimationState.h"
 
 namespace nge {
     class AnimatedSprite : public Sprite {
@@ -26,14 +27,8 @@ namespace nge {
             ~AnimatedSprite();
 
         protected:
-            int frame_count_;
-            int repeats_;
-            double frame_duration_;
+            std::shared_ptr<AnimationState> state_;
             SDL_Rect full_texture_;
-
-            int current_duration_;
-            int current_frame_;
-            int current_repeat_;
 
             void UpdateFrame();
     };
