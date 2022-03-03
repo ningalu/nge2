@@ -13,9 +13,9 @@
 - how should text be handled? feels like it shouldnt warrant its own class since plain text is functionally just a sprite
 - fix cmake so it doesnt depend on my file system
 - the entire drawing system is super clumsy; it should be easier to position objects relative to one another and defining destination rect size is a pain, maybe binding objects relative positions. might need CSTs or at least some linear algebra
-- NEED a base drawable class holy shit
+- ~NEED a base drawable class holy shit~ need to reexamine the concept of drawable objects.
 
-## game states
+# game states
 you should be able to inherit from state, write a constructor with only objects you actually want to pass in, write your draw and tick methods, and not have to worry about passing in game level dependencies like graphics or the state manager. solutions are a bit annoying.
 
 1: separate construction and initialisation
@@ -45,3 +45,30 @@ maybe separate fundamental state behaviour and user defined state behaviour, and
 eg. Game.SetInitialState\<State\<InitialStateModel\>\>(InitialStateModelArgs...)  
 \- the model wouldn't have enough information about its container State to do things like create textures without encountering the same types of problems surrounding passing dependencies like graphics and state management   
 \- requires users to double template something which is slightly cringe  
+
+# Drawing
+
+## Drawables
+what does it mean to be Drawable?  
+if an object is Drawable, it can be drawn, and it occupies some space on the screen. for a simple sprite or piece of text this might be a single sdl_rect but maybe you will have a character sprite composed of several limbs. in that case strictly speaking the sprite will only occupy a shape on the screen defined by some contour rather than a rectangle. interfaces name behaviours of their implementors, so it doesnt really make sense to have some kind of GetDestinationRectangle method on the Drawable interface. i should instead consider the reasons you would need the destination rectangle, or need to know a Drawable's position or dimensions. two reasons i can think of are calculating overlaps and aligning two objects. therefore those behaviours should be potential behaviours should be added to Drawable. it would be nice to be able to write something like  
+
+```if (MyDrawableImpl1.Overlaps(MyDrawableImpl2) {do something}```
+
+but to pass a pointer to this method you would need a way to get space occupied on the screen from the Drawable interface. the solution will probably have to be to pass the space occupied as a shape. this can be an SDL_Rect temporarily.  
+alignment will probably need to split into something like AlignHorizontal and AlignVertical  
+
+```MyDrawableImpl1.AlignHorizontal(50)```  
+
+then again, should an object being drawable on the screen imply that it can be aligned (moved)? i have a Translatable interface but is it meaningful to have? in practice, the Drawable interface will probably be used to programmatically Draw a collection of Drawable objects. a user shouldnt have to define what it means for their own implementation of a Drawable to be aligned with something if all they want to do is register it to some list of Drawables. I think therefore the Translatable interface makes sense. 
+
+## Translatables
+being Translatable is a lot easier to define than being Drawable. Translatables will require methods that set or increment their position on screen. alignment is technically different from just setting a position because you will typically require information about the visual size of some graphic in order to align it appropriately, so the alignment methods can go on it too.
+
+## Rotatables
+rotation is even simpler because alignment of rotation is just setting a rotation, and has nothing to do with a graphics dimensions. all it needs is the ability to set and increment an angle.
+
+## Single-Texture Drawable Functionality
+there was/is massive code redundancy between Text, Sprite/AnimatedSprite, and Button. i would like to take this redundancy out of text and sprite and maybe revise how buttons work.
+
+### SimpleDrawableBase
+a SimpleDrawableBase will be an abstract class with source and destination rectangles and convenience methods common to Text and Sprite. it will inherit from all of Drawable, Translatable, and Rotatable.

@@ -5,12 +5,12 @@
 
 class Translatable {
     public:
-        virtual int GetX() = 0;
-        virtual int GetY() = 0;
         virtual void SetX(int x) = 0;
         virtual void SetY(int y) = 0;
         virtual void MoveX(int x) = 0;
         virtual void MoveY(int y) = 0;
+        virtual void AlignHorizontal(int x) = 0;
+        virtual void AlignVertical(int y) = 0;
 };
 
 template <typename T1, typename T2>
