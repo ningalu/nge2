@@ -2,9 +2,9 @@
 - reexamine usage of shared pointer and object ownerships
 - concept of automatic z levels for drawables instead of forced user defined draw orders per state (sort on every insertion to drawing list?)
 - const correctness, pass by reference, inline where applicable
-- fix namespacing and include guards
+- ~fix namespacing and include guards~ DONE
 - button construction is convoluted
-- improve templating of initial state creation -DONE?
+- ~improve templating of initial state creation~ -DONE
 - ~move input processing into states?~ DONE
 - input handling needs a longer history of mouse and keyboard states to allow buffers of precision, like allowing a 5 frame buffer before an input is considered "held"
 - dedicated resource loader? ~would be another annoying dependency to pass in~ not that annoying anymore
