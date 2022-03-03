@@ -58,8 +58,10 @@ namespace nge {
     }
 
     void AnimatedSprite::Sync(AnimatedSprite& sprite, bool disableAdvance) {
-        state_ = sprite.GetAnimationState();
-        update_state_ = !disableAdvance;
+        if (state_->IsCompatable(*sprite.GetAnimationState())) {
+            state_ = sprite.GetAnimationState();
+            update_state_ = !disableAdvance;
+        } // Could throw exception here
     }
 
     AnimatedSprite::~AnimatedSprite() {

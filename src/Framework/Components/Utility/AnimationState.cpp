@@ -25,10 +25,17 @@ namespace nge {
             }
         }
     }
-    
+
     void AnimationState::Reset() {
         CurrentSubframe = 0;
         CurrentFrame = 0;
         CurrentRepeat = 0;
     }
+
+    bool AnimationState::IsCompatable(const AnimationState& state) {
+        return (FrameCount == state.FrameCount)
+        && (Repeats == state.Repeats)
+        && (Subframes == state.Subframes);
+    }
+
 }
