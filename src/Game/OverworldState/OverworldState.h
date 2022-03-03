@@ -1,7 +1,7 @@
 #ifndef _OVERWORLDSTATE_H
 #define _OVERWORLDSTATE_H
 
-#include "State.hpp"
+#include "Core/State.hpp"
 #include "Tilemap.h"
 #include "Tileset.h"
 

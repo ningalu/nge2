@@ -3,7 +3,7 @@
 #include <iostream>
 #include "SDL2/SDL_ttf.h"
 
-#include "Utility/SDL_RectExtensions.h"
+#include "Core/Utility/SDL_RectExtensions.h"
 #include "Game/SampleState.h"
 #include "Game/OverworldState/OverworldState.h"
 

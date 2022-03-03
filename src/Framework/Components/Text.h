@@ -1,11 +1,11 @@
 #ifndef _TEXT_H
 #define _TEXT_H
 
-#include "Utility/SimpleDrawableBase.h"
+#include "Components/Utility/SimpleDrawableBase.h"
 
 #include "SDL2/SDL.h"
 
-#include "Graphics.h"
+#include "Core/Graphics.h"
 
 namespace nge {
     class Text : public SimpleDrawableBase {

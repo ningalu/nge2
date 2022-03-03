@@ -5,7 +5,7 @@
 
 #include "SDL2/SDL.h"
 
-#include "Graphics.h"
+#include "Core/Graphics.h"
 
 namespace rpg {
     class Tileset {

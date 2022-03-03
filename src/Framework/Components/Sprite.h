@@ -1,13 +1,13 @@
 #ifndef _SPRITE_H
 #define _SPRITE_H
 
-#include "Utility/SimpleDrawableBase.h"
+#include "Components/Utility/SimpleDrawableBase.h"
 
 #include <string>
 
 #include "SDL2/SDL.h"
 
-#include "Graphics.h"
+#include "Core/Graphics.h"
 
 namespace nge {
 

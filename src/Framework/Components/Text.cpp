@@ -1,6 +1,6 @@
 #include "Text.h"
 
-#include "Utility/SDL_PointExtensions.h"
+#include "Core/Utility/SDL_PointExtensions.h"
 
 namespace nge {
     Text::Text(

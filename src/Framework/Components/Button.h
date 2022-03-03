@@ -6,9 +6,9 @@
 #include <memory>
 #include <functional>
 
-#include "Input.h"
-#include "Interfaces/Clickable.h"
-#include "Interfaces/Drawable.h"
+#include "Core/Input.h"
+#include "Core/Interfaces/Clickable.h"
+#include "Core/Interfaces/Drawable.h"
 
 namespace nge {
     class Button : public Clickable, public Drawable {

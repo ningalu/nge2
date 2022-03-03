@@ -8,7 +8,7 @@
 #include "Core/StateManager.h"
 #include "Components/Sprite.h"
 #include "Components/AnimatedSprite.h"
-#include "Timer.h"
+#include "Core/Timer.h"
 #include "Components/Button.h"
 #include "Components/Text.h"
 #include "OverworldState/Tileset.h"

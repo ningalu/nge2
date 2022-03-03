@@ -2,7 +2,7 @@
 #define _ANIMATEDSPRITE_H
 
 #include "Sprite.h"
-#include "Utility/AnimationState.h"
+#include "Components/Utility/AnimationState.h"
 
 namespace nge {
     class AnimatedSprite : public Sprite {

@@ -1,7 +1,7 @@
 #include "SimpleDrawableBase.h"
 
 #include <iostream>
-#include "Utility/SDL_RectExtensions.h"
+#include "Core/Utility/SDL_RectExtensions.h"
 
 namespace nge {
     bool SimpleDrawableBase::Overlaps(SDL_Rect area) {

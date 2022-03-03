@@ -1,9 +1,9 @@
 #ifndef _SIMPLEDRAWABLEBASE_H
 #define _SIMPLEDRAWABLEBASE_H
 
-#include "Interfaces/Drawable.h"
-#include "Interfaces/Translatable.h"
-#include "Interfaces/Rotatable.h"
+#include "Core/Interfaces/Drawable.h"
+#include "Core/Interfaces/Translatable.h"
+#include "Core/Interfaces/Rotatable.h"
 
 namespace nge {
     class SimpleDrawableBase : public Drawable, public Translatable, public Rotatable {

@@ -3,8 +3,8 @@
 #include <climits>
 #include <iostream>
 
-#include "Utility/SDL_RectExtensions.h"
-#include "Utility/SDL_PointExtensions.h"
+#include "Core/Utility/SDL_RectExtensions.h"
+#include "Core/Utility/SDL_PointExtensions.h"
 
 namespace nge {
     Sprite::Sprite(

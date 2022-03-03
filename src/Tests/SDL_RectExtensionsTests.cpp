@@ -1,7 +1,7 @@
 #include "SDL_RectExtensionsTests.h"
 
 #include "SDL2/SDL.h"
-#include "Utility/SDL_RectExtensions.h"
+#include "Core/Utility/SDL_RectExtensions.h"
 
 TestResult HasIntersect_CornersOverlap();
 

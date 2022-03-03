@@ -11,7 +11,6 @@ target_include_directories(
     Game
     PUBLIC ${CMAKE_SOURCE_DIR}/src
     PUBLIC ${CMAKE_SOURCE_DIR}/src/Framework
-    PUBLIC ${CMAKE_SOURCE_DIR}/src/Components
     PUBLIC ${SDL_INCLUDE_DIR}
     PUBLIC ${SDL_INCLUDE_DIR_SDL2}
     PUBLIC ${SDL_IMAGE_INCLUDE_DIR}

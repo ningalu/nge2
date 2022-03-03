@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Timer.h"
+#include "Core/Timer.h"
 // benchmarking state
 namespace rpg {
     OverworldState::OverworldState(nge::State state) : nge::State(state) {

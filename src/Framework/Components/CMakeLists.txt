@@ -10,7 +10,7 @@ add_library(
 
 target_include_directories(
     Components
-    PUBLIC ${CMAKE_SOURCE_DIR}/src/Framework/Core
+    PUBLIC ${CMAKE_SOURCE_DIR}/src/Framework
     PUBLIC ${SDL_INCLUDE_DIR}
     PUBLIC ${SDL_INCLUDE_DIR_SDL2}
     PUBLIC ${SDL_IMAGE_INCLUDE_DIR}

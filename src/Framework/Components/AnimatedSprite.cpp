@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "Utility/SDL_RectExtensions.h"
+#include "Core/Utility/SDL_RectExtensions.h"
 
 namespace nge {
     AnimatedSprite::AnimatedSprite(

@@ -6,7 +6,7 @@
 
 #include "InitialState/InitialState.h"
 #include "SampleState.h"
-#include "Utility/SDL_RectExtensions.h"
+#include "Core/Utility/SDL_RectExtensions.h"
 #include "SDL_RectExtensionsTests.h"
 
 class Interface {
