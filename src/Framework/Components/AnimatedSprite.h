@@ -20,17 +20,21 @@ namespace nge {
                 SDL_RendererFlip flip = SDL_FLIP_NONE
             );
 
+            std::shared_ptr<AnimationState> GetAnimationState();
+            void SetAnimationState(std::shared_ptr<AnimationState> animationState);
+
             void Draw() override;
             void Advance();
             void Reset();
+            void Sync(AnimatedSprite& sprite, bool disableAdvance = true);
+            
 
             ~AnimatedSprite();
 
         protected:
             std::shared_ptr<AnimationState> state_;
             SDL_Rect full_texture_;
-
-            void UpdateFrame();
+            bool update_state_;
     };
 
     using AnimatedSpritePtr = std::unique_ptr<AnimatedSprite>;

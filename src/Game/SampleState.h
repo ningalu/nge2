@@ -38,6 +38,9 @@ class SampleState : public nge::State {
         nge::AnimPtr anim2_;
         nge::Text anim2_text_;
 
+        nge::AnimPtr anim3_;
+        nge::Text anim3_text_;
+
         nge::ButtonPtr butt1_;
         nge::Text butt1_text_;
 

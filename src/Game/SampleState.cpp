@@ -92,6 +92,21 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
     anim2_ = std::make_unique<nge::AnimatedSprite>(graphics_, "resources/SampleState/kokichiwalk.png", nge::Graphics::FULL_TEXTURE, SDL_Rect{900, 80, 89, 90}, 2, -1, 15);
     anim2_->AlignHorizontal(anim2_text_.GetCentreX());
 
+    anim3_text_ = nge::Text{graphics_, f, nge::FontStyle::SOLID, "Animation Syncing", SDL_Point{-1, 170}};
+    anim3_text_.AlignHorizontal(anim1_text_.GetCentreX());
+
+    anim3_ = std::make_unique<nge::AnimatedSprite>(
+        graphics_, 
+        "resources/SampleState/blaziken_anim_test.png",
+        nge::Graphics::FULL_TEXTURE,
+        SDL_Rect{0, anim3_text_.GetY() + 30, 100, 100},
+        17,
+        2,
+        2
+    );
+    anim3_->AlignHorizontal(anim3_text_.GetCentreX());
+    anim3_->Sync(*anim1_);
+
     butt1_text_ = nge::Text{graphics_, f, nge::FontStyle::SOLID, "Button Test", SDL_Point{600, 50}};
     nge::SpritePtr temp = std::make_unique<nge::Sprite>(graphics_, "resources/SampleState/hachigatsu.jpg", nge::Graphics::FULL_TEXTURE, SDL_Rect{600, 90, 250, 250});
     temp->AlignHorizontal(butt1_text_.GetCentreX());
@@ -183,6 +198,9 @@ void SampleState::Draw() {
 
     anim2_->Draw();
     anim2_text_.Draw();
+
+    anim3_->Draw();
+    anim3_text_.Draw();
 
     butt1_->Draw();
     butt1_text_.Draw();

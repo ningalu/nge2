@@ -9,7 +9,6 @@ namespace nge {
     }
 
     void SimpleDrawableBase::SetX(int x) {
-        std::cout << "SimpleDrawableBase SetX" << std::endl;
         dst_.x = x;
     }
 
@@ -38,7 +37,6 @@ namespace nge {
     }
 
     void SimpleDrawableBase::SetAngle(double angle) {
-        std::cout << "SimpleDrawableBase SetAngle" << std::endl;
         angle_ += angle;
     }
 

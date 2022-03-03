@@ -19,11 +19,22 @@ namespace nge {
     ) : 
     Sprite(graphics, texturePath, src, dst, angle, rotationCentre, flip) {
         state_ = std::make_shared<AnimationState>(frameCount, repeats, frameDuration);
+        
         full_texture_ = src_;
+        
         src_ = {0, 0, 0, 0};
         src_.w = full_texture_.w / state_->FrameCount;
         src_.h = full_texture_.h;
 
+        update_state_ = true;
+    }
+
+    std::shared_ptr<AnimationState> AnimatedSprite::GetAnimationState() {
+        return state_;
+    }
+
+    void AnimatedSprite::SetAnimationState(std::shared_ptr<AnimationState> animationState) {
+        state_ = animationState;
     }
 
     // Having animation updates use time deltas would probably cause weird stuttering so this version is frame dependent
@@ -33,7 +44,9 @@ namespace nge {
     }
 
     void AnimatedSprite::Advance() {
-        state_->Advance();
+        if (update_state_) {
+            state_->Advance();
+        }
         if ((state_->Repeats == -1) || (state_->CurrentRepeat < state_->Repeats)) {
             src_.x = state_->CurrentFrame * src_.w;
             src_.x %= full_texture_.w;
@@ -42,6 +55,11 @@ namespace nge {
 
     void AnimatedSprite::Reset() {
         state_->Reset();
+    }
+
+    void AnimatedSprite::Sync(AnimatedSprite& sprite, bool disableAdvance) {
+        state_ = sprite.GetAnimationState();
+        update_state_ = !disableAdvance;
     }
 
     AnimatedSprite::~AnimatedSprite() {
