@@ -1,5 +1,5 @@
-#ifndef _SPRITE_H
-#define _SPRITE_H
+#ifndef _COMPONENTS_SPRITE_H
+#define _COMPONENTS_SPRITE_H
 
 #include "Components/Utility/SimpleDrawableBase.h"
 

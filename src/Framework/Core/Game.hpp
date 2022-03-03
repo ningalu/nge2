@@ -1,5 +1,5 @@
-#ifndef _GAME_H
-#define _GAME_H
+#ifndef _FRAMEWORK_CORE_GAME_H
+#define _FRAMEWORK_CORE_GAME_H
 
 #include <memory>
 

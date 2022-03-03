@@ -1,5 +1,5 @@
-#ifndef _ANIMATEDSPRITE_H
-#define _ANIMATEDSPRITE_H
+#ifndef _COMPONENTS_ANIMATEDSPRITE_H
+#define _COMPONENTS_ANIMATEDSPRITE_H
 
 #include "Sprite.h"
 #include "Components/Utility/AnimationState.h"

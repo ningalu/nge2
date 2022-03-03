@@ -1,5 +1,5 @@
-#ifndef _GRAPHICS_H
-#define _GRAPHICS_H
+#ifndef _FRAMEWORK_CORE_GRAPHICS_H
+#define _FRAMEWORK_CORE_GRAPHICS_H
 
 #include <memory>
 #include <string>

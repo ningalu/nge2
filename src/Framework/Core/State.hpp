@@ -1,5 +1,5 @@
-#ifndef _STATE_H
-#define _STATE_H
+#ifndef _FRAMEWORK_CORE_STATE_H
+#define _FRAMEWORK_CORE_STATE_H
 
 #include <memory>
 #include <map>

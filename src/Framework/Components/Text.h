@@ -1,5 +1,5 @@
-#ifndef _TEXT_H
-#define _TEXT_H
+#ifndef _COMPONENTS_TEXT_H
+#define _COMPONENTS_TEXT_H
 
 #include "Components/Utility/SimpleDrawableBase.h"
 

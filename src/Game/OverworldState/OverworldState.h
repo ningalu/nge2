@@ -1,5 +1,5 @@
-#ifndef _OVERWORLDSTATE_H
-#define _OVERWORLDSTATE_H
+#ifndef _GAME_OVERWORLDSTATE_OVERWORLDSTATE_H
+#define _GAME_OVERWORLDSTATE_OVERWORLDSTATE_H
 
 #include "Core/State.hpp"
 #include "Tilemap.h"

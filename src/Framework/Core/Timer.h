@@ -1,5 +1,5 @@
-#ifndef _TIMER_H
-#define _TIMER_H
+#ifndef _FRAMEWORK_CORE_TIMER_H
+#define _FRAMEWORK_CORE_TIMER_H
 
 #include "stdint.h"
 #include <chrono>

@@ -1,5 +1,5 @@
-#ifndef _ANIMATION_STATE_H
-#define _ANIMATION_STATE_H
+#ifndef _COMPONENTS_UTILITY_ANIMATION_STATE_H
+#define _COMPONENTS_UTILITY_ANIMATION_STATE_H
 
 namespace nge {
     struct AnimationState {

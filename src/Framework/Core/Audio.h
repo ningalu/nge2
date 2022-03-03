@@ -1,5 +1,5 @@
-#ifndef _AUDIO_H
-#define _AUDIO_H
+#ifndef _FRAMEWORK_CORE_AUDIO_H
+#define _FRAMEWORK_CORE_AUDIO_H
 
 #include <memory>
 #include <string>

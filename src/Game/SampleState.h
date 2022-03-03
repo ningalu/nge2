@@ -1,5 +1,5 @@
-#ifndef _SAMPLESTATE_H
-#define _SAMPLESTATE_H
+#ifndef _GAME_SAMPLESTATE_H
+#define _GAME_SAMPLESTATE_H
 
 #include <memory>
 

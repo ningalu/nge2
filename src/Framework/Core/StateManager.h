@@ -1,5 +1,5 @@
-#ifndef _STATEMANAGER_H
-#define _STATEMANAGER_H
+#ifndef _FRAMEWORK_CORE_STATEMANAGER_H
+#define _FRAMEWORK_CORE_STATEMANAGER_H
 
 #include <vector>
 #include <memory>

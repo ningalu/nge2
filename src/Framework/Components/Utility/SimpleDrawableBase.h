@@ -1,5 +1,5 @@
-#ifndef _SIMPLEDRAWABLEBASE_H
-#define _SIMPLEDRAWABLEBASE_H
+#ifndef _COMPONENTS_UTILITY_SIMPLEDRAWABLEBASE_H
+#define _COMPONENTS_UTILITY_SIMPLEDRAWABLEBASE_H
 
 #include "Core/Interfaces/Drawable.h"
 #include "Core/Interfaces/Translatable.h"

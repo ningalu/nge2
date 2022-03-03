@@ -1,5 +1,5 @@
-#ifndef _BUTTON_H
-#define _BUTTON_H
+#ifndef _COMPONENTS_BUTTON_H
+#define _COMPONENTS_BUTTON_H
 
 #include "Sprite.h"
 
