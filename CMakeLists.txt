@@ -12,12 +12,14 @@ set(SDL_TTF_LIBRARY_DIR "A:/SDK/sdl2_ttf/SDL2_ttf-devel-2.0.15-mingw/SDL2_ttf-2.
 set(SDL_TTF_INCLUDE_DIR "A:/SDK/sdl2_ttf/SDL2_ttf-devel-2.0.15-mingw/SDL2_ttf-2.0.15/x86_64-w64-mingw32/include")
 set(NGE_FRAMEWORK_DIR ${CMAKE_SOURCE_DIR}/src/Framework)
 set(NGE_GAME_DIR ${CMAKE_SOURCE_DIR}/src/Game)
+set(NGE_TESTS_DIR ${CMAKE_SOURCE_DIR}/src/Tests)
 
 set(CMAKE_BUILD_TYPE Debug)
 
 add_subdirectory(./src/Framework/Core)
 add_subdirectory(./src/Framework/Components)
 add_subdirectory(./src/Game)
+add_subdirectory(./src/Tests)
 
 target_include_directories(
     ${PROJECT_NAME}
@@ -28,6 +30,7 @@ target_include_directories(
     PUBLIC ${SDL_TTF_INCLUDE_DIR}
     PUBLIC ${NGE_FRAMEWORK_DIR}
     PUBLIC ${NGE_GAME_DIR}
+    PUBLIC ${NGE_TESTS_DIR}
 )
 
 target_link_directories(
@@ -38,6 +41,7 @@ target_link_directories(
     PRIVATE ${SDL_TTF_LIBRARY_DIR}
     PUBLIC ${NGE_FRAMEWORK_DIR}
     PUBLIC ${NGE_GAME_DIR}
+    PUBLIC ${NGE_TESTS_DIR}
 )
 
 target_link_libraries(
@@ -50,4 +54,5 @@ target_link_libraries(
     -lSDL2_ttf
     Core
     Game
+    Tests
 )

@@ -6,6 +6,8 @@
 
 bool operator==(SDL_Rect lhs, SDL_Rect rhs);
 std::ostream& operator<<(std::ostream& os, const SDL_Rect& rect);
-bool PointInRect(const SDL_Point& p, const SDL_Rect& r);
+// Copying simple values vs passing const reference?
+bool PointInRect(SDL_Point p, SDL_Rect r);
+bool HasIntersect(SDL_Rect r1, SDL_Rect r2);
 
 #endif
