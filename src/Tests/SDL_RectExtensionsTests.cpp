@@ -12,12 +12,8 @@ TestResult RunSDL_RectExtensionTests() {
 TestResult HasIntersect_CornersOverlap() {
     SDL_Rect r1{0, 0, 10, 10};
     SDL_Rect r2{9, 9, 10, 10};
-    if (!HasIntersect(r1, r2)) {
-        return TestResult::FAIL;
-    }
-    if (!HasIntersect(r2, r1)) {
-        return TestResult::FAIL;
-    }
+    ASSERT(HasIntersect(r1, r2));
+    ASSERT(HasIntersect(r2, r1));
 
     r1 = {9, 0, 10, 10};
     r2 = {0, 9, 10, 10};

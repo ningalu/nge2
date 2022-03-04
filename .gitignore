@@ -6,7 +6,5 @@
 *.app
 .vscode
 CMakeCache.txt
-build/CMakeFiles
-build/src
-build/cmake_install.cmake
-build/Makefile
+build/*
+!build/resources

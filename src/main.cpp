@@ -7,18 +7,11 @@
 #include "InitialState/InitialState.h"
 #include "SampleState.h"
 #include "Core/Utility/SDL_RectExtensions.h"
-#include "SDL_RectExtensionsTests.h"
 
 int main(int argc, char **argv) {
     
     for (int i = 0; i < argc - 1; i++) {
         printf("%d\n", argv[i]);
-    }
-    
-    if (RunSDL_RectExtensionTests() == TestResult::FAIL) {
-        return 1;
-    } else {
-        std::cout << "SDL_RectExtensionTests ran successfully" << std::endl;
     }
     
     nge::Game game;

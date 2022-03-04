@@ -54,5 +54,44 @@ target_link_libraries(
     -lSDL2_ttf
     Core
     Game
+)
+
+include(CTest)
+add_executable(tests ./src/tests/tests.cpp)
+add_test(Tests tests)
+
+target_include_directories(
+    tests
+    PUBLIC ${SDL_INCLUDE_DIR}
+    PUBLIC ${SDL_INCLUDE_DIR}/SDL2
+    PUBLIC ${SDL_IMAGE_INCLUDE_DIR}
+    PUBLIC ${SDL_MIXER_INCLUDE_DIR}
+    PUBLIC ${SDL_TTF_INCLUDE_DIR}
+    PUBLIC ${NGE_FRAMEWORK_DIR}
+    PUBLIC ${NGE_GAME_DIR}
+    PUBLIC ${NGE_TESTS_DIR}
+)
+
+target_link_directories(
+    tests
+    PRIVATE ${SDL_LIBRARY_DIR}
+    PRIVATE ${SDL_IMAGE_LIBRARY_DIR}
+    PRIVATE ${SDL_MIXER_LIBRARY_DIR}
+    PRIVATE ${SDL_TTF_LIBRARY_DIR}
+    PUBLIC ${NGE_FRAMEWORK_DIR}
+    PUBLIC ${NGE_GAME_DIR}
+    PUBLIC ${NGE_TESTS_DIR}
+)
+
+target_link_libraries(
+    tests
+    -lmingw32
+    -lSDL2main
+    -lSDL2
+    -lSDL2_image
+    -lSDL2_mixer
+    -lSDL2_ttf
+    Core
+    Game
     Tests
 )
