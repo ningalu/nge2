@@ -23,14 +23,28 @@ target_link_directories(
     PRIVATE ${SDL_TTF_LIBRARY_DIR}
 )
 
-target_link_libraries(
-    Tests
-    -lmingw32
-    -lSDL2main
-    -lSDL2
-    -lSDL2_image
-    -lSDL2_mixer
-    -lSDL2_ttf
-    Core
-    Components
-)
+if (MINGW)
+    target_link_libraries(
+        Tests
+        mingw32
+        SDL2main
+        SDL2
+        SDL2_image
+        SDL2_mixer
+        SDL2_ttf
+        Core
+        Components
+    )
+else()
+    target_link_libraries(
+        Tests
+        SDL2main
+        SDL2
+        SDL2_image
+        SDL2_mixer
+        SDL2_ttf
+        Core
+        Components
+    )
+endif()
+

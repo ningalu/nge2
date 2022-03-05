@@ -31,10 +31,9 @@ target_link_directories(
 
 target_link_libraries(
     Core
-    -lmingw32
-    -lSDL2main
-    -lSDL2
-    -lSDL2_image
-    -lSDL2_mixer
-    -lSDL2_ttf
+    SDL2main
+    SDL2
+    SDL2_image
+    SDL2_mixer
+    SDL2_ttf
 )
