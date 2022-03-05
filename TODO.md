@@ -74,7 +74,7 @@ there was/is massive code redundancy between Text, Sprite/AnimatedSprite, and Bu
 a SimpleDrawableBase will be an abstract class with source and destination rectangles and convenience methods common to Text and Sprite. it will inherit from all of Drawable, Translatable, and Rotatable.
 
 # Dependencies
-there are no sdl distributions for windows/mingw or apple m1 but configuring the submodules in all of my cmakelists for all my subdirectories is hard and i get weird runtime issues. for now ill probably just use conan distributions. ~in this case i need a way of automatically copying the dlls and resources to the output directory.~ this is done for dlls and for resources in my current machine dependent configuration so i need to figure out how to actually use the sdl distribution from conan
+there are no sdl distributions for windows/mingw or apple m1 but configuring the submodules in all of my cmakelists for all my subdirectories is hard and i get weird runtime issues. for now ill probably just use conan distributions. ~in this case i need a way of automatically copying the dlls and resources to the output directory.~ this is done for dlls and for resources in my current machine dependent configuration so i need to figure out how to actually use the sdl distribution from conan. there is no official sdl mixer package for conan.
 
 # Testing
 making a few quick and dirty test suites is not that hard but i would like to practice using industry standard testing libraries. i would also like to try to set up some kind of ci. travis seems like a popular ci thing. ive used teamcity before which apparently has free stuff? i could try compiling and running tests with docker on a local machine as well and docker would be a good thing to learn about

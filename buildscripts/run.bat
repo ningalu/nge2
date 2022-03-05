@@ -1,3 +1,2 @@
-cd ./build
-dir -r NGE2_Demo.exe
+cd ./build/Debug
 NGE2_Demo
