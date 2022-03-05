@@ -8,7 +8,7 @@
 - ~move input processing into states?~ DONE
 - input handling needs a longer history of mouse and keyboard states to allow buffers of precision, like allowing a 5 frame buffer before an input is considered "held"
 - dedicated resource loader? ~would be another annoying dependency to pass in~ not that annoying anymore
-- this kinda needs a more robust event listener system. could write my own
+- ~this kinda needs a more robust event listener system. could write my own~ probably gonna just use sigslots
 - input class was literally just ripped from old project and i want to overhaul it since it feels really clumsy to use. maybe shift sdl event processing to inputs and register to inputs as well? essentially make the input class responsible for acting on user input in addition to just observing it as it does now
 - how should text be handled? feels like it shouldnt warrant its own class since plain text is functionally just a sprite
 - fix cmake so it doesnt depend on my file system
@@ -74,4 +74,7 @@ there was/is massive code redundancy between Text, Sprite/AnimatedSprite, and Bu
 a SimpleDrawableBase will be an abstract class with source and destination rectangles and convenience methods common to Text and Sprite. it will inherit from all of Drawable, Translatable, and Rotatable.
 
 # Dependencies
-there are no sdl distributions for windows/mingw or apple m1 but configuring the submodules in all of my cmakelists for all my subdirectories is hard and i get weird runtime issues. for now ill probably just use conan distributions. in this case i need a way of automatically copying the dlls and resources to the output directory.
+there are no sdl distributions for windows/mingw or apple m1 but configuring the submodules in all of my cmakelists for all my subdirectories is hard and i get weird runtime issues. for now ill probably just use conan distributions. ~in this case i need a way of automatically copying the dlls and resources to the output directory.~ this is done for dlls and for resources in my current machine dependent configuration so i need to figure out how to actually use the sdl distribution from conan
+
+# Testing
+making a few quick and dirty test suites is not that hard but i would like to practice using industry standard testing libraries. i would also like to try to set up some kind of ci. travis seems like a popular ci thing. ive used teamcity before which apparently has free stuff? i could try compiling and running tests with docker on a local machine as well and docker would be a good thing to learn about

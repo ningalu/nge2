@@ -1,6 +1,10 @@
 [requires]
 nlohmann_json/3.10.5
 sigslot/1.2.1
+sdl/2.0.20
+sdl_image/2.0.5
+sdl_ttf/2.0.18
+sdl_image/2.0.5
 
 [generators]
 cmake
