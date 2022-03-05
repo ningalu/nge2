@@ -17,6 +17,22 @@ set(NGE_FRAMEWORK_DIR ${CMAKE_SOURCE_DIR}/src/Framework)
 set(NGE_GAME_DIR ${CMAKE_SOURCE_DIR}/src/Game)
 set(NGE_TESTS_DIR ${CMAKE_SOURCE_DIR}/src/Tests)
 
+file(COPY ./resources DESTINATION ${CMAKE_BINARY_DIR})
+
+file(GLOB_RECURSE SDL_DLLS ${SDL_LIBRARY_DIR}/../*.dll)
+#message(${SDL_DLLS})
+file(GLOB_RECURSE IMG_DLLS ${SDL_IMAGE_LIBRARY_DIR}/../*.dll)
+#message(${IMG_DLLS})
+file(GLOB_RECURSE MIX_DLLS ${SDL_MIXER_LIBRARY_DIR}/../*.dll)
+#message(${MIX_DLLS})
+file(GLOB_RECURSE TTF_DLLS ${SDL_TTF_LIBRARY_DIR}/../*.dll)
+#message(${TTF_DLLS})
+
+file(COPY ${SDL_DLLS} DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${IMG_DLLS} DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${MIX_DLLS} DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${TTF_DLLS} DESTINATION ${CMAKE_BINARY_DIR})
+
 set(CMAKE_BUILD_TYPE Debug)
 
 add_subdirectory(./src/Framework/Core)
@@ -49,12 +65,12 @@ target_link_directories(
 
 target_link_libraries(
     ${PROJECT_NAME}
-    -lmingw32
-    -lSDL2main
-    -lSDL2
-    -lSDL2_image
-    -lSDL2_mixer
-    -lSDL2_ttf
+    mingw32
+    SDL2main
+    SDL2
+    SDL2_image
+    SDL2_mixer
+    SDL2_ttf
     Core
     Game
 )
