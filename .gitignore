@@ -7,4 +7,3 @@
 .vscode
 CMakeCache.txt
 build/*
-!build/resources

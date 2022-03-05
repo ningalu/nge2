@@ -72,3 +72,6 @@ there was/is massive code redundancy between Text, Sprite/AnimatedSprite, and Bu
 
 ### SimpleDrawableBase
 a SimpleDrawableBase will be an abstract class with source and destination rectangles and convenience methods common to Text and Sprite. it will inherit from all of Drawable, Translatable, and Rotatable.
+
+# Dependencies
+there are no sdl distributions for windows/mingw or apple m1 but configuring the submodules in all of my cmakelists for all my subdirectories is hard and i get weird runtime issues. for now ill probably just use conan distributions. in this case i need a way of automatically copying the dlls and resources to the output directory.
