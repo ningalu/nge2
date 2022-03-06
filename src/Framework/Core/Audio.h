@@ -4,20 +4,20 @@
 #include <memory>
 #include <string>
 
-#include "SDL2/SDL_mixer.h"
+// #include "SDL2/SDL_mixer.h"
 
 namespace nge {
 
-    struct ChunkDeleter {
-        void operator()(Mix_Chunk* chunk);
-    };
+    // struct ChunkDeleter {
+    //     void operator()(Mix_Chunk* chunk);
+    // };
 
-    struct MusicDeleter {
-        void operator()(Mix_Music* music);
-    };
+    // struct MusicDeleter {
+    //     void operator()(Mix_Music* music);
+    // };
 
-    using SoundPtr = std::unique_ptr<Mix_Chunk, ChunkDeleter>;
-    using SongPtr = std::unique_ptr<Mix_Music, MusicDeleter>;
+    // using SoundPtr = std::unique_ptr<Mix_Chunk, ChunkDeleter>;
+    // using SongPtr = std::unique_ptr<Mix_Music, MusicDeleter>;
                                                                         
     //                     ██████████                                  
     //                   ██░░░░░░░░░░██                                
@@ -54,14 +54,14 @@ namespace nge {
 
             static void Init();
 
-            static SoundPtr LoadSound(std::string path);
-            static SongPtr LoadSong(std::string path);
+            // static SoundPtr LoadSound(std::string path);
+            // static SongPtr LoadSong(std::string path);
 
-            static void PlaySound(Mix_Chunk* sound, int loops = 0, int channel = 0);
+            // static void PlaySound(Mix_Chunk* sound, int loops = 0, int channel = 0);
 
-            static void PlaySong(Mix_Music* song, int loops = -1);
-            static void PauseSong();
-            static void ResumeSong();
+            // static void PlaySong(Mix_Music* song, int loops = -1);
+            // static void PauseSong();
+            // static void ResumeSong();
 
             ~Audio();
 

@@ -47,7 +47,7 @@ namespace nge {
             Return();
         }
         if (input_->MouseClicked(MouseButton::LEFT)) {
-            Audio::PlaySound(Audio::LoadSound("resources/State/default_sound.wav").get());
+            // Audio::PlaySound(Audio::LoadSound("resources/State/default_sound.wav").get());
         }
     }
 

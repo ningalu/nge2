@@ -14,12 +14,12 @@ conan_basic_setup()
 #set(SDL_TTF_LIBRARY_DIR "A:/SDK/sdl2_ttf/SDL2_ttf-devel-2.0.15-mingw/SDL2_ttf-2.0.15/x86_64-w64-mingw32/lib")
 #set(SDL_TTF_INCLUDE_DIR "A:/SDK/sdl2_ttf/SDL2_ttf-devel-2.0.15-mingw/SDL2_ttf-2.0.15/x86_64-w64-mingw32/include")
 
-set(SDL_LIBRARY_DIR "A:/SDK/sdl2/SDL2-devel-2.0.14-VC/SDL2-2.0.14/lib/x64")
+# set(SDL_LIBRARY_DIR "A:/SDK/sdl2/SDL2-devel-2.0.14-VC/SDL2-2.0.14/lib/x64")
 # set(SDL_INCLUDE_DIR "A:/SDK/sdl2/SDL2-devel-2.0.14-VC/SDL2-2.0.14/include")
 # set(SDL_IMAGE_LIBRARY_DIR "A:/SDK/sdl2_image/SDL2_image-devel-2.0.5-VC/SDL2_image-2.0.5/lib/x64")
 # set(SDL_IMAGE_INCLUDE_DIR "A:/SDK/sdl2_image/SDL2_image-devel-2.0.5-VC/SDL2_image-2.0.5/include")
-set(SDL_MIXER_LIBRARY_DIR "A:/SDK/sdl2_mixer/SDL2_mixer-devel-2.0.4-VC/SDL2_mixer-2.0.4/lib/x64")
-set(SDL_MIXER_INCLUDE_DIR "A:/SDK/sdl2_mixer/SDL2_mixer-devel-2.0.4-VC/SDL2_mixer-2.0.4/include")
+# set(SDL_MIXER_LIBRARY_DIR "A:/SDK/sdl2_mixer/SDL2_mixer-devel-2.0.4-VC/SDL2_mixer-2.0.4/lib/x64")
+# set(SDL_MIXER_INCLUDE_DIR "A:/SDK/sdl2_mixer/SDL2_mixer-devel-2.0.4-VC/SDL2_mixer-2.0.4/include")
 # set(SDL_TTF_LIBRARY_DIR "A:/SDK/sdl2_ttf/SDL2_ttf-devel-2.0.15-VC/SDL2_ttf-2.0.15/lib/x64")
 # set(SDL_TTF_INCLUDE_DIR "A:/SDK/sdl2_ttf/SDL2_ttf-devel-2.0.15-VC/SDL2_ttf-2.0.15/include")
 
@@ -27,29 +27,29 @@ set(NGE_FRAMEWORK_DIR ${CMAKE_SOURCE_DIR}/src/Framework)
 set(NGE_GAME_DIR ${CMAKE_SOURCE_DIR}/src/Game)
 set(NGE_TESTS_DIR ${CMAKE_SOURCE_DIR}/src/Tests)
 
-if (MSVC)
-    file(GLOB_RECURSE SDL_DLLS ${SDL_LIBRARY_DIR}/*.dll)
-    # file(GLOB_RECURSE IMG_DLLS ${SDL_IMAGE_LIBRARY_DIR}/*.dll)
-    file(GLOB_RECURSE MIX_DLLS ${SDL_MIXER_LIBRARY_DIR}/*.dll)
-    # file(GLOB_RECURSE TTF_DLLS ${SDL_TTF_LIBRARY_DIR}/*.dll)
-else()
-    file(GLOB_RECURSE SDL_DLLS ${SDL_LIBRARY_DIR}/../*.dll)
-    # file(GLOB_RECURSE IMG_DLLS ${SDL_IMAGE_LIBRARY_DIR}/../*.dll)
-    file(GLOB_RECURSE MIX_DLLS ${SDL_MIXER_LIBRARY_DIR}/../*.dll)
-    # file(GLOB_RECURSE TTF_DLLS ${SDL_TTF_LIBRARY_DIR}/../*.dll)
-endif()
+# if (MSVC)
+#     file(GLOB_RECURSE SDL_DLLS ${SDL_LIBRARY_DIR}/*.dll)
+#     file(GLOB_RECURSE IMG_DLLS ${SDL_IMAGE_LIBRARY_DIR}/*.dll)
+#     file(GLOB_RECURSE MIX_DLLS ${SDL_MIXER_LIBRARY_DIR}/*.dll)
+#     file(GLOB_RECURSE TTF_DLLS ${SDL_TTF_LIBRARY_DIR}/*.dll)
+# else()
+#     file(GLOB_RECURSE SDL_DLLS ${SDL_LIBRARY_DIR}/../*.dll)
+#     file(GLOB_RECURSE IMG_DLLS ${SDL_IMAGE_LIBRARY_DIR}/../*.dll)
+#     file(GLOB_RECURSE MIX_DLLS ${SDL_MIXER_LIBRARY_DIR}/../*.dll)
+#     file(GLOB_RECURSE TTF_DLLS ${SDL_TTF_LIBRARY_DIR}/../*.dll)
+# endif()
 
 add_custom_command(
     TARGET ${PROJECT_NAME}
     POST_BUILD
     COMMAND ${CMAKE_COMMAND}
     ARGS -E copy_directory ${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources
-    COMMAND ${CMAKE_COMMAND}
-    ARGS -E copy ${SDL_DLLS} $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    # COMMAND ${CMAKE_COMMAND}
+    # ARGS -E copy ${SDL_DLLS} $<TARGET_FILE_DIR:${PROJECT_NAME}>
     # COMMAND ${CMAKE_COMMAND}
     # ARGS -E copy ${IMG_DLLS} $<TARGET_FILE_DIR:${PROJECT_NAME}>
-    COMMAND ${CMAKE_COMMAND}
-    ARGS -E copy ${MIX_DLLS} $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    # COMMAND ${CMAKE_COMMAND}
+    # ARGS -E copy ${MIX_DLLS} $<TARGET_FILE_DIR:${PROJECT_NAME}>
     # COMMAND ${CMAKE_COMMAND}
     # ARGS -E copy ${TTF_DLLS} $<TARGET_FILE_DIR:${PROJECT_NAME}>
 )
@@ -67,7 +67,7 @@ target_include_directories(
     #PUBLIC ${SDL_INCLUDE_DIR}
     #PUBLIC ${SDL_INCLUDE_DIR}/SDL2
     #PUBLIC ${SDL_IMAGE_INCLUDE_DIR}
-    PUBLIC ${SDL_MIXER_INCLUDE_DIR}
+    # PUBLIC ${SDL_MIXER_INCLUDE_DIR}
     #PUBLIC ${SDL_TTF_INCLUDE_DIR}
     PUBLIC ${NGE_FRAMEWORK_DIR}
     PUBLIC ${NGE_GAME_DIR}
@@ -79,7 +79,7 @@ target_link_directories(
     PRIVATE ${CONAN_LIB_DIRS}
     #PRIVATE ${SDL_LIBRARY_DIR}
     #PRIVATE ${SDL_IMAGE_LIBRARY_DIR}
-    PRIVATE ${SDL_MIXER_LIBRARY_DIR}
+    # PRIVATE ${SDL_MIXER_LIBRARY_DIR}
     #PRIVATE ${SDL_TTF_LIBRARY_DIR}
     PUBLIC ${NGE_FRAMEWORK_DIR}
     PUBLIC ${NGE_GAME_DIR}
@@ -94,7 +94,7 @@ if (MINGW)
         #SDL2main
         #SDL2
         #SDL2_image
-        SDL2_mixer
+        # SDL2_mixer
         #SDL2_ttf
         Core
         Game
@@ -113,42 +113,44 @@ else()
     )
 endif()
 
-#include(CTest)
-#add_executable(tests ./src/tests/tests.cpp)
-#add_test(Tests tests)
-#
-#target_include_directories(
-#    tests
-#    PUBLIC ${SDL_INCLUDE_DIR}
-#    PUBLIC ${SDL_INCLUDE_DIR}/SDL2
-#    PUBLIC ${SDL_IMAGE_INCLUDE_DIR}
-#    PUBLIC ${SDL_MIXER_INCLUDE_DIR}
-#    PUBLIC ${SDL_TTF_INCLUDE_DIR}
-#    PUBLIC ${NGE_FRAMEWORK_DIR}
-#    PUBLIC ${NGE_GAME_DIR}
-#    PUBLIC ${NGE_TESTS_DIR}
-#)
-#
-#target_link_directories(
-#    tests
-#    PRIVATE ${SDL_LIBRARY_DIR}
-#    PRIVATE ${SDL_IMAGE_LIBRARY_DIR}
-#    PRIVATE ${SDL_MIXER_LIBRARY_DIR}
-#    PRIVATE ${SDL_TTF_LIBRARY_DIR}
-#    PUBLIC ${NGE_FRAMEWORK_DIR}
-#    PUBLIC ${NGE_GAME_DIR}
-#    PUBLIC ${NGE_TESTS_DIR}
-#)
-#
-#target_link_libraries(
-#    tests
-#    SDL2main
-#    SDL2
-#    SDL2_image
-#    SDL2_mixer
-#    SDL2_ttf
-#    Core
-#    Game
-#    Tests
-#)
-#
+include(CTest)
+add_executable(tests ./src/tests/tests.cpp)
+add_test(Tests tests)
+
+target_include_directories(
+    tests
+    PUBLIC ${CONAN_INCLUDE_DIRS}
+    # PUBLIC ${SDL_INCLUDE_DIR}
+    # PUBLIC ${SDL_INCLUDE_DIR}/SDL2
+    # PUBLIC ${SDL_IMAGE_INCLUDE_DIR}
+    # PUBLIC ${SDL_MIXER_INCLUDE_DIR}
+    # PUBLIC ${SDL_TTF_INCLUDE_DIR}
+    PUBLIC ${NGE_FRAMEWORK_DIR}
+    PUBLIC ${NGE_GAME_DIR}
+    PUBLIC ${NGE_TESTS_DIR}
+)
+
+target_link_directories(
+    tests
+    PRIVATE ${CONAN_LIB_DIRS}
+    # PRIVATE ${SDL_LIBRARY_DIR}
+    # PRIVATE ${SDL_IMAGE_LIBRARY_DIR}
+    # PRIVATE ${SDL_MIXER_LIBRARY_DIR}
+    # PRIVATE ${SDL_TTF_LIBRARY_DIR}
+    PUBLIC ${NGE_FRAMEWORK_DIR}
+    PUBLIC ${NGE_GAME_DIR}
+    PUBLIC ${NGE_TESTS_DIR}
+)
+
+target_link_libraries(
+    tests
+    ${CONAN_LIBS}
+    # SDL2main
+    # SDL2
+    # SDL2_image
+    # SDL2_mixer
+    # SDL2_ttf
+    Core
+    Game
+    Tests
+)

@@ -5,44 +5,48 @@ add_library(
 
 target_include_directories(
     Tests
+    PUBLIC ${CONAN_INCLUDE_DIRS}
     PUBLIC ${CMAKE_SOURCE_DIR}/src
     PUBLIC ${CMAKE_SOURCE_DIR}/src/Framework
     PUBLIC ${CMAKE_SOURCE_DIR}/src/Tests
-    PUBLIC ${SDL_INCLUDE_DIR}
-    PUBLIC ${SDL_INCLUDE_DIR_SDL2}
-    PUBLIC ${SDL_IMAGE_INCLUDE_DIR}
-    PUBLIC ${SDL_MIXER_INCLUDE_DIR}
-    PUBLIC ${SDL_TTF_INCLUDE_DIR}
+    # PUBLIC ${SDL_INCLUDE_DIR}
+    # PUBLIC ${SDL_INCLUDE_DIR_SDL2}
+    # PUBLIC ${SDL_IMAGE_INCLUDE_DIR}
+    # PUBLIC ${SDL_MIXER_INCLUDE_DIR}
+    # PUBLIC ${SDL_TTF_INCLUDE_DIR}
 )
 
 target_link_directories(
     Tests
-    PRIVATE ${SDL_LIBRARY_DIR}
-    PRIVATE ${SDL_IMAGE_LIBRARY_DIR}
-    PRIVATE ${SDL_MIXER_LIBRARY_DIR}
-    PRIVATE ${SDL_TTF_LIBRARY_DIR}
+    PRIVATE ${CONAN_LIB_DIRS}
+    # PRIVATE ${SDL_LIBRARY_DIR}
+    # PRIVATE ${SDL_IMAGE_LIBRARY_DIR}
+    # PRIVATE ${SDL_MIXER_LIBRARY_DIR}
+    # PRIVATE ${SDL_TTF_LIBRARY_DIR}
 )
 
 if (MINGW)
     target_link_libraries(
         Tests
         mingw32
-        SDL2main
-        SDL2
-        SDL2_image
-        SDL2_mixer
-        SDL2_ttf
+        ${CONAN_LIBS}
+        # SDL2main
+        # SDL2
+        # SDL2_image
+        # SDL2_mixer
+        # SDL2_ttf
         Core
         Components
     )
 else()
     target_link_libraries(
         Tests
-        SDL2main
-        SDL2
-        SDL2_image
-        SDL2_mixer
-        SDL2_ttf
+        ${CONAN_LIBS}
+        # SDL2main
+        # SDL2
+        # SDL2_image
+        # SDL2_mixer
+        # SDL2_ttf
         Core
         Components
     )
