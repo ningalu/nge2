@@ -7,10 +7,11 @@
 
 #include "Core/Game.hpp"
 #include "Core/Timer.h"
+#include "Core/Utility/SDL_RectExtensions.h"
 
 #include "InitialState/InitialState.h"
 #include "SampleState.h"
-#include "Core/Utility/SDL_RectExtensions.h"
+#include "MiningState/MiningState.h"
 
 int main(int argc, char **argv) {
     
@@ -28,7 +29,7 @@ int main(int argc, char **argv) {
     // std::cout << "Initial State: " << s << std::endl;
     // game.Start(new SampleState(game.GetStateManager(), game.GetGraphics()));
 
-    game.SetInitialState<InitialState>();
+    game.SetInitialState<MiningState>();
     game.Start();
     
 

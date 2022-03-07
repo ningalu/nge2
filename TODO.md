@@ -14,6 +14,8 @@
 - ~fix cmake so it doesnt depend on my file system~ DONE, everything is now consumed through conan and doesnt depend on my system
 - the entire drawing system is super clumsy; it should be easier to position objects relative to one another and defining destination rect size is a pain, maybe binding objects relative positions. might need CSTs or at least some linear algebra
 - ~NEED a base drawable class holy shit~ ~need to reexamine the concept of drawable objects.~ IN PROGRESS
+- maybe find something more customisable than clang-format because even at best i think it looks really ugly
+- turns out making temp states forces a lot of destructors to run unintentionally, maybe look into fixing or mitigating that
 
 # game states
 you should be able to inherit from state, write a constructor with only objects you actually want to pass in, write your draw and tick methods, and not have to worry about passing in game level dependencies like graphics or the state manager. solutions are a bit annoying.

@@ -5,6 +5,7 @@ add_library(
     ./OverworldState/Tileset.cpp
     ./OverworldState/Tilemap.cpp
     ./OverworldState/OverworldState.cpp
+    ./MiningState/MiningState.cpp
 )
 
 target_include_directories(
