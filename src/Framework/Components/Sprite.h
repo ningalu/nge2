@@ -23,6 +23,16 @@ namespace nge {
                 SDL_Point rotationCentre = Graphics::ROTATION_CENTRE,
                 SDL_RendererFlip flip = SDL_FLIP_NONE
             );
+            Sprite(
+                std::shared_ptr<Graphics> graphics, 
+                TexturePtr texture, 
+                SDL_Rect src, 
+                SDL_Rect dst,
+                double angle = 0.0f,
+                SDL_Point rotationCentre = Graphics::ROTATION_CENTRE,
+                SDL_RendererFlip flip = SDL_FLIP_NONE
+            );
+
 
             void Draw();
 

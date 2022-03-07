@@ -16,6 +16,7 @@
 - ~NEED a base drawable class holy shit~ ~need to reexamine the concept of drawable objects.~ IN PROGRESS
 - maybe find something more customisable than clang-format because even at best i think it looks really ugly
 - turns out making temp states forces a lot of destructors to run unintentionally, maybe look into fixing or mitigating that
+- gonna have to mess with ticks and draw frequency and key events
 
 # game states
 you should be able to inherit from state, write a constructor with only objects you actually want to pass in, write your draw and tick methods, and not have to worry about passing in game level dependencies like graphics or the state manager. solutions are a bit annoying.
