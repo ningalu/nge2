@@ -7,6 +7,7 @@
 namespace nge {
     class AnimatedSprite : public Sprite {
         public:
+            AnimatedSprite() = default;
             AnimatedSprite(
                 std::shared_ptr<Graphics> graphics, 
                 std::string texturePath, 

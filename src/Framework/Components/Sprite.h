@@ -13,6 +13,7 @@ namespace nge {
 
     class Sprite : public SimpleDrawableBase {
         public:
+            Sprite() = default;
             Sprite(
                 std::shared_ptr<Graphics> graphics, 
                 std::string texturePath, 
