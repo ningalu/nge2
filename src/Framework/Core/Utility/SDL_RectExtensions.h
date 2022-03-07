@@ -5,6 +5,7 @@
 #include <iostream>
 
 bool operator==(SDL_Rect lhs, SDL_Rect rhs);
+bool operator!=(SDL_Rect lhs, SDL_Rect rhs);
 std::ostream& operator<<(std::ostream& os, const SDL_Rect& rect);
 // Copying simple values vs passing const reference?
 bool PointInRect(SDL_Point p, SDL_Rect r);

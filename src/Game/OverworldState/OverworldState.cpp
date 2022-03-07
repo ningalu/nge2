@@ -6,6 +6,7 @@
 // benchmarking state
 namespace rpg {
     OverworldState::OverworldState(nge::State state) : nge::State(state) {
+        graphics_->SetWindowRect({SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600});
         tileset1_ = std::make_shared<Tileset>(graphics_, "resources/OverworldState/tileset.png", 32, 32);
         std::vector<std::vector<int>> tilemap1Ids{
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -45,10 +46,10 @@ namespace rpg {
         for (int i = 0; i < 35000; i++) {
             SDL_RenderCopy(graphics_->GetRenderer(), tilemap1_.GetMapTexture(), nullptr, &tempdst);
         }
-        std::cout << t << std::endl;
+        std::cout << "draws: " << t << "\n";
 
         SDL_QueryTexture(tilemap2_.GetMapTexture(), nullptr, nullptr, &tempdst.w, &tempdst.h);
         SDL_RenderCopy(graphics_->GetRenderer(), tilemap2_.GetMapTexture(), nullptr, &tempdst);
-
+        std::cout << "total time: " << t << "\n";
     }
 }

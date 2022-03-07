@@ -11,12 +11,15 @@ namespace nge {
     State::State() {
     }
 
-    State::State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics) : states_(states), graphics_(graphics) {
+    State::State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics, SDL_Rect prevWindowRect) : states_(states), graphics_(graphics) {
         base_path_ = SDL_GetBasePath();
+        prev_window_rect_ = prevWindowRect;
         active_ = true;
         quit_ = false;
         input_ = std::make_shared<Input>();
     }
+
+    const SDL_Rect State::INITIAL_STATE_WINDOW_RECT = {-1, -1, -1, -1};
 
     bool State::IsActive() const {
         return active_;
@@ -133,6 +136,10 @@ namespace nge {
     }
 
     void State::Return() {
+        if (prev_window_rect_ != INITIAL_STATE_WINDOW_RECT) {
+            graphics_->SetWindowRect(prev_window_rect_);
+        }
+        
         active_ = false;
     }
 

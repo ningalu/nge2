@@ -16,7 +16,10 @@ namespace nge {
     class State {
         public:
             State();
-            State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics);
+            State::State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics, SDL_Rect prevWindowRect);
+
+            const static SDL_Rect INITIAL_STATE_WINDOW_RECT;
+
             void SetStateManager(std::shared_ptr<StateManager> states);
             void SetGraphics(std::shared_ptr<Graphics> graphics);
 
@@ -46,6 +49,7 @@ namespace nge {
             std::string base_path_;
             std::shared_ptr<Input> input_;
             SDL_Event event_buffer_;
+            SDL_Rect prev_window_rect_;
             std::vector<std::shared_ptr<Clickable>> clickables_;
             std::vector<std::pair<SDL_Scancode, std::function<void(void)> > > keypressed_events_, keyheld_events_, keyreleased_events_;
 
@@ -55,7 +59,7 @@ namespace nge {
             template <typename TState, typename ...Args>
             void Advance(Args... args) {
                 if (std::shared_ptr<StateManager> sm = states_.lock()) {
-                    State temp(sm, graphics_);
+                    State temp(sm, graphics_, graphics_->GetWindowRect());
                     sm->Advance(std::make_shared<TState>(temp, args...));
                 } else {
                     std::cout << "Could not obtain lock on StateManager\n";

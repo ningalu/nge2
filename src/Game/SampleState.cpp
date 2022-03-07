@@ -115,9 +115,7 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
     butt1_ = std::make_shared<nge::Button>(input_, std::move(temp), SDL_Rect{600, 90, 250, 250});
     butt1_->SetHeldDrawable(std::move(tempHeld));
     butt1_->SetOnRelease([&](){
-        if (std::shared_ptr<nge::StateManager> sm = states_.lock()) {
-            sm->Advance(std::make_shared<State>(sm, graphics_));
-        }
+        Advance<State>();
     });
     RegisterClickable(butt1_);
 

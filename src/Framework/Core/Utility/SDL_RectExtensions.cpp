@@ -7,6 +7,13 @@ bool operator==(SDL_Rect lhs, SDL_Rect rhs) {
     && (lhs.h == rhs.h);
 }
 
+bool operator!=(SDL_Rect lhs, SDL_Rect rhs) {
+    return (lhs.x != rhs.x)
+    || (lhs.y != rhs.y)
+    || (lhs.w != rhs.w)
+    || (lhs.h != rhs.h);
+}
+
 std::ostream& operator<<(std::ostream& os, const SDL_Rect& rect) {
     os << "x: " 
     << rect.x 

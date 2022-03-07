@@ -24,8 +24,8 @@ namespace nge {
 
             template<typename state, typename... Args>
             void SetInitialState(Args&&... args) {
-                State temp(state_manager_, graphics_);
-                std::shared_ptr<state> initialState = std::make_shared<state>(temp, std::forward<Args>(args)...);
+                State temp(state_manager_, graphics_, State::INITIAL_STATE_WINDOW_RECT);
+                std::shared_ptr<state> initialState = std::make_shared<state>(std::move(temp), std::forward<Args>(args)...);
                 state_manager_->Advance(initialState);
             }
 
