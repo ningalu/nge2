@@ -6,6 +6,7 @@
 #include <array>
 
 #include "Components/AnimatedSprite.h"
+#include "Components/Button.h"
 
 class MiningState : public nge::State {
     
@@ -24,13 +25,22 @@ class MiningState : public nge::State {
         ~MiningState() = default;
 
     protected:
+        const SDL_Point MINING_TILE_START_POINT = {0, 64};
+        const SDL_Point HAMMER_BUTTON = {217 * 2, 55 * 2};
+        const SDL_Point PICKAXE_BUTTON = {217 * 2, 127 * 2};
+        Tool tool_;
+
         std::array<MiningLayer, 4> layers_;
         std::array<SpriteLayer, 4> layer_sprites_;
-        nge::AnimatedSprite cursor_;
-        nge::Sprite background_;
-        const SDL_Point MINING_TILE_START_POINT = {0, 64};
         std::vector<std::vector<nge::TexturePtr>> layer_textures_;
 
+        nge::AnimatedSprite cursor_;
+        nge::Sprite background_;
+        nge::ButtonPtr hammer_button_, pickaxe_button_;
+        
+        void Hit(SDL_Point point);
+        SDL_Point GetMousePosInMine(int x, int y);
+        bool PosIsValid(SDL_Point mousePos);
 };
 
 

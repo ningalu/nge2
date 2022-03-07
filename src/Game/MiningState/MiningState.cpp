@@ -3,11 +3,14 @@
 #include <vector>
 #include <random>
 #include <time.h>
+#include <memory>
 
 #include "Core/Timer.h"
 #include "Core/Utility/SDL_PointExtensions.h"
 
 MiningState::MiningState(nge::State state) : nge::State(state) {
+    graphics_->SetWindowSize(512, 384);
+    tool_ = Tool::HAMMER;
 
     // load mining texture tiles
     std::vector<nge::TexturePtr> t;
@@ -31,8 +34,6 @@ MiningState::MiningState(nge::State state) : nge::State(state) {
         }
     }
 
-    
-
     // create mapping of tiles
     layers_.fill({});
     for (auto &row : layers_[0]) {
@@ -51,16 +52,15 @@ MiningState::MiningState(nge::State state) : nge::State(state) {
             }
         }
     }
-
-    for (auto i = 0; i < layers_.size(); i++) {
-        std::cout << "\nLayer " << i << "\n";
-        for (const auto &j : layers_[i]) {
-            for (const auto &k : j) {
-                std::cout << k;
-            }
-            std::cout << "\n";
-        }
-    }
+    // for (auto i = 0; i < layers_.size(); i++) {
+    //     std::cout << "\nLayer " << i << "\n";
+    //     for (const auto &j : layers_[i]) {
+    //         for (const auto &k : j) {
+    //             std::cout << k;
+    //         }
+    //         std::cout << "\n";
+    //     }
+    // }
 
     // create sprites based on the mapping
     SDL_Rect dst = {0, 0, 0, 0};
@@ -82,7 +82,6 @@ MiningState::MiningState(nge::State state) : nge::State(state) {
         }
     }
 
-    graphics_->SetWindowSize(512, 384);
     cursor_ = nge::AnimatedSprite{
         graphics_, 
         "resources/MiningState/hammer_sprite.png", 
@@ -98,8 +97,30 @@ MiningState::MiningState(nge::State state) : nge::State(state) {
         nge::Graphics::FULL_TEXTURE,
         {0, 0, 512, 384}
     };
-
     
+    nge::SpritePtr hammerSprite = std::make_unique<nge::Sprite>(
+        graphics_,
+        "resources/MiningState/hammer_off.png",
+        nge::Graphics::FULL_TEXTURE,
+        SDL_Rect{HAMMER_BUTTON.x, HAMMER_BUTTON.y, 34 * 2, 50 * 2}
+    );
+    hammer_button_ = std::make_shared<nge::Button>(
+        input_,
+        std::move(hammerSprite),
+        SDL_Rect{HAMMER_BUTTON.x, HAMMER_BUTTON.y, 34 * 2, 50 * 2}
+    );
+
+    nge::SpritePtr pickaxeSprite = std::make_unique<nge::Sprite>(
+        graphics_,
+        "resources/MiningState/pickaxe_off.png",
+        nge::Graphics::FULL_TEXTURE,
+        SDL_Rect{PICKAXE_BUTTON.x, PICKAXE_BUTTON.y, 34 * 2, 50 * 2}
+    );
+    pickaxe_button_ = std::make_shared<nge::Button>(
+        input_,
+        std::move(pickaxeSprite),
+        SDL_Rect{PICKAXE_BUTTON.x, PICKAXE_BUTTON.y, 34 * 2, 50 * 2}
+    );
 
     RegisterKeyEvent(
         SDL_SCANCODE_ESCAPE, 
@@ -116,6 +137,8 @@ void MiningState::Draw() {
     cursor_.AlignHorizontal(input_->GetMouseX());
     cursor_.AlignVertical(input_->GetMouseY());
     background_.Draw();
+    hammer_button_->Draw();
+    pickaxe_button_->Draw();
 
     SDL_Rect src = {0, 0, 0, 0};
     SDL_QueryTexture(layer_textures_[0][0].get(), nullptr, nullptr, &src.w, &src.h);
@@ -137,21 +160,91 @@ void MiningState::Draw() {
     }
     run = true;
     
-    //cursor_.Draw();
+    cursor_.Draw();
 }
 
 void MiningState::Tick() {
     if (input_->MouseClicked(nge::MouseButton::LEFT)) {
-        int row = (input_->GetMouseY() - MINING_TILE_START_POINT.y) / 32;
-        int col = (input_->GetMouseX() - MINING_TILE_START_POINT.x) / 32;
-        std::cout << SDL_Point{input_->GetMouseX(), input_->GetMouseY()} << "\n";
-        std::cout << SDL_Point{row, col} << "\n";
+        SDL_Point p = GetMousePosInMine(input_->GetMouseX(), input_->GetMouseY());
+        if (PosIsValid(p)) {
+            Hit(p);
+        }
+        
+    }
+}
 
-        for (int i = layers_.size() - 1; i >= 0; i--) {
-            if (layers_[i][row][col] != 0) {
-                layers_[i][row][col] = 0;
+void MiningState::Hit(SDL_Point point) {
+    std::vector<SDL_Point> struckTiles;
+    struckTiles.reserve(9);
+    struckTiles.push_back(point);
+
+    SDL_Point temp = {point.x + 1, point.y};
+    if (PosIsValid(temp)) {
+        struckTiles.push_back(temp);
+    }
+
+    temp = {point.x - 1, point.y};
+    if (PosIsValid(temp)) {
+        struckTiles.push_back(temp);
+    }
+
+    temp = {point.x, point.y + 1};
+    if (PosIsValid(temp)) {
+        struckTiles.push_back(temp);
+    }
+
+    temp = {point.x, point.y - 1};
+    if (PosIsValid(temp)) {
+        struckTiles.push_back(temp);
+    }
+    
+    if (tool_ == Tool::HAMMER) {
+
+        temp = {point.x + 1, point.y + 1};
+        if (PosIsValid(temp)) {
+            struckTiles.push_back(temp);
+        }
+
+        temp = {point.x - 1, point.y + 1};
+        if (PosIsValid(temp)) {
+            struckTiles.push_back(temp);
+        }
+
+        temp = {point.x - 1, point.y - 1};
+        if (PosIsValid(temp)) {
+            struckTiles.push_back(temp);
+        }
+
+        // I typoed the following and am now paranoid enough to
+        // use a temp var like this
+        /*
+        if (PosIsValid({point.x + 1, point.y - 1})) {
+            struckTiles.push_back({point.x - 1, point.y - 1});
+        }
+        */
+        temp = {point.x + 1, point.y - 1};
+        if (PosIsValid(temp)) {
+            struckTiles.push_back(temp);
+        }
+    }
+
+    for (const auto &p : struckTiles) {
+        for (int i = layers_.size() - 1; i > 0; i--) {
+            if (layers_[i][p.y][p.x] != 0) {
+                layers_[i][p.y][p.x] = 0;
                 break;
             }
         }
     }
+}
+
+SDL_Point MiningState::GetMousePosInMine(int x, int y) {
+    return {
+        (input_->GetMouseX() / 32) - (MINING_TILE_START_POINT.x / 32),
+        (input_->GetMouseY() / 32) - (MINING_TILE_START_POINT.y / 32)
+    };
+}
+
+bool MiningState::PosIsValid(SDL_Point mousePos) {
+    return ((mousePos.x >= 0) && (mousePos.y >= 0) && (mousePos.x < layers_[0][0].size()) && (mousePos.y < layers_[0].size()));
 }
