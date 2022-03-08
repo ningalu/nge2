@@ -42,21 +42,18 @@ namespace nge {
     }
 
     void Button::OnClick() {
-        if (enabled_) {
-            held_ = true;
-            on_click_();
-        }
+        state_ = ButtonState::HELD;
+        on_click_();
     }
 
     void Button::OnHold() {
-        if (enabled_) {
+        if (state_ == ButtonState::HELD) {
             on_hold_();
         }
     }
 
     void Button::OnRelease() {
-        held_ = false;
-        if (enabled_) {
+        if (state_ == ButtonState::HELD) {
             on_release_();
         }
     }
@@ -71,6 +68,13 @@ namespace nge {
 
     void Button::Draw() {
         held_ = held_ && MouseOver(input_->GetMouseX(), input_->GetMouseY());
+        bool hovering = PointInRect(input_->GetMousePoint(), clickable_region_);
+        if (!hovering) {
+            state_ = ButtonState::NONE;
+        }
+        if (state_ == ButtonState::HELD) {
+            held_drawable_->Draw();
+        } else if (PointInRect)
         held_ && (held_drawable_.get() != nullptr) ? held_drawable_->Draw() : default_drawable_->Draw();
     }
     

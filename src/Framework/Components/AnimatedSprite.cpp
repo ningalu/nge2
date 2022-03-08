@@ -37,7 +37,9 @@ namespace nge {
         state_ = animationState;
     }
 
-    // Having animation updates use time deltas would probably cause weird stuttering so this version is frame dependent
+    // Could update animations in State::Tick in order to be able to use time deltas rather than
+    // depending on framerate
+    // Maybe make an alternative time based animation class later on
     void AnimatedSprite::Draw() {
         Sprite::Draw();
         Advance();

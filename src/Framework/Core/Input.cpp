@@ -107,6 +107,10 @@ namespace nge {
         return mouse_y_;
     }
 
+    SDL_Point Input::GetMousePoint() {
+        return {mouse_x_, mouse_y_};
+    }
+
     void Input::Update() {
         current_mouse_state_ = SDL_GetMouseState(&mouse_x_, &mouse_y_);
     }

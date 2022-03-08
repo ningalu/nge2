@@ -11,6 +11,12 @@
 #include "Core/Interfaces/Drawable.h"
 
 namespace nge {
+    enum class ButtonState {
+        NONE,
+        HOVER,
+        HELD
+    };
+
     class Button : public Clickable, public Drawable {
         public:
             Button();
@@ -36,6 +42,8 @@ namespace nge {
             void AlignHorizontal(int x);
             void AlignVertical(int y);
 
+            void SetButtonState(ButtonState state);
+
             void SetOnClick(std::function<void(void)> onClick);
             void SetOnHold(std::function<void(void)> onHold);
             void SetOnRelease(std::function<void(void)> onRelease);
@@ -50,6 +58,7 @@ namespace nge {
             std::shared_ptr<Input> input_;
             bool enabled_;
             bool held_;
+            ButtonState state_;
             SDL_Rect clickable_region_;
             std::unique_ptr<Drawable> default_drawable_, hover_drawable_, held_drawable_;
             std::function<void(void)> on_click_, on_hold_, on_release_;

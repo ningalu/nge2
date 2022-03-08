@@ -10,8 +10,6 @@ namespace nge {
             virtual void OnClick() = 0;
             virtual void OnHold() = 0;
             virtual void OnRelease() = 0;
-            virtual void EnableClick() = 0;
-            virtual void DisableClick() = 0;
             virtual const SDL_Rect& GetClickableRegion() const = 0;
     };
 }

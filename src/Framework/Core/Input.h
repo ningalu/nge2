@@ -37,6 +37,7 @@ namespace nge {
 
             int GetMouseX();
             int GetMouseY();
+            SDL_Point GetMousePoint();
 
             void Update();
             void UpdatePrevInput();

@@ -94,27 +94,41 @@ namespace nge {
     }
 
     void State::ProcessClickables() {
-        if (input_->MouseClicked(MouseButton::LEFT)) {
-            for (auto &c : clickables_) {
-                if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
+        for (auto &c : clickables_) {
+            if (PointInRect(input_->GetMousePoint(), c->GetClickableRegion())) {
+                if (input_->MouseClicked(MouseButton::LEFT)) {
                     c->OnClick();
                 }
-            }
-        }
-        if (input_->MouseHeld(MouseButton::LEFT)) {
-            for (auto c : clickables_) {
-                if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
+                if (input_->MouseHeld(MouseButton::LEFT)) {
                     c->OnHold();
                 }
-            }
-        }
-        if (input_->MouseReleased(MouseButton::LEFT)) {
-            for (auto c : clickables_) {
-                if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
+                if (input_->MouseReleased(MouseButton::LEFT)) {
                     c->OnRelease();
                 }
             }
         }
+
+        // if (input_->MouseClicked(MouseButton::LEFT)) {
+        //     for (auto &c : clickables_) {
+        //         if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
+        //             c->OnClick();
+        //         }
+        //     }
+        // }
+        // if (input_->MouseHeld(MouseButton::LEFT)) {
+        //     for (auto c : clickables_) {
+        //         if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
+        //             c->OnHold();
+        //         }
+        //     }
+        // }
+        // if (input_->MouseReleased(MouseButton::LEFT)) {
+        //     for (auto c : clickables_) {
+        //         if (PointInRect({input_->GetMouseX(), input_->GetMouseY()}, c->GetClickableRegion())) {
+        //             c->OnRelease();
+        //         }
+        //     }
+        // }
     }
 
     void State::ProcessKeyboardEvents() {
