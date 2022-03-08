@@ -78,6 +78,14 @@ InitialState::InitialState(nge::State init) : State(init) {
         "RPG",
         SDL_Point{450, 500}
     );
+    nge::TextPtr rpgTextHover = std::make_unique<nge::Text>(
+        graphics_,  
+        f,
+        nge::FontStyle::SOLID,
+        "RPG",
+        SDL_Point{rpgText->GetX(), rpgText->GetY()},
+        SDL_Color{0, 0, 0, 120}
+    );
     nge::TextPtr rpgTextHeld = std::make_unique<nge::Text>(
         graphics_,  
         f,
@@ -92,6 +100,7 @@ InitialState::InitialState(nge::State init) : State(init) {
         std::move(rpgText),
         rpgTextSrc
     );
+    rpg_button_->SetHoverDrawable(std::move(rpgTextHover));
     rpg_button_->SetHeldDrawable(std::move(rpgTextHeld));
 
     rpg_button_->SetOnRelease([&](){

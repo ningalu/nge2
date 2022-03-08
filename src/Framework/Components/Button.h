@@ -26,8 +26,6 @@ namespace nge {
             void OnClick();
             void OnHold();
             void OnRelease();
-            void EnableClick();
-            void DisableClick();
             const SDL_Rect& GetClickableRegion() const;
 
             // Drawable Interface
@@ -49,6 +47,7 @@ namespace nge {
             void SetOnRelease(std::function<void(void)> onRelease);
 
             void SetHeldDrawable(std::unique_ptr<Drawable> heldDrawable);
+            void SetHoverDrawable(std::unique_ptr<Drawable> hoverDrawable);
 
             bool MouseOver(int mouseX, int mouseY);
 
@@ -56,8 +55,6 @@ namespace nge {
 
         protected:
             std::shared_ptr<Input> input_;
-            bool enabled_;
-            bool held_;
             ButtonState state_;
             SDL_Rect clickable_region_;
             std::unique_ptr<Drawable> default_drawable_, hover_drawable_, held_drawable_;

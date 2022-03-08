@@ -13,13 +13,11 @@ namespace nge {
     std::unique_ptr<Drawable> defaultDrawable, 
     SDL_Rect clickableRegion
     ) : default_drawable_(std::move(defaultDrawable)), input_(input) {
-
-        enabled_ = true;
-
-        held_ = false;
+        state_ = ButtonState::NONE;
 
         clickable_region_ = clickableRegion;
 
+        held_drawable_ = nullptr;
         SetOnClick([](){return;});
         SetOnHold([](){return;});
         SetOnRelease([](){return;});
@@ -54,28 +52,23 @@ namespace nge {
 
     void Button::OnRelease() {
         if (state_ == ButtonState::HELD) {
+            state_ = ButtonState::NONE;
             on_release_();
         }
     }
 
-    void Button::EnableClick() {
-        enabled_ = true;
-    }
-
-    void Button::DisableClick() {
-        enabled_ = false;
-    }
-
     void Button::Draw() {
-        held_ = held_ && MouseOver(input_->GetMouseX(), input_->GetMouseY());
         bool hovering = PointInRect(input_->GetMousePoint(), clickable_region_);
         if (!hovering) {
             state_ = ButtonState::NONE;
         }
-        if (state_ == ButtonState::HELD) {
+        if ((state_ == ButtonState::HELD) && (held_drawable_ != nullptr)) {
             held_drawable_->Draw();
-        } else if (PointInRect)
-        held_ && (held_drawable_.get() != nullptr) ? held_drawable_->Draw() : default_drawable_->Draw();
+        } else if ((hovering) && (hover_drawable_ != nullptr)) {
+            hover_drawable_->Draw();
+        } else {
+            default_drawable_->Draw();
+        }
     }
     
     int Button::GetX() {
@@ -112,6 +105,10 @@ namespace nge {
 
     void Button::SetHeldDrawable(std::unique_ptr<Drawable> heldDrawable) {
         held_drawable_ = std::move(heldDrawable);
+    }
+
+    void Button::SetHoverDrawable(std::unique_ptr<Drawable> hoverDrawable) {
+        hover_drawable_ = std::move(hoverDrawable);
     }
 
     bool Button::MouseOver(int mouseX, int mouseY) {
