@@ -4,6 +4,7 @@ add_library(
     ./AnimatedSprite.cpp
     ./Button.cpp
     ./Text.cpp
+    ./Switch.cpp
     ./Utility/SimpleDrawableBase.cpp
     ./Utility/AnimationState.cpp
 )

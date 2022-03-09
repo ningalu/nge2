@@ -10,6 +10,7 @@
 #include "Components/AnimatedSprite.h"
 #include "Core/Timer.h"
 #include "Components/Button.h"
+#include "Components/Switch.h"
 #include "Components/Text.h"
 #include "OverworldState/Tileset.h"
 #include "OverworldState/Tilemap.h"
@@ -44,7 +45,7 @@ class SampleState : public nge::State {
         nge::ButtonPtr butt1_;
         nge::Text butt1_text_;
 
-        nge::Button butt2_;
+        std::shared_ptr<nge::Switch> sw1_;
 
         std::shared_ptr<rpg::Tileset> tileset1_;
         rpg::Tilemap tilemap1_, tilemap2_;

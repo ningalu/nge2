@@ -119,6 +119,31 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
     });
     RegisterClickable(butt1_);
 
+    auto sw1On = std::make_unique<nge::Text>(
+        graphics_,
+        f,
+        nge::FontStyle::SOLID,
+        "On",
+        SDL_Point{0, 150}
+    );
+    sw1On->AlignHorizontal(anim2_text_.GetCentreX());
+    auto sw1Off = std::make_unique<nge::Text>(
+        graphics_,
+        f,
+        nge::FontStyle::SOLID,
+        "Off",
+        SDL_Point{0, 150}
+    );
+    sw1Off->AlignHorizontal(anim2_text_.GetCentreX());
+    SDL_Rect sw1Dst = sw1Off->GetDestRect();
+    sw1_ = std::make_shared<nge::Switch>(
+        input_,
+        std::move(sw1On),
+        std::move(sw1Off),
+        sw1Dst
+    );
+    RegisterClickable(sw1_);
+
 
     RegisterKeyEvent(SDL_SCANCODE_W, nge::InputState::PRESSED | nge::InputState::HELD, [&](){
         sprite2_->MoveY(-100 * draw_timer_.GetElapsedTime());
@@ -202,6 +227,8 @@ void SampleState::Draw() {
 
     butt1_->Draw();
     butt1_text_.Draw();
+
+    sw1_->Draw();
 
     draw_timer_.Reset();
 
