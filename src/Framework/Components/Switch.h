@@ -30,6 +30,11 @@ namespace nge {
             void OnHold();
             void OnRelease();
             const SDL_Rect& GetClickableRegion() const;
+
+            void SetOnToggleOn(std::function<void(void)> onToggleOn);
+            void SetOnToggleOff(std::function<void(void)> onToggleOff);
+
+            void Toggle(bool suppress = false);
         
         protected:
             bool on_;

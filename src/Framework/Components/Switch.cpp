@@ -11,6 +11,8 @@ namespace nge {
     ) : on_drawable_(std::move(onDrawable)), off_drawable_(std::move(offDrawable)) {
         input_ = input;
         clickable_region_ = clickableRegion;
+        on_toggle_on_ = [](){return;};
+        on_toggle_off_ = [](){return;};
     }
 
     // Drawable Interface
@@ -24,7 +26,7 @@ namespace nge {
 
     // Clickable Interface
     void Switch::OnClick() {
-        on_ = !on_;
+        Toggle();
     }
 
     void Switch::OnHold() {
@@ -37,6 +39,21 @@ namespace nge {
 
     const SDL_Rect& Switch::GetClickableRegion() const {
         return clickable_region_;
+    }
+
+    void Switch::SetOnToggleOn(std::function<void(void)> onToggleOn) {
+        on_toggle_on_ = onToggleOn;
+    }
+
+    void Switch::SetOnToggleOff(std::function<void(void)> onToggleOff) {
+        on_toggle_off_ = onToggleOff;
+    }
+    
+    void Switch::Toggle(bool suppress) {
+        on_ = !on_;
+        if (!suppress) {
+            on_ ? on_toggle_on_() : on_toggle_off_();
+        }
     }
 
 }

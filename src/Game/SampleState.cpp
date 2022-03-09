@@ -119,22 +119,31 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
     });
     RegisterClickable(butt1_);
 
+    sw1_text_ = nge::Text{
+        graphics_,
+        f,
+        nge::FontStyle::SOLID,
+        "Switch Test",
+        SDL_Point{0, 200}
+    };
+    sw1_text_.AlignHorizontal(anim2_text_.GetCentreX());
+
     auto sw1On = std::make_unique<nge::Text>(
         graphics_,
         f,
         nge::FontStyle::SOLID,
         "On",
-        SDL_Point{0, 150}
+        SDL_Point{0, 250}
     );
-    sw1On->AlignHorizontal(anim2_text_.GetCentreX());
+    sw1On->AlignHorizontal(sw1_text_.GetCentreX());
     auto sw1Off = std::make_unique<nge::Text>(
         graphics_,
         f,
         nge::FontStyle::SOLID,
         "Off",
-        SDL_Point{0, 150}
+        SDL_Point{0, 250}
     );
-    sw1Off->AlignHorizontal(anim2_text_.GetCentreX());
+    sw1Off->AlignHorizontal(sw1_text_.GetCentreX());
     SDL_Rect sw1Dst = sw1Off->GetDestRect();
     sw1_ = std::make_shared<nge::Switch>(
         input_,
@@ -142,6 +151,12 @@ SampleState::SampleState(nge::State init) : nge::State(init) {
         std::move(sw1Off),
         sw1Dst
     );
+    sw1_->SetOnToggleOff([&](){
+        std::cout << "Toggled Off\n";
+    });
+    sw1_->SetOnToggleOn([&](){
+        std::cout << "Toggled On\n";
+    });
     RegisterClickable(sw1_);
 
 
@@ -228,6 +243,7 @@ void SampleState::Draw() {
     butt1_->Draw();
     butt1_text_.Draw();
 
+    sw1_text_.Draw();
     sw1_->Draw();
 
     draw_timer_.Reset();

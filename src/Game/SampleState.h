@@ -45,6 +45,7 @@ class SampleState : public nge::State {
         nge::ButtonPtr butt1_;
         nge::Text butt1_text_;
 
+        nge::Text sw1_text_;
         std::shared_ptr<nge::Switch> sw1_;
 
         std::shared_ptr<rpg::Tileset> tileset1_;
