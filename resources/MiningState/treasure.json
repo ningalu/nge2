@@ -1,0 +1,35 @@
+{
+    "treasures": [
+        {
+            "name": "green_sphere_s",
+            "layout": [
+                [1, 1],
+                [1, 1]
+            ]
+        },
+        {
+            "name": "green_sphere_l",
+            "layout": [
+                [1, 1, 1],
+                [1, 1, 1],
+                [1, 1, 1]
+            ]
+        },
+        {
+            "name": "heart_scale",
+            "layout": [
+                [1, 0],
+                [1, 1]
+            ]
+        },
+        {
+            "name": "smooth_rock",
+            "layout": [
+                [0, 0, 1, 0],
+                [1, 1, 1, 0],
+                [0, 1, 1, 1],
+                [0, 1, 0, 0]
+            ]
+        }
+    ]
+}

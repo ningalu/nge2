@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
     // std::cout << "Initial State: " << s << std::endl;
     // game.Start(new SampleState(game.GetStateManager(), game.GetGraphics()));
 
-    game.SetInitialState<InitialState>();
+    game.SetInitialState<MiningState>();
     game.Start();
     
 

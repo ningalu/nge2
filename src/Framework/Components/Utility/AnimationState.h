@@ -14,6 +14,7 @@ namespace nge {
 
         void Advance();
         void Reset();
+        void Complete();
         bool IsCompatable(const AnimationState& state);
 
         const int FrameCount, Repeats, Subframes;

@@ -32,6 +32,12 @@ namespace nge {
         CurrentRepeat = 0;
     }
 
+    void AnimationState::Complete() {
+        CurrentSubframe = Subframes;
+        CurrentFrame = FrameCount;
+        CurrentRepeat = Repeats;
+    }
+
     bool AnimationState::IsCompatable(const AnimationState& state) {
         return (FrameCount == state.FrameCount)
         && (Repeats == state.Repeats)

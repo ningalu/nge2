@@ -4,13 +4,40 @@
 #include <random>
 #include <time.h>
 #include <memory>
+#include <fstream>
 
 #include "Core/Timer.h"
 #include "Core/Utility/SDL_PointExtensions.h"
 
 MiningState::MiningState(nge::State state) : nge::State(state) {
     graphics_->SetWindowSize(512, 384);
-    tool_ = Tool::HAMMER;
+    tool_ = Tool::PICKAXE;
+
+    srand(time(NULL));
+    int treasures = (rand() % 4) + 1;
+
+    std::ifstream treasureFile("resources/MiningState/treasure.json");
+    nlohmann::json treasureJson = nlohmann::json::parse(treasureFile);
+    std::cout << treasureJson["treasures"].dump(4) << "\n";
+    std::vector<std::vector<int>> a = treasureJson["treasures"][0]["layout"].get<std::vector<std::vector<int>>>();
+    for (auto i : a) {
+        for (auto j : i) {
+            std::cout << j;
+        }
+        std::cout << "\n";
+    }
+    for (auto &t : treasureJson["treasures"]) {
+        treasure_layouts_.insert({t["name"], t["layout"].get<std::vector<std::vector<int>>>()});
+    }
+    for (auto &v : treasure_layouts_) {
+        std::cout << v.first << ": \n";
+        for (auto i : v.second) {
+            for (auto j : i) {
+                std::cout << j;
+            }
+            std::cout << "\n";
+        }
+    }
 
     // load mining texture tiles
     std::vector<nge::TexturePtr> t;
@@ -28,11 +55,11 @@ MiningState::MiningState(nge::State state) : nge::State(state) {
     layer_textures_[3].push_back(graphics_->LoadTexture("resources/MiningState/invalid_tile.png"));
     layer_textures_[3].push_back(graphics_->LoadTexture("resources/MiningState/layer3_0.png"));
     layer_textures_[3].push_back(graphics_->LoadTexture("resources/MiningState/layer3_1.png"));
-    for (const auto &i : layer_textures_) {
-        for (const auto &j : i) {
-            std::cout << j.get() << "\n";
-        }
-    }
+    // for (const auto &i : layer_textures_) {
+    //     for (const auto &j : i) {
+    //         std::cout << j.get() << "\n";
+    //     }
+    // }
 
     // create mapping of tiles
     layers_.fill({});
@@ -42,7 +69,6 @@ MiningState::MiningState(nge::State state) : nge::State(state) {
     for (auto &row : layers_[1]) {
         row.fill(1);
     }
-    srand(time(NULL));
     for (auto l = 2; l < layers_.size(); l++) {
         for (auto i = 0; i < layers_[l].size(); i++) {
             for (auto j = 0; j < layers_[l][i].size(); j++) {
@@ -82,7 +108,7 @@ MiningState::MiningState(nge::State state) : nge::State(state) {
         }
     }
 
-    cursor_ = nge::AnimatedSprite{
+    hammer_cursor_ = nge::AnimatedSprite{
         graphics_, 
         "resources/MiningState/hammer_sprite.png", 
         nge::Graphics::FULL_TEXTURE,
@@ -91,6 +117,38 @@ MiningState::MiningState(nge::State state) : nge::State(state) {
         1,
         5
     };
+    pickaxe_cursor_ = nge::AnimatedSprite{
+        graphics_, 
+        "resources/MiningState/pickaxe_sprite.png", 
+        nge::Graphics::FULL_TEXTURE,
+        {input_->GetMouseX(), input_->GetMouseY(), 72, 64},
+        4,
+        1,
+        5
+    };
+
+    hammer_selected_ = nge::AnimatedSprite{
+        graphics_,
+        "resources/MiningState/hammer_selected.png",
+        nge::Graphics::FULL_TEXTURE,
+        {HAMMER_SELECTED.x, HAMMER_SELECTED.y, 92, 128},
+        5,
+        1,
+        3
+    };
+    hammer_selected_.GetAnimationState()->Complete();
+
+    pickaxe_selected_ = nge::AnimatedSprite{
+        graphics_,
+        "resources/MiningState/pickaxe_selected.png",
+        nge::Graphics::FULL_TEXTURE,
+        {PICKAXE_SELECTED.x, PICKAXE_SELECTED.y, 92, 128},
+        5,
+        1,
+        3
+    };
+    pickaxe_selected_.GetAnimationState()->Complete();
+
     background_ = nge::Sprite{
         graphics_,
         "resources/MiningState/background.png",
@@ -98,29 +156,64 @@ MiningState::MiningState(nge::State state) : nge::State(state) {
         {0, 0, 512, 384}
     };
     
-    nge::SpritePtr hammerSprite = std::make_unique<nge::Sprite>(
+    nge::SpritePtr hammerSwitchOn = std::make_unique<nge::Sprite>(
+        graphics_,
+        "resources/MiningState/hammer_on.png",
+        nge::Graphics::FULL_TEXTURE,
+        SDL_Rect{HAMMER_BUTTON.x, HAMMER_BUTTON.y, 34 * 2, 50 * 2}
+    );
+    nge::SpritePtr hammerSwitchOff = std::make_unique<nge::Sprite>(
         graphics_,
         "resources/MiningState/hammer_off.png",
         nge::Graphics::FULL_TEXTURE,
         SDL_Rect{HAMMER_BUTTON.x, HAMMER_BUTTON.y, 34 * 2, 50 * 2}
     );
-    hammer_button_ = std::make_shared<nge::Button>(
+    hammer_switch_ = std::make_shared<nge::Switch>(
         input_,
-        std::move(hammerSprite),
+        std::move(hammerSwitchOn),
+        std::move(hammerSwitchOff),
         SDL_Rect{HAMMER_BUTTON.x, HAMMER_BUTTON.y, 34 * 2, 50 * 2}
     );
+    hammer_switch_->SetOnToggleOn([&](){
+        hammer_selected_.Reset();
+        tool_ = Tool::HAMMER;
+        pickaxe_switch_->SetState(nge::SwitchState::OFF);
+        pickaxe_switch_->Enable();
+        hammer_switch_->Disable();
+        
+    });
+    RegisterClickable(hammer_switch_);
 
-    nge::SpritePtr pickaxeSprite = std::make_unique<nge::Sprite>(
+    nge::SpritePtr pickaxeSwitchOn = std::make_unique<nge::Sprite>(
+        graphics_,
+        "resources/MiningState/pickaxe_on.png",
+        nge::Graphics::FULL_TEXTURE,
+        SDL_Rect{PICKAXE_BUTTON.x, PICKAXE_BUTTON.y, 34 * 2, 50 * 2}
+    );
+    nge::SpritePtr pickaxeSwitchOff = std::make_unique<nge::Sprite>(
         graphics_,
         "resources/MiningState/pickaxe_off.png",
         nge::Graphics::FULL_TEXTURE,
         SDL_Rect{PICKAXE_BUTTON.x, PICKAXE_BUTTON.y, 34 * 2, 50 * 2}
     );
-    pickaxe_button_ = std::make_shared<nge::Button>(
+    pickaxe_switch_ = std::make_shared<nge::Switch>(
         input_,
-        std::move(pickaxeSprite),
-        SDL_Rect{PICKAXE_BUTTON.x, PICKAXE_BUTTON.y, 34 * 2, 50 * 2}
+        std::move(pickaxeSwitchOn),
+        std::move(pickaxeSwitchOff),
+        SDL_Rect{PICKAXE_BUTTON.x, PICKAXE_BUTTON.y, 34 * 2, 50 * 2},
+        nge::SwitchState::ON,
+        false
     );
+    pickaxe_switch_->SetOnToggleOn([&](){
+
+        tool_ = Tool::PICKAXE;
+        pickaxe_selected_.Reset();
+        hammer_switch_->SetState(nge::SwitchState::OFF);
+        hammer_switch_->Enable();
+        pickaxe_switch_->Disable();
+        
+    });
+    RegisterClickable(pickaxe_switch_);
 
     RegisterKeyEvent(
         SDL_SCANCODE_ESCAPE, 
@@ -134,11 +227,12 @@ MiningState::MiningState(nge::State state) : nge::State(state) {
 static bool run = false;
 
 void MiningState::Draw() {
-    cursor_.AlignHorizontal(input_->GetMouseX());
-    cursor_.AlignVertical(input_->GetMouseY());
+    
     background_.Draw();
-    hammer_button_->Draw();
-    pickaxe_button_->Draw();
+    hammer_switch_->Draw();
+    pickaxe_switch_->Draw();
+    hammer_selected_.Draw();
+    pickaxe_selected_.Draw();
 
     SDL_Rect src = {0, 0, 0, 0};
     SDL_QueryTexture(layer_textures_[0][0].get(), nullptr, nullptr, &src.w, &src.h);
@@ -159,8 +253,19 @@ void MiningState::Draw() {
         }
     }
     run = true;
+    switch (tool_) {
+        case Tool::HAMMER:
+            hammer_cursor_.AlignHorizontal(input_->GetMouseX());
+            hammer_cursor_.AlignVertical(input_->GetMouseY());
+            hammer_cursor_.Draw();
+            break;
+        case Tool::PICKAXE:
+            pickaxe_cursor_.AlignHorizontal(input_->GetMouseX());
+            pickaxe_cursor_.AlignVertical(input_->GetMouseY());
+            pickaxe_cursor_.Draw();
+            break;
+    }
     
-    cursor_.Draw();
 }
 
 void MiningState::Tick() {
@@ -180,39 +285,53 @@ void MiningState::Hit(SDL_Point point) {
 
     SDL_Point temp = {point.x + 1, point.y};
     if (PosIsValid(temp)) {
-        struckTiles.push_back(temp);
+        if ((rand() % 2) > 0) {
+            struckTiles.push_back(temp);
+        }
     }
 
     temp = {point.x - 1, point.y};
     if (PosIsValid(temp)) {
-        struckTiles.push_back(temp);
+        if ((rand() % 2) > 0) {
+            struckTiles.push_back(temp);
+        }
     }
 
     temp = {point.x, point.y + 1};
     if (PosIsValid(temp)) {
-        struckTiles.push_back(temp);
+        if ((rand() % 2) > 0) {
+            struckTiles.push_back(temp);
+        }
     }
 
     temp = {point.x, point.y - 1};
     if (PosIsValid(temp)) {
-        struckTiles.push_back(temp);
+        if ((rand() % 2) > 0) {
+            struckTiles.push_back(temp);
+        }
     }
     
     if (tool_ == Tool::HAMMER) {
 
         temp = {point.x + 1, point.y + 1};
         if (PosIsValid(temp)) {
-            struckTiles.push_back(temp);
+            if ((rand() % 2) > 0) {
+                struckTiles.push_back(temp);
+            }
         }
 
         temp = {point.x - 1, point.y + 1};
         if (PosIsValid(temp)) {
-            struckTiles.push_back(temp);
+            if ((rand() % 2) > 0) {
+                struckTiles.push_back(temp);
+            }
         }
 
         temp = {point.x - 1, point.y - 1};
         if (PosIsValid(temp)) {
-            struckTiles.push_back(temp);
+            if ((rand() % 2) > 0) {
+                struckTiles.push_back(temp);
+            }
         }
 
         // I typoed the following and am now paranoid enough to
@@ -224,7 +343,9 @@ void MiningState::Hit(SDL_Point point) {
         */
         temp = {point.x + 1, point.y - 1};
         if (PosIsValid(temp)) {
-            struckTiles.push_back(temp);
+            if ((rand() % 2) > 0) {
+                struckTiles.push_back(temp);
+            }
         }
     }
 
@@ -247,4 +368,7 @@ SDL_Point MiningState::GetMousePosInMine(int x, int y) {
 
 bool MiningState::PosIsValid(SDL_Point mousePos) {
     return ((mousePos.x >= 0) && (mousePos.y >= 0) && (mousePos.x < layers_[0][0].size()) && (mousePos.y < layers_[0].size()));
+}
+
+MiningState::~MiningState() {
 }
