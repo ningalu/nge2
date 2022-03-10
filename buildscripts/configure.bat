@@ -1,5 +1,5 @@
 mkdir build
 cd ./build
-conan install .. --profile=MSVC
+conan install .. --build=missing
 cd ..
 cmake -S . -B ./build

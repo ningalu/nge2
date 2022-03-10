@@ -79,12 +79,14 @@ there was/is massive code redundancy between Text, Sprite/AnimatedSprite, and Bu
 a SimpleDrawableBase will be an abstract class with source and destination rectangles and convenience methods common to Text and Sprite. it will inherit from all of Drawable, Translatable, and Rotatable.
 
 # Dependencies
-there are no sdl distributions for windows/mingw or apple m1 but configuring the submodules in all of my cmakelists for all my subdirectories is hard and i get weird runtime issues. for now ill probably just use conan distributions. ~in this case i need a way of automatically copying the dlls and resources to the output directory.~ this is done for dlls and for resources in my current machine dependent configuration so i need to figure out how to actually use the sdl distribution from conan. there is no official sdl mixer package for conan. i have a few options:
+~there are no sdl distributions for windows/mingw or apple m1 but configuring the submodules in all of my cmakelists for all my subdirectories is hard and i get weird runtime issues.~ building libiconv in windows with mingw breaks for some obscure reason so i can either support every platform other than windows/mingw or use submodules. for now ill probably just use conan distributions. ~in this case i need a way of automatically copying the dlls and resources to the output directory.~ ~this is done for dlls and for resources in my current machine dependent configuration so i need to figure out how to actually use the sdl distribution from conan~. there is no official sdl mixer package for conan. i have a few options:
 - automatically download the sdl2/mixer dev packs using cmake file downloads and globbing and copying the dlls into the output directory
 - build mixer from source with a submodule
 - replace the audio library im using
 
 the latter 2 options are a lot more appealing to me
 
+on further research miniaudio seems like a decent option so i will try that when i get around to needing audio for something i guess
+
 # Testing
-making a few quick and dirty test suites is not that hard but i would like to practice using industry standard testing libraries. i would also like to try to set up some kind of ci. travis seems like a popular ci thing. ive used teamcity before which apparently has free stuff? i could try compiling and running tests with docker on a local machine as well and docker would be a good thing to learn about
+making a few quick and dirty test suites is not that hard but i would like to practice using industry standard testing libraries. i would also like to try to set up some kind of ci. travis seems like a popular ci thing. ive used teamcity before which apparently has free stuff? i could try compiling and running tests with docker on a local machine as well and docker would be a good thing to learn about. jenkins also seems like a popular and self hostable option. 
