@@ -336,10 +336,10 @@ void MiningState::Hit(SDL_Point point) {
 
         // I typoed the following and am now paranoid enough to
         // use a temp var like this
-        /*
+        /*                      v
         if (PosIsValid({point.x + 1, point.y - 1})) {
             struckTiles.push_back({point.x - 1, point.y - 1});
-        }
+        }                                  ^
         */
         temp = {point.x + 1, point.y - 1};
         if (PosIsValid(temp)) {
