@@ -18,6 +18,7 @@
 - turns out making temp states forces a lot of destructors to run unintentionally, maybe look into fixing or mitigating that
 - gonna have to mess with ticks and draw frequency and key events
 - i think the button thing works at the moment because mouse position is updated every frame and not every tick by definition, and it should technically support multiple framerates (i think?) but its pretty hacky and i dont like it much
+- figure out how to manage multiple github accounts on the same machine while im at uni and am using my other account
 
 # game states
 you should be able to inherit from state, write a constructor with only objects you actually want to pass in, write your draw and tick methods, and not have to worry about passing in game level dependencies like graphics or the state manager. solutions are a bit annoying.
