@@ -57,7 +57,7 @@ else()
 endif()
 
 include(CTest)
-add_executable(tests ./src/tests/tests.cpp)
+add_executable(tests ./src/Tests/tests.cpp)
 add_test(Tests tests)
 
 target_include_directories(
