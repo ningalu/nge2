@@ -87,6 +87,15 @@
                     "scripts": [
                         "run.sh"
                     ]
+                },
+                {
+                    "name": "all",
+                    "scripts": [
+                        "clean.sh",
+                        "configure.sh",
+                        "build.sh",
+                        "run.sh"
+                    ]
                 }
             ]
         }
