@@ -39,6 +39,7 @@ class MiningState : public nge::State {
 
         std::array<MiningLayer, 4> layers_;
         std::array<SpriteLayer, 4> layer_sprites_;
+        SpriteLayer treasure_layer_;
         std::vector<std::vector<nge::TexturePtr>> layer_textures_;
 
         nge::AnimatedSprite hammer_cursor_;

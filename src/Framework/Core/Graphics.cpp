@@ -11,13 +11,15 @@ namespace nge {
 
     Graphics::Graphics(std::string title, SDL_Rect windowRect) : 
         window_(nullptr, SDL_DestroyWindow),
-        renderer_(nullptr, SDL_DestroyRenderer),
-        title_(title)
+        renderer_(nullptr, SDL_DestroyRenderer)
+
     {
+        title_ = title;
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
             std::cout << "Error initialising SDL2: " << SDL_GetError() << std::endl;
             return;
         }
+        base_path_ = SDL_GetBasePath();
 
         int IMG_Flags = IMG_INIT_JPG | IMG_INIT_PNG;
         if (!(IMG_Init(IMG_Flags) & IMG_Flags)) {
@@ -61,7 +63,7 @@ namespace nge {
 
     TexturePtr Graphics::LoadTexture(const std::string& path) {
         TexturePtr t;
-        SDL_Surface *tempSurf = IMG_Load(path.c_str());
+        SDL_Surface *tempSurf = IMG_Load((base_path_ + path).c_str());
         if (tempSurf == nullptr) {
             std::cout << "LoadTexture: Surface could not be created from: " << path << std::endl;
             return t;
@@ -79,7 +81,7 @@ namespace nge {
 
     FontPtr Graphics::LoadFont(const std::string& path, int size) {
         FontPtr f;
-        TTF_Font *tempFont = TTF_OpenFont(path.c_str(), size);
+        TTF_Font *tempFont = TTF_OpenFont((base_path_ + path).c_str(), size);
         if (tempFont == nullptr) {
             std::cout << "LoadFont: Font could not be created from " << path << ": " << TTF_GetError() << std::endl;
             return f;

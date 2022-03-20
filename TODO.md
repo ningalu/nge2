@@ -90,3 +90,6 @@ on further research miniaudio seems like a decent option so i will try that when
 
 # Testing
 making a few quick and dirty test suites is not that hard but i would like to practice using industry standard testing libraries. i would also like to try to set up some kind of ci. travis seems like a popular ci thing. ive used teamcity before which apparently has free stuff? i could try compiling and running tests with docker on a local machine as well and docker would be a good thing to learn about. jenkins also seems like a popular and self hostable option. 
+
+# Build Scripts
+i like build scripts but mine currently dont support different release types and sort of clash with visual studio specifically, since conan needs to be initialised in the build directory beforehand. i need to figure out a cleaner way of implementing these build scripts and keep them unintrusive to vs

@@ -11,5 +11,5 @@ NGE2 is my second attempt at a larger scale C++ project that tries to consider n
 - Install Conan
 ### Building
 - Clone and navigate into the repo
-- Configure the CMake project manually or using the build script  
+- Install the Conan dependencies and configure the CMake project manually or use the build script  
 ```python build.py all```

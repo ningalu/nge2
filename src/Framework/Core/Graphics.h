@@ -74,6 +74,7 @@ namespace nge {
             std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> window_;
             std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> renderer_;
             std::string title_;
+            std::string base_path_;
     };
 
     using GraphicsPtr = std::shared_ptr<Graphics>;

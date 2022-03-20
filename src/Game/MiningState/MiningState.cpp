@@ -237,13 +237,25 @@ void MiningState::Draw() {
     SDL_Rect src = {0, 0, 0, 0};
     SDL_QueryTexture(layer_textures_[0][0].get(), nullptr, nullptr, &src.w, &src.h);
     SDL_Rect dst = {MINING_TILE_START_POINT.x, MINING_TILE_START_POINT.y, src.w * 2, src.h * 2};
-    for (auto layer = 0; layer < layers_.size(); layer++) {
+
+    // unconditionally draw the bottom layer
+    for (auto &row : layer_sprites_[0]) {
+        for (auto &sprite : row) {
+            sprite.Draw();
+        }
+    }
+
+
+
+    for (auto layer = 1; layer < layers_.size(); layer++) {
         for (auto row = 0; row < layers_[layer].size(); row++) {
             for (auto col = 0; col < layers_[layer][row].size(); col++) {
                 if (layers_[layer][row][col] != 0) {
+                    // always try to draw the top layer, since you can't check above it
                     if (layer == (layers_.size() - 1)) {
                         layer_sprites_[layer][row][col].Draw();
                     } else {
+                        // draw the tile if there is nothing above it
                         if (layers_[layer + 1][row][col] == 0) {
                             layer_sprites_[layer][row][col].Draw();
                         }
@@ -283,69 +295,19 @@ void MiningState::Hit(SDL_Point point) {
     struckTiles.reserve(9);
     struckTiles.push_back(point);
 
-    SDL_Point temp = {point.x + 1, point.y};
-    if (PosIsValid(temp)) {
-        if ((rand() % 2) > 0) {
-            struckTiles.push_back(temp);
-        }
-    }
-
-    temp = {point.x - 1, point.y};
-    if (PosIsValid(temp)) {
-        if ((rand() % 2) > 0) {
-            struckTiles.push_back(temp);
-        }
-    }
-
-    temp = {point.x, point.y + 1};
-    if (PosIsValid(temp)) {
-        if ((rand() % 2) > 0) {
-            struckTiles.push_back(temp);
-        }
-    }
-
-    temp = {point.x, point.y - 1};
-    if (PosIsValid(temp)) {
-        if ((rand() % 2) > 0) {
-            struckTiles.push_back(temp);
-        }
-    }
-    
-    if (tool_ == Tool::HAMMER) {
-
-        temp = {point.x + 1, point.y + 1};
-        if (PosIsValid(temp)) {
-            if ((rand() % 2) > 0) {
-                struckTiles.push_back(temp);
+    for (int x = -1; x < 2; x++) {
+        for (int y = -1; y < 2; y++) {
+            SDL_Point temp = {x + point.x, y + point.y};
+            if(PosIsValid(temp) && (temp != struckTiles[0])) {
+                // if tool is a pickaxe and the tile is diagonally adjacent ignore it
+                if (!(((abs(x) + abs(y)) > 1) && (tool_ == Tool::PICKAXE))) {
+                    if ((rand() % 2) > 0) {
+                        struckTiles.push_back(temp);
+                    }
+                }
+                
             }
-        }
-
-        temp = {point.x - 1, point.y + 1};
-        if (PosIsValid(temp)) {
-            if ((rand() % 2) > 0) {
-                struckTiles.push_back(temp);
-            }
-        }
-
-        temp = {point.x - 1, point.y - 1};
-        if (PosIsValid(temp)) {
-            if ((rand() % 2) > 0) {
-                struckTiles.push_back(temp);
-            }
-        }
-
-        // I typoed the following and am now paranoid enough to
-        // use a temp var like this
-        /*                      v
-        if (PosIsValid({point.x + 1, point.y - 1})) {
-            struckTiles.push_back({point.x - 1, point.y - 1});
-        }                                  ^
-        */
-        temp = {point.x + 1, point.y - 1};
-        if (PosIsValid(temp)) {
-            if ((rand() % 2) > 0) {
-                struckTiles.push_back(temp);
-            }
+            
         }
     }
 
