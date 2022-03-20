@@ -1,6 +1,7 @@
 #include "Graphics.h"
 
 #include <iostream>
+#include <climits>
 
 #include "SDL2/SDL.h"
 
@@ -15,7 +16,7 @@ namespace nge {
 
     {
         title_ = title;
-        if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+        if (SDL_Init(SDL_INIT_EVERYTHING ^ SDL_INIT_AUDIO) != 0) {
             std::cout << "Error initialising SDL2: " << SDL_GetError() << std::endl;
             return;
         }

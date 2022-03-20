@@ -16,7 +16,7 @@ namespace nge {
     class State {
         public:
             State();
-            State::State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics, SDL_Rect prevWindowRect);
+            State(std::shared_ptr<StateManager> states, std::shared_ptr<Graphics> graphics, SDL_Rect prevWindowRect);
 
             const static SDL_Rect INITIAL_STATE_WINDOW_RECT;
 

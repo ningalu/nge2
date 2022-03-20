@@ -59,6 +59,36 @@
                     "description": "Delete and reconfigure the CMake project, then build and run the application"
                 }
             ]
+        },
+        {
+            "name": "linux",
+            "path_separator": "/",
+            "commands": [
+                {
+                    "name": "clean",
+                    "scripts": [
+                        "clean.sh"
+                    ]
+                },
+                {
+                    "name": "configure",
+                    "scripts": [
+                        "configure.sh"
+                    ]
+                },
+                {
+                    "name": "build",
+                    "scripts": [
+                        "build.sh"
+                    ]
+                },
+                {
+                    "name": "run",
+                    "scripts": [
+                        "run.sh"
+                    ]
+                }
+            ]
         }
     ]
 }
