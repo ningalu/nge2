@@ -12,25 +12,21 @@ add_library(
     ./Utility/SDL_EventExtensions.cpp
 )
 
-target_include_directories(
-    Core
-    PUBLIC ${CONAN_INCLUDE_DIRS}
-)
-
-target_link_directories(
-    Core
-    PRIVATE ${CONAN_LIB_DIRS}
-)
-
 if (MINGW)
     target_link_libraries(
         Core
         mingw32
-        ${CONAN_LIBS}
+        SDL2::SDL2main
+        sdl_image::sdl_image
+        SDL2_ttf::SDL2_ttf
+        nlohmann_json::nlohmann_json
     )
 else()
     target_link_libraries(
         Core
-        ${CONAN_LIBS}
+        SDL2::SDL2main
+        sdl_image::sdl_image
+        SDL2_ttf::SDL2_ttf
+        nlohmann_json::nlohmann_json
     )
 endif()

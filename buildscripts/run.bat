@@ -1,2 +1,2 @@
-cd ./build/Debug
+cd ./build/Release
 NGE2_Demo

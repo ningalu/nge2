@@ -1,28 +1,17 @@
-#include "SDL_RectExtensionsTests.h"
-
+#include "gtest/gtest.h"
 #include "SDL2/SDL.h"
 #include "Core/Utility/SDL_RectExtensions.h"
 
-TestResult HasIntersect_CornersOverlap();
-
-TestResult RunSDL_RectExtensionTests() {
-    return HasIntersect_CornersOverlap();
-}
-
-TestResult HasIntersect_CornersOverlap() {
+TEST(SDLRectExtensions, IntersectingCorners) {
     SDL_Rect r1{0, 0, 10, 10};
     SDL_Rect r2{9, 9, 10, 10};
-    ASSERT(HasIntersect(r1, r2));
-    ASSERT(HasIntersect(r2, r1));
+    EXPECT_TRUE(HasIntersect(r1, r2));
+    EXPECT_TRUE(HasIntersect(r2, r1));
+}
 
-    r1 = {9, 0, 10, 10};
-    r2 = {0, 9, 10, 10};
-    if (!HasIntersect(r1, r2)) {
-        return TestResult::FAIL;
-    }
-    if (!HasIntersect(r2, r1)) {
-        return TestResult::FAIL;
-    }
-
-    return TestResult::PASS;
+TEST(SDLRectExtentions, NonIntersectingCorners) {
+    SDL_Rect r1 = {0, 0, 5, 5};
+    SDL_Rect r2 = {6, 6, 11, 11};
+    EXPECT_FALSE(HasIntersect(r1, r2));
+    EXPECT_FALSE(HasIntersect(r2, r1));
 }

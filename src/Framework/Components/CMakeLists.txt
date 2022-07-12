@@ -12,25 +12,25 @@ add_library(
 target_include_directories(
     Components
     PUBLIC ${CMAKE_SOURCE_DIR}/src/Framework
-    PUBLIC ${CONAN_INCLUDE_DIRS}
-)
-
-target_link_directories(
-    Components
-    PRIVATE ${CONAN_LIB_DIRS}
 )
 
 if (MINGW)
     target_link_libraries(
         Components
         mingw32
-        ${CONAN_LIBS}
+        SDL2::SDL2main
+        sdl_image::sdl_image
+        SDL2_ttf::SDL2_ttf
+        nlohmann_json::nlohmann_json
         Core
     )
 else()
     target_link_libraries(
         Components
-        ${CONAN_LIBS}
+        SDL2::SDL2main
+        sdl_image::sdl_image
+        SDL2_ttf::SDL2_ttf
+        nlohmann_json::nlohmann_json
         Core
     )
 endif()
