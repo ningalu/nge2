@@ -9,7 +9,7 @@ Currently tested and working on Windows 10 with MSVC 19 and MinGW GCC 8.1 and Ub
 
 ### Installations
 
-- Install a C++ compiler (Windows must use Microsoft Visual C++)
+- Install a C++ compiler
 - Install Python 3
 - Install CMake 3.20.2 or greater
 - Install Conan
