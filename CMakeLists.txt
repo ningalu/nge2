@@ -28,15 +28,28 @@ target_include_directories(
     ${PROJECT_NAME}
     PUBLIC ${NGE_GAME_DIR}
 )
-target_link_libraries(
-    ${PROJECT_NAME}
-    SDL2::SDL2main
-    sdl_image::sdl_image
-    SDL2_ttf::SDL2_ttf
-    nlohmann_json::nlohmann_json
-    Core
-    Game
-)
+if (MINGW)
+    target_link_libraries(
+        ${PROJECT_NAME}
+        mingw32
+        SDL2::SDL2main
+        sdl_image::sdl_image
+        SDL2_ttf::SDL2_ttf
+        nlohmann_json::nlohmann_json
+        Core
+        Game
+    )
+else()
+    target_link_libraries(
+        ${PROJECT_NAME}
+        SDL2::SDL2main
+        sdl_image::sdl_image
+        SDL2_ttf::SDL2_ttf
+        nlohmann_json::nlohmann_json
+        Core
+        Game
+    )
+endif()
 
 enable_testing()
 add_executable(

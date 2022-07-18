@@ -5,7 +5,7 @@ NGE2 is my second attempt at a larger scale C++ project that tries to consider n
 
 # Build
 
-Currently tested and working on Windows 10 with MSVC 19 and Ubuntu 20.04 with GCC 9.4
+Currently tested and working on Windows 10 with MSVC 19 and MinGW GCC 8.1 and Ubuntu 20.04 with GCC 9.4. Building with MinGW on Windows requires that "MinGW Makefiles" is specified as the CMake generator.
 
 ### Installations
 

@@ -11,6 +11,7 @@
 
 MiningState::MiningState(nge::State state) : nge::State(state) {
     graphics_->SetWindowSize(512, 384);
+    graphics_->SetWindowPosition(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
     tool_ = Tool::PICKAXE;
 
     srand(time(NULL));
