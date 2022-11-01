@@ -1,4 +1,5 @@
 ## TODO notes:
+
 - reexamine usage of shared pointer and object ownerships
 - concept of automatic z levels for drawables instead of forced user defined draw orders per state (sort on every insertion to drawing list?)
 - const correctness, pass by reference, inline where applicable
@@ -21,6 +22,7 @@
 - figure out how to manage multiple github accounts on the same machine while im at uni and am using my other account
 
 # game states
+
 you should be able to inherit from state, write a constructor with only objects you actually want to pass in, write your draw and tick methods, and not have to worry about passing in game level dependencies like graphics or the state manager. solutions are a bit annoying.
 
 1: separate construction and initialisation
@@ -28,14 +30,14 @@ you have to write a ctor that handles being passed whatever dependencies the gam
 \+ you dont have to worry about what the game is actually injecting to your state  
 \+ the "magic" injected parameters are separated from your own personal inputs to your state  
 \- you have a bunch of magic parameters to your ctor that you need to boilerplate away  
-\- the number of magic parameters might change as the base State needs more things  
+\- the number of magic parameters might change as the base State needs more things
 
 2: no user construction  
 your state is default constructed, its dependencies are set externally by the game, and then an Init method is called  
 \+ you dont need to write an actual ctor, only supply an empty default one  
 \+ there is no ambiguity between construction and initialisation, since the ctor will just always be empty  
 \- the base State class will have to expose methods to set its dependencies after construction, either giving the user the ability to arbitrarily set (and therefore invalidate) any other State's dependencies they want, or requiring that the base State's setters for these dependencies are friends to the Game class  
-\- you still have to write a bit more boilerplate than is absolutely necessary with the empty default ctor  
+\- you still have to write a bit more boilerplate than is absolutely necessary with the empty default ctor
 
 3: pass a fully constructed State object to the child state \<-- this for now  
 you take a correctly constructed and initialised state created by the game class as an argument to your new state's ctor  
@@ -43,43 +45,63 @@ you take a correctly constructed and initialised state created by the game class
 \+ i can add as many dependencies as i want for state, like a resource manager or if sound becomes non static, and you wont have to change the ctor of every single state to accept more arguments  
 \+ doesnt require exposing base State fields that can be messed with as in 2  
 \- you need a "magic" parameter to your ctor  
-\- confusing when setting initial state as there will be a discrepancy between the parameters in the ctor and the parameters actually passed in, since the state that would be passed in would be created by the Game and would therefore be inaccessible to the user  
+\- confusing when setting initial state as there will be a discrepancy between the parameters in the ctor and the parameters actually passed in, since the state that would be passed in would be created by the Game and would therefore be inaccessible to the user
 
 4: change the State model entirely?  
 maybe separate fundamental state behaviour and user defined state behaviour, and connect the two by means other than inheritance?  
 eg. Game.SetInitialState\<State\<InitialStateModel\>\>(InitialStateModelArgs...)  
-\- the model wouldn't have enough information about its container State to do things like create textures without encountering the same types of problems surrounding passing dependencies like graphics and state management   
-\- requires users to double template something which is slightly cringe  
+\- the model wouldn't have enough information about its container State to do things like create textures without encountering the same types of problems surrounding passing dependencies like graphics and state management  
+\- requires users to double template something which is slightly cringe
+
+# game state usability requirements
+
+- the game is composed of a series of States which should generally divide the game into discrete modes of interaction; an overworld might be one state, while menuing might be another
+- the consumer should only have to know that input is processed on each Tick method and the State is redrawn each Draw method
+  - this means the only methods the user should have to implement are the Draw and Tick methods
+  - this means that the user shouldnt have to include any "magic" in their boilerplate that reveals the internal mechanisms of the interactions between the State and the Game
+- the consumer should be free to initialise any game object in the constructor rather than some kind of Init method to minimise any learning curve
+
+the requirement that the consumer shoudl be free to initialise any game object in their constructor even if it requires dependencies from the game object mean that either
+
+- the state must know about its higher dependencies like input and graphics before construction (this is very cringe)
+- the state must be constructed with those higher dependencies without the user explicitly writing that this is the case
 
 # Drawing
 
 ## Drawables
-what does it mean to be Drawable?  
-if an object is Drawable, it can be drawn, and it occupies some space on the screen. for a simple sprite or piece of text this might be a single sdl_rect but maybe you will have a character sprite composed of several limbs. in that case strictly speaking the sprite will only occupy a shape on the screen defined by some contour rather than a rectangle. interfaces name behaviours of their implementors, so it doesnt really make sense to have some kind of GetDestinationRectangle method on the Drawable interface. i should instead consider the reasons you would need the destination rectangle, or need to know a Drawable's position or dimensions. two reasons i can think of are calculating overlaps and aligning two objects. therefore those behaviours should be potential behaviours should be added to Drawable. it would be nice to be able to write something like  
 
-```if (MyDrawableImpl1.Overlaps(MyDrawableImpl2) {do something}```
+what does it mean to be Drawable?  
+if an object is Drawable, it can be drawn, and it occupies some space on the screen. for a simple sprite or piece of text this might be a single sdl_rect but maybe you will have a character sprite composed of several limbs. in that case strictly speaking the sprite will only occupy a shape on the screen defined by some contour rather than a rectangle. interfaces name behaviours of their implementors, so it doesnt really make sense to have some kind of GetDestinationRectangle method on the Drawable interface. i should instead consider the reasons you would need the destination rectangle, or need to know a Drawable's position or dimensions. two reasons i can think of are calculating overlaps and aligning two objects. therefore those behaviours should be potential behaviours should be added to Drawable. it would be nice to be able to write something like
+
+`if (MyDrawableImpl1.Overlaps(MyDrawableImpl2) {do something}`
 
 but to pass a pointer to this method you would need a way to get space occupied on the screen from the Drawable interface. the solution will probably have to be to pass the space occupied as a shape. this can be an SDL_Rect temporarily.  
-alignment will probably need to split into something like AlignHorizontal and AlignVertical  
+alignment will probably need to split into something like AlignHorizontal and AlignVertical
 
-```MyDrawableImpl1.AlignHorizontal(50)```  
+`MyDrawableImpl1.AlignHorizontal(50)`
 
-then again, should an object being drawable on the screen imply that it can be aligned (moved)? i have a Translatable interface but is it meaningful to have? in practice, the Drawable interface will probably be used to programmatically Draw a collection of Drawable objects. a user shouldnt have to define what it means for their own implementation of a Drawable to be aligned with something if all they want to do is register it to some list of Drawables. I think therefore the Translatable interface makes sense. 
+then again, should an object being drawable on the screen imply that it can be aligned (moved)? i have a Translatable interface but is it meaningful to have? in practice, the Drawable interface will probably be used to programmatically Draw a collection of Drawable objects. a user shouldnt have to define what it means for their own implementation of a Drawable to be aligned with something if all they want to do is register it to some list of Drawables. I think therefore the Translatable interface makes sense.
 
 ## Translatables
+
 being Translatable is a lot easier to define than being Drawable. Translatables will require methods that set or increment their position on screen. alignment is technically different from just setting a position because you will typically require information about the visual size of some graphic in order to align it appropriately, so the alignment methods can go on it too.
 
 ## Rotatables
+
 rotation is even simpler because alignment of rotation is just setting a rotation, and has nothing to do with a graphics dimensions. all it needs is the ability to set and increment an angle.
 
 ## Single-Texture Drawable Functionality
+
 there was/is massive code redundancy between Text, Sprite/AnimatedSprite, and Button. i would like to take this redundancy out of text and sprite and maybe revise how buttons work.
 
 ### SimpleDrawableBase
+
 a SimpleDrawableBase will be an abstract class with source and destination rectangles and convenience methods common to Text and Sprite. it will inherit from all of Drawable, Translatable, and Rotatable.
 
 # Dependencies
+
 ~there are no sdl distributions for windows/mingw or apple m1 but configuring the submodules in all of my cmakelists for all my subdirectories is hard and i get weird runtime issues.~ building libiconv in windows with mingw breaks for some obscure reason so i can either support every platform other than windows/mingw or use submodules. for now ill probably just use conan distributions. ~in this case i need a way of automatically copying the dlls and resources to the output directory.~ ~this is done for dlls and for resources in my current machine dependent configuration so i need to figure out how to actually use the sdl distribution from conan~. there is no official sdl mixer package for conan. i have a few options:
+
 - automatically download the sdl2/mixer dev packs using cmake file downloads and globbing and copying the dlls into the output directory
 - build mixer from source with a submodule
 - replace the audio library im using
@@ -89,7 +111,9 @@ the latter 2 options are a lot more appealing to me
 on further research miniaudio seems like a decent option so i will try that when i get around to needing audio for something i guess
 
 # Testing
-making a few quick and dirty test suites is not that hard but i would like to practice using industry standard testing libraries. i would also like to try to set up some kind of ci. travis seems like a popular ci thing. ive used teamcity before which apparently has free stuff? i could try compiling and running tests with docker on a local machine as well and docker would be a good thing to learn about. jenkins also seems like a popular and self hostable option. 
+
+making a few quick and dirty test suites is not that hard but i would like to practice using industry standard testing libraries. i would also like to try to set up some kind of ci. travis seems like a popular ci thing. ive used teamcity before which apparently has free stuff? i could try compiling and running tests with docker on a local machine as well and docker would be a good thing to learn about. jenkins also seems like a popular and self hostable option.
 
 # Build Scripts
+
 i like build scripts but mine currently dont support different release types and sort of clash with visual studio specifically, since conan needs to be initialised in the build directory beforehand. i need to figure out a cleaner way of implementing these build scripts and keep them unintrusive to vs
